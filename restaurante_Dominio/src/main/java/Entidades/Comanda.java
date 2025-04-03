@@ -6,15 +6,22 @@ package Entidades;
 
 import ENUM.Estado;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 
@@ -25,94 +32,160 @@ import javax.persistence.Temporal;
 @Entity
 public class Comanda implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Enumerated(EnumType.STRING)
     private Estado estado;
 
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date fechaHora;
+    @Column(nullable = false)
+    private LocalDateTime fechaHora;
 
+    @Column(unique = true, nullable = false)
     private String folio;
 
     private Double totalVenta;
 
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
-    @OneToMany
-    private List<DetallesComanda> detalles;
+    @OneToMany(mappedBy = "comanda", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DetallesComanda> detallesComanda;
+    
 
     public Comanda() {
-        this.detalles = new ArrayList<>();
+        this.detallesComanda = new ArrayList<>();
     }
 
-    public Comanda(Long id, Estado estado, Date fechaHora, String folio, Double totalVenta, Cliente cliente, List<DetallesComanda> detalles) {
+    public Comanda(Long id, Estado estado, LocalDateTime fechaHora, String folio, Double totalVenta, Cliente cliente, List<DetallesComanda> detallesComanda) {
         this.id = id;
         this.estado = estado;
         this.fechaHora = fechaHora;
         this.folio = folio;
         this.totalVenta = totalVenta;
         this.cliente = cliente;
-        this.detalles = detalles;
-        this.detalles = new ArrayList<>();
+        this.detallesComanda = detallesComanda;
+    }
+
+    public Comanda(Estado estado, LocalDateTime fechaHora, String folio, Double totalVenta, Cliente cliente, List<DetallesComanda> detallesComanda) {
+        this.estado = estado;
+        this.fechaHora = fechaHora;
+        this.folio = folio;
+        this.totalVenta = totalVenta;
+        this.cliente = cliente;
+        this.detallesComanda = detallesComanda;
     }
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public Estado getEstado() {
         return estado;
     }
 
-    public void setEstado(Estado estado) {
-        this.estado = estado;
-    }
-
-    public Date getFechaHora() {
+    public LocalDateTime getFechaHora() {
         return fechaHora;
-    }
-
-    public void setFechaHora(Date fechaHora) {
-        this.fechaHora = fechaHora;
     }
 
     public String getFolio() {
         return folio;
     }
 
-    public void setFolio(String folio) {
-        this.folio = folio;
-    }
-
     public Double getTotalVenta() {
         return totalVenta;
-    }
-
-    public void setTotalVenta(Double totalVenta) {
-        this.totalVenta = totalVenta;
     }
 
     public Cliente getCliente() {
         return cliente;
     }
 
+    public List<DetallesComanda> getDetallesComanda() {
+        return detallesComanda;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
+    }
+
+    public void setFechaHora(LocalDateTime fechaHora) {
+        this.fechaHora = fechaHora;
+    }
+
+    public void setFolio(String folio) {
+        this.folio = folio;
+    }
+
+    public void setTotalVenta(Double totalVenta) {
+        this.totalVenta = totalVenta;
+    }
+
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
 
-    public List<DetallesComanda> getDetalles() {
-        return detalles;
+    public void setDetallesComanda(List<DetallesComanda> detallesComanda) {
+        this.detallesComanda = detallesComanda;
     }
 
-    public void setDetalles(List<DetallesComanda> detalles) {
-        this.detalles = detalles;
+    @Override
+    public String toString() {
+        return "Comanda{" + "id=" + id + ", estado=" + estado + ", fechaHora=" + fechaHora + ", folio=" + folio + ", totalVenta=" + totalVenta + ", cliente=" + cliente + ", detallesComanda=" + detallesComanda + '}';
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 23 * hash + Objects.hashCode(this.id);
+        hash = 23 * hash + Objects.hashCode(this.estado);
+        hash = 23 * hash + Objects.hashCode(this.fechaHora);
+        hash = 23 * hash + Objects.hashCode(this.folio);
+        hash = 23 * hash + Objects.hashCode(this.totalVenta);
+        hash = 23 * hash + Objects.hashCode(this.cliente);
+        hash = 23 * hash + Objects.hashCode(this.detallesComanda);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Comanda other = (Comanda) obj;
+        if (!Objects.equals(this.folio, other.folio)) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (this.estado != other.estado) {
+            return false;
+        }
+        if (!Objects.equals(this.fechaHora, other.fechaHora)) {
+            return false;
+        }
+        if (!Objects.equals(this.totalVenta, other.totalVenta)) {
+            return false;
+        }
+        if (!Objects.equals(this.cliente, other.cliente)) {
+            return false;
+        }
+        return Objects.equals(this.detallesComanda, other.detallesComanda);
+    }
+    
+    
+
+    
 }

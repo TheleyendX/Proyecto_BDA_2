@@ -9,6 +9,7 @@
     <class>Entidades.Ingrediente</class>
     <class>Entidades.Mesa</class>
     <class>Entidades.Producto</class>
+    <class>Entidades.ProductoIngrediente</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/Restaurante?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

@@ -5,12 +5,15 @@
 package Entidades;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -19,20 +22,28 @@ import javax.persistence.Id;
 @Entity
 public class Mesa implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(name = "numero", nullable = false)
-    private Long numero;
+    @Column(name = "numero", nullable = false, unique = true)
+    private int numero;
+    
+    @OneToMany(mappedBy = "mesa")
+    private List<Comanda> comandas;
 
     public Mesa() {
     }
 
-    public Mesa(Long id, Long numero) {
+    public Mesa(Long id, int numero, List<Comanda> comandas) {
         this.id = id;
         this.numero = numero;
+        this.comandas = comandas;
+    }
+
+    public Mesa(int numero, List<Comanda> comandas) {
+        this.numero = numero;
+        this.comandas = comandas;
     }
 
     public Long getId() {
@@ -43,13 +54,22 @@ public class Mesa implements Serializable {
         this.id = id;
     }
 
-    public Long getNumero() {
+    public int getNumero() {
         return numero;
     }
 
-    public void setNumero(Long numero) {
+    public void setNumero(int numero) {
         this.numero = numero;
     }
+
+    public List<Comanda> getComandas() {
+        return comandas;
+    }
+
+    public void setComandas(List<Comanda> comandas) {
+        this.comandas = comandas;
+    }
+    
 
     @Override
     public String toString() {

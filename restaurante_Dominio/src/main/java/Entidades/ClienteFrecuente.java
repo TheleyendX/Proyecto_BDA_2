@@ -5,6 +5,7 @@
 package Entidades;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -17,36 +18,37 @@ import javax.persistence.Entity;
 @Entity
 public class ClienteFrecuente extends Cliente implements Serializable {
 
-    @Column(name = "puntos", nullable = true)
-    private Long puntos;
+    @Column(name = "puntos")
+    private int puntos;
 
-    @Column(name = "gastosTotalesAcumulados", nullable = false)
+    @Column(name = "gastoTotalAcumulado")
     private Double gastoTotalAcumulado;
 
-    @Column(name = "visitasTotales", nullable = false)
-    private Long visitasTotales;
+    @Column(name = "conteoVisitas")
+    private int conteoVisitas;
 
     public ClienteFrecuente() {
     }
 
-    public ClienteFrecuente(Long puntos, Double gastoTotalAcumulado, Long visitasTotales) {
+    public ClienteFrecuente(int puntos, Double gastoTotalAcumulado, int conteoVisitas) {
         this.puntos = puntos;
         this.gastoTotalAcumulado = gastoTotalAcumulado;
-        this.visitasTotales = visitasTotales;
+        this.conteoVisitas = conteoVisitas;
     }
 
-    public ClienteFrecuente(Long puntos, Double gastoTotalAcumulado, Long visitasTotales, Long id, String nombre, String apellidoP, String apellidoM, String correo, String telefono, Date fechaRegistro) {
+    public ClienteFrecuente(int puntos, Double gastoTotalAcumulado, int conteoVisitas, Long id, String nombre, String apellidoP, String apellidoM, String correo, String telefono, LocalDate fechaRegistro) {
         super(id, nombre, apellidoP, apellidoM, correo, telefono, fechaRegistro);
         this.puntos = puntos;
         this.gastoTotalAcumulado = gastoTotalAcumulado;
-        this.visitasTotales = visitasTotales;
+        this.conteoVisitas = conteoVisitas;
     }
+    
 
-    public Long getPuntos() {
+    public int getPuntos() {
         return puntos;
     }
 
-    public void setPuntos(Long puntos) {
+    public void setPuntos(int puntos) {
         this.puntos = puntos;
     }
 
@@ -58,25 +60,26 @@ public class ClienteFrecuente extends Cliente implements Serializable {
         this.gastoTotalAcumulado = gastoTotalAcumulado;
     }
 
-    public Long getVisitasTotales() {
-        return visitasTotales;
+    public int getConteoVisitas() {
+        return conteoVisitas;
     }
 
-    public void setVisitasTotales(Long visitasTotales) {
-        this.visitasTotales = visitasTotales;
+    public void setConteoVisitas(int conteoVisitas) {
+        this.conteoVisitas = conteoVisitas;
     }
 
     @Override
     public String toString() {
-        return "ClienteFrecuente{" + "puntos=" + puntos + ", gastoTotalAcumulado=" + gastoTotalAcumulado + ", visitasTotales=" + visitasTotales + '}';
+        return "ClienteFrecuente{" + "puntos=" + puntos + ", gastoTotalAcumulado=" + gastoTotalAcumulado + ", conteoVisitas=" + conteoVisitas + '}';
     }
+
 
     @Override
     public int hashCode() {
         int hash = 7;
         hash = 89 * hash + Objects.hashCode(this.puntos);
         hash = 89 * hash + Objects.hashCode(this.gastoTotalAcumulado);
-        hash = 89 * hash + Objects.hashCode(this.visitasTotales);
+        hash = 89 * hash + Objects.hashCode(this.conteoVisitas);
         return hash;
     }
 
@@ -98,7 +101,7 @@ public class ClienteFrecuente extends Cliente implements Serializable {
         if (!Objects.equals(this.gastoTotalAcumulado, other.gastoTotalAcumulado)) {
             return false;
         }
-        return Objects.equals(this.visitasTotales, other.visitasTotales);
+        return Objects.equals(this.conteoVisitas, other.conteoVisitas);
     }
 
 }

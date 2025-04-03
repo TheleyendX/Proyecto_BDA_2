@@ -5,6 +5,7 @@
 package Entidades;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -25,18 +26,17 @@ import javax.persistence.Table;
 @Inheritance (strategy = InheritanceType.SINGLE_TABLE)
 public class Cliente implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nombre", length = 50, nullable = false)
+    @Column(name = "nombre", length = 70, nullable = false)
     private String nombre;
 
-    @Column(name = "apellidoPaterno", length = 50, nullable = false)
+    @Column(name = "apellidoPaterno", length = 70, nullable = false)
     private String apellidoP;
 
-    @Column(name = "apellidoMaterno", length = 50, nullable = false)
+    @Column(name = "apellidoMaterno", length = 70, nullable = false)
     private String apellidoM;
 
     @Column(name = "correo", length = 70, nullable = false, unique = true)
@@ -46,12 +46,12 @@ public class Cliente implements Serializable {
     private String telefono;
 
     @Column(name = "fechaRegistro", nullable = true)
-    private Date fechaRegistro;
+    private LocalDate fechaRegistro;
 
     public Cliente() {
     }
 
-    public Cliente(Long id, String nombre, String apellidoP, String apellidoM, String correo, String telefono, Date fechaRegistro) {
+    public Cliente(Long id, String nombre, String apellidoP, String apellidoM, String correo, String telefono, LocalDate fechaRegistro) {
         this.id = id;
         this.nombre = nombre;
         this.apellidoP = apellidoP;
@@ -109,11 +109,11 @@ public class Cliente implements Serializable {
         this.telefono = telefono;
     }
 
-    public Date getFechaRegistro() {
+    public LocalDate getFechaRegistro() {
         return fechaRegistro;
     }
 
-    public void setFechaRegistro(Date fechaRegistro) {
+    public void setFechaRegistro(LocalDate fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
 

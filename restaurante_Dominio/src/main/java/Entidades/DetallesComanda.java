@@ -6,10 +6,12 @@ package Entidades;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 /**
@@ -19,96 +21,121 @@ import javax.persistence.ManyToOne;
 @Entity
 public class DetallesComanda implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    @Column(nullable = false)
     private Double precioPorProducto;
     
-    private String comentario;
+    @Column
+    private String comentarios;
     
-    private Double cantidadRequerida;
+    @Column(nullable = false)
+    private int cantidadRequerida;
     
+    @Column(nullable = false)
     private Double importeTotal;
     
     @ManyToOne
+    @JoinColumn(name = "comanda_id", nullable = false)
     private Comanda comanda;
     
     @ManyToOne
+    @JoinColumn(name = "producto_id")
     private Producto producto;
 
     public DetallesComanda() {
     }
 
-    public DetallesComanda(Long id, Double precioPorProducto, String comentario, Double cantidadRequerida, Double importeTotal, Comanda comanda) {
+    public DetallesComanda(Long id, Double precioPorProducto, String comentarios, int cantidadRequerida, Double importeTotal, Comanda comanda, Producto producto) {
         this.id = id;
         this.precioPorProducto = precioPorProducto;
-        this.comentario = comentario;
+        this.comentarios = comentarios;
         this.cantidadRequerida = cantidadRequerida;
         this.importeTotal = importeTotal;
         this.comanda = comanda;
+        this.producto = producto;
     }
 
-    public Comanda getComanda() {
-        return comanda;
-    }
-
-    public void setComanda(Comanda comanda) {
+    public DetallesComanda(Double precioPorProducto, String comentarios, int cantidadRequerida, Double importeTotal, Comanda comanda, Producto producto) {
+        this.precioPorProducto = precioPorProducto;
+        this.comentarios = comentarios;
+        this.cantidadRequerida = cantidadRequerida;
+        this.importeTotal = importeTotal;
         this.comanda = comanda;
+        this.producto = producto;
     }
-    
+
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Double getPrecioPorProducto() {
         return precioPorProducto;
     }
 
-    public void setPrecioPorProducto(Double precioPorProducto) {
-        this.precioPorProducto = precioPorProducto;
+    public String getComentarios() {
+        return comentarios;
     }
 
-    public String getComentario() {
-        return comentario;
-    }
-
-    public void setComentario(String comentario) {
-        this.comentario = comentario;
-    }
-
-    public Double getCantidadRequerida() {
+    public int getCantidadRequerida() {
         return cantidadRequerida;
-    }
-
-    public void setCantidadRequerida(Double cantidadRequerida) {
-        this.cantidadRequerida = cantidadRequerida;
     }
 
     public Double getImporteTotal() {
         return importeTotal;
     }
 
+    public Comanda getComanda() {
+        return comanda;
+    }
+
+    public Producto getProducto() {
+        return producto;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setPrecioPorProducto(Double precioPorProducto) {
+        this.precioPorProducto = precioPorProducto;
+    }
+
+    public void setComentarios(String comentarios) {
+        this.comentarios = comentarios;
+    }
+
+    public void setCantidadRequerida(int cantidadRequerida) {
+        this.cantidadRequerida = cantidadRequerida;
+    }
+
     public void setImporteTotal(Double importeTotal) {
         this.importeTotal = importeTotal;
     }
 
+    public void setComanda(Comanda comanda) {
+        this.comanda = comanda;
+    }
+
+    public void setProducto(Producto producto) {
+        this.producto = producto;
+    }
+
     @Override
     public String toString() {
-        return "DetallesComanda{" + "id=" + id + ", precioPorProducto=" + precioPorProducto + ", comentario=" + comentario + ", cantidadRequerida=" + cantidadRequerida + ", importeTotal=" + importeTotal + ", comanda=" + comanda + '}';
+        return "DetallesComanda{" + "id=" + id + ", precioPorProducto=" + precioPorProducto + ", comentarios=" + comentarios + ", cantidadRequerida=" + cantidadRequerida + ", importeTotal=" + importeTotal + ", comanda=" + comanda + ", producto=" + producto + '}';
     }
+
+    
 
     @Override
     public int hashCode() {
         int hash = 5;
         hash = 97 * hash + Objects.hashCode(this.id);
         hash = 97 * hash + Objects.hashCode(this.precioPorProducto);
-        hash = 97 * hash + Objects.hashCode(this.comentario);
+        hash = 97 * hash + Objects.hashCode(this.comentarios);
         hash = 97 * hash + Objects.hashCode(this.cantidadRequerida);
         hash = 97 * hash + Objects.hashCode(this.importeTotal);
         hash = 97 * hash + Objects.hashCode(this.comanda);
@@ -127,7 +154,7 @@ public class DetallesComanda implements Serializable {
             return false;
         }
         final DetallesComanda other = (DetallesComanda) obj;
-        if (!Objects.equals(this.comentario, other.comentario)) {
+        if (!Objects.equals(this.comentarios, other.comentarios)) {
             return false;
         }
         if (!Objects.equals(this.id, other.id)) {

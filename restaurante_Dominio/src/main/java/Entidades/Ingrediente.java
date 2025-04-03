@@ -4,16 +4,18 @@
  */
 package Entidades;
 
-import ENUM.unidadMedida;
+import ENUM.UnidadMedida;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -22,85 +24,93 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Ingrediente implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long stock;
+    @Column(nullable = false)
+    private double stock;
 
+    @Column(nullable = false)
     private String nombre;
 
     @Enumerated(EnumType.STRING)
-    private unidadMedida unidadMedida;
+    private UnidadMedida unidadMedida;
 
-    @ManyToOne
-    private Producto producto;
+    @OneToMany(mappedBy = "ingrediente")
+    private List<ProductoIngrediente> productosIngredientes;
 
     public Ingrediente() {
     }
 
-    public Ingrediente(Long id, Long stock, String nombre, unidadMedida unidadMedida, Producto producto) {
+    public Ingrediente(Long id, double stock, String nombre, UnidadMedida unidadMedida, List<ProductoIngrediente> productosIngredientes) {
         this.id = id;
         this.stock = stock;
         this.nombre = nombre;
         this.unidadMedida = unidadMedida;
-        this.producto = producto;
+        this.productosIngredientes = productosIngredientes;
     }
 
-    public Producto getProducto() {
-        return producto;
-    }
-
-    public void setProducto(Producto producto) {
-        this.producto = producto;
+    public Ingrediente(double stock, String nombre, UnidadMedida unidadMedida, List<ProductoIngrediente> productosIngredientes) {
+        this.stock = stock;
+        this.nombre = nombre;
+        this.unidadMedida = unidadMedida;
+        this.productosIngredientes = productosIngredientes;
     }
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getStock() {
+    public double getStock() {
         return stock;
-    }
-
-    public void setStock(Long stock) {
-        this.stock = stock;
     }
 
     public String getNombre() {
         return nombre;
     }
 
+    public UnidadMedida getUnidadMedida() {
+        return unidadMedida;
+    }
+
+    public List<ProductoIngrediente> getProductosIngredientes() {
+        return productosIngredientes;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setStock(double stock) {
+        this.stock = stock;
+    }
+
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
-    public unidadMedida getUnidadMedida() {
-        return unidadMedida;
+    public void setUnidadMedida(UnidadMedida unidadMedida) {
+        this.unidadMedida = unidadMedida;
     }
 
-    public void setUnidadMedida(unidadMedida unidadMedida) {
-        this.unidadMedida = unidadMedida;
+    public void setProductosIngredientes(List<ProductoIngrediente> productosIngredientes) {
+        this.productosIngredientes = productosIngredientes;
     }
 
     @Override
     public String toString() {
-        return "Ingrediente{" + "id=" + id + ", stock=" + stock + ", nombre=" + nombre + ", unidadMedida=" + unidadMedida + ", producto=" + producto + '}';
+        return "Ingrediente{" + "id=" + id + ", stock=" + stock + ", nombre=" + nombre + ", unidadMedida=" + unidadMedida + ", productosIngredientes=" + productosIngredientes + '}';
     }
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 43 * hash + Objects.hashCode(this.id);
-        hash = 43 * hash + Objects.hashCode(this.stock);
-        hash = 43 * hash + Objects.hashCode(this.nombre);
-        hash = 43 * hash + Objects.hashCode(this.unidadMedida);
-        hash = 43 * hash + Objects.hashCode(this.producto);
+        int hash = 3;
+        hash = 47 * hash + Objects.hashCode(this.id);
+        hash = 47 * hash + (int) (Double.doubleToLongBits(this.stock) ^ (Double.doubleToLongBits(this.stock) >>> 32));
+        hash = 47 * hash + Objects.hashCode(this.nombre);
+        hash = 47 * hash + Objects.hashCode(this.unidadMedida);
+        hash = 47 * hash + Objects.hashCode(this.productosIngredientes);
         return hash;
     }
 
@@ -116,18 +126,22 @@ public class Ingrediente implements Serializable {
             return false;
         }
         final Ingrediente other = (Ingrediente) obj;
+        if (Double.doubleToLongBits(this.stock) != Double.doubleToLongBits(other.stock)) {
+            return false;
+        }
         if (!Objects.equals(this.nombre, other.nombre)) {
             return false;
         }
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
-        if (!Objects.equals(this.stock, other.stock)) {
-            return false;
-        }
         if (this.unidadMedida != other.unidadMedida) {
             return false;
         }
-        return Objects.equals(this.producto, other.producto);
+        return Objects.equals(this.productosIngredientes, other.productosIngredientes);
     }
+    
+    
+
+    
 }

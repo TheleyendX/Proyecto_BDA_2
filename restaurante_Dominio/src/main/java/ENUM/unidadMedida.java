@@ -8,6 +8,6 @@ package ENUM;
  *
  * @author mmax2
  */
-public enum unidadMedida {
+public enum UnidadMedida {
     ml, gm, pz
 }
