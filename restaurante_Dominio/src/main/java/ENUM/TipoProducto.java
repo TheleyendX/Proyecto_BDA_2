@@ -9,5 +9,5 @@ package ENUM;
  * @author mmax2
  */
 public enum TipoProducto {
-    
+    platillo, bebida, postre;
 }

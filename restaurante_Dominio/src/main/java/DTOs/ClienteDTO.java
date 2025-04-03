@@ -16,7 +16,7 @@ public class ClienteDTO {
     
     public String apellidoP;
     
-    public String apelldioM;
+    public String apellidoM;
     
     public String correo;
     
@@ -30,7 +30,7 @@ public class ClienteDTO {
     public ClienteDTO(String nombre, String apellidoP, String apelldioM, String correo, String telefono, Date fechaRegistro) {
         this.nombre = nombre;
         this.apellidoP = apellidoP;
-        this.apelldioM = apelldioM;
+        this.apellidoM = apelldioM;
         this.correo = correo;
         this.telefono = telefono;
         this.fechaRegistro = fechaRegistro;
@@ -52,12 +52,12 @@ public class ClienteDTO {
         this.apellidoP = apellidoP;
     }
 
-    public String getApelldioM() {
-        return apelldioM;
+    public String getApellidoM() {
+        return apellidoM;
     }
 
-    public void setApelldioM(String apelldioM) {
-        this.apelldioM = apelldioM;
+    public void setApellidoM(String apellidoM) {
+        this.apellidoM = apellidoM;
     }
 
     public String getCorreo() {
@@ -89,7 +89,7 @@ public class ClienteDTO {
         return "ClienteDTO{" + "nombre="
                 + nombre + ", apellidoP=" 
                 + apellidoP + ", apelldioM=" 
-                + apelldioM + ", correo=" 
+                + apellidoM + ", correo=" 
                 + correo + ", telefono=" 
                 + telefono 
                 + ", fechaRegistro=" 
@@ -101,7 +101,7 @@ public class ClienteDTO {
         int hash = 3;
         hash = 23 * hash + Objects.hashCode(this.nombre);
         hash = 23 * hash + Objects.hashCode(this.apellidoP);
-        hash = 23 * hash + Objects.hashCode(this.apelldioM);
+        hash = 23 * hash + Objects.hashCode(this.apellidoM);
         hash = 23 * hash + Objects.hashCode(this.correo);
         hash = 23 * hash + Objects.hashCode(this.telefono);
         hash = 23 * hash + Objects.hashCode(this.fechaRegistro);
@@ -126,7 +126,7 @@ public class ClienteDTO {
         if (!Objects.equals(this.apellidoP, other.apellidoP)) {
             return false;
         }
-        if (!Objects.equals(this.apelldioM, other.apelldioM)) {
+        if (!Objects.equals(this.apellidoM, other.apellidoM)) {
             return false;
         }
         if (!Objects.equals(this.correo, other.correo)) {
