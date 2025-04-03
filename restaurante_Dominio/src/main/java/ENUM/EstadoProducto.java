@@ -6,8 +6,8 @@ package ENUM;
 
 /**
  *
- * @author mmax2
+ * @author katia
  */
-public enum Estado {
-    Cancelado, Entregado, Abierto
+public enum EstadoProducto {
+    Disponible, NoDisponible;
 }

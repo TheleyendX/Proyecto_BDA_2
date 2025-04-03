@@ -39,13 +39,13 @@ public class Cliente implements Serializable {
     @Column(name = "apellidoMaterno", length = 70, nullable = false)
     private String apellidoM;
 
-    @Column(name = "correo", length = 70, nullable = false, unique = true)
+    @Column(name = "correo", length = 70, nullable = true)
     private String correo;
 
     @Column(name = "telefono", length = 10, nullable = false, unique = true)
     private String telefono;
 
-    @Column(name = "fechaRegistro", nullable = true)
+    @Column(name = "fechaRegistro", nullable = false)
     private LocalDate fechaRegistro;
 
     public Cliente() {

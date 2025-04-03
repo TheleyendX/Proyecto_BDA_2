@@ -34,7 +34,7 @@ public class ProductoIngrediente implements Serializable {
     private Ingrediente ingrediente;
     
     @Column(nullable = false)
-    private double cantidadRequerida;
+    private Double cantidadRequerida;
 
     public ProductoIngrediente() {
     }

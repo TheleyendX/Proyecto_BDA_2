@@ -29,6 +29,7 @@ public class Mesa implements Serializable {
     @Column(name = "numero", nullable = false, unique = true)
     private int numero;
     
+    // quitar 
     @OneToMany(mappedBy = "mesa")
     private List<Comanda> comandas;
 

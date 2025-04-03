@@ -32,11 +32,12 @@ public class DetallesComanda implements Serializable {
     private String comentarios;
     
     @Column(nullable = false)
-    private int cantidadRequerida;
+    private Integer cantidadRequerida;
     
     @Column(nullable = false)
     private Double importeTotal;
     
+    // detallecomanda solo tiene 1
     @ManyToOne
     @JoinColumn(name = "comanda_id", nullable = false)
     private Comanda comanda;

@@ -29,7 +29,7 @@ public class Ingrediente implements Serializable {
     private Long id;
 
     @Column(nullable = false)
-    private double stock;
+    private Double stock;
 
     @Column(nullable = false)
     private String nombre;
@@ -37,6 +37,8 @@ public class Ingrediente implements Serializable {
     @Enumerated(EnumType.STRING)
     private UnidadMedida unidadMedida;
 
+    // no bidireccional
+    // hacerlo unidireccional, al ingrediente no le importa donde esta siendo utilizado
     @OneToMany(mappedBy = "ingrediente")
     private List<ProductoIngrediente> productosIngredientes;
 

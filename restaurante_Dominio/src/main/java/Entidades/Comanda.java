@@ -4,7 +4,7 @@
  */
 package Entidades;
 
-import ENUM.Estado;
+import ENUM.EstadoComanda;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ public class Comanda implements Serializable {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    private Estado estado;
+    private EstadoComanda estado;
 
     @Column(nullable = false)
     private LocalDateTime fechaHora;
@@ -45,13 +45,15 @@ public class Comanda implements Serializable {
     @Column(unique = true, nullable = false)
     private String folio;
 
+    // derivado pero si se guarda
     private Double totalVenta;
 
     @ManyToOne
-    @JoinColumn(name = "cliente_id")
+    @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;
 
-    @OneToMany(mappedBy = "comanda", cascade = CascadeType.ALL, orphanRemoval = true)
+    // ver que cascada poner, no ALL
+    @OneToMany(mappedBy = "comanda",  orphanRemoval = true)
     private List<DetallesComanda> detallesComanda;
     
 
@@ -59,7 +61,7 @@ public class Comanda implements Serializable {
         this.detallesComanda = new ArrayList<>();
     }
 
-    public Comanda(Long id, Estado estado, LocalDateTime fechaHora, String folio, Double totalVenta, Cliente cliente, List<DetallesComanda> detallesComanda) {
+    public Comanda(Long id, EstadoComanda estado, LocalDateTime fechaHora, String folio, Double totalVenta, Cliente cliente, List<DetallesComanda> detallesComanda) {
         this.id = id;
         this.estado = estado;
         this.fechaHora = fechaHora;
@@ -69,7 +71,7 @@ public class Comanda implements Serializable {
         this.detallesComanda = detallesComanda;
     }
 
-    public Comanda(Estado estado, LocalDateTime fechaHora, String folio, Double totalVenta, Cliente cliente, List<DetallesComanda> detallesComanda) {
+    public Comanda(EstadoComanda estado, LocalDateTime fechaHora, String folio, Double totalVenta, Cliente cliente, List<DetallesComanda> detallesComanda) {
         this.estado = estado;
         this.fechaHora = fechaHora;
         this.folio = folio;
@@ -82,7 +84,7 @@ public class Comanda implements Serializable {
         return id;
     }
 
-    public Estado getEstado() {
+    public EstadoComanda getEstado() {
         return estado;
     }
 
@@ -110,7 +112,7 @@ public class Comanda implements Serializable {
         this.id = id;
     }
 
-    public void setEstado(Estado estado) {
+    public void setEstado(EstadoComanda estado) {
         this.estado = estado;
     }
 

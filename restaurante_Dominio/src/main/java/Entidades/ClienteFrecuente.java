@@ -18,12 +18,16 @@ import javax.persistence.Entity;
 @Entity
 public class ClienteFrecuente extends Cliente implements Serializable {
 
+    // no guardar atributos derivados en la bd, usar @transient
+    // entidades con atributos calculados solo get
+    // q solo dao pueda asignar el valor
+    
     @Column(name = "puntos")
     private int puntos;
 
     @Column(name = "gastoTotalAcumulado")
     private Double gastoTotalAcumulado;
-
+    
     @Column(name = "conteoVisitas")
     private int conteoVisitas;
 

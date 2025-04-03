@@ -46,6 +46,7 @@ public class Producto implements Serializable {
     @OneToMany(mappedBy = "producto")
     private List<Ingrediente> productoIngredientes;
 
+    // hacerlo unidireccional
     @OneToMany(mappedBy = "producto")
     private List<DetallesComanda> detallesComanda;
     
