@@ -4,6 +4,7 @@
  */
 package DTOs;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
@@ -22,12 +23,12 @@ public class ClienteDTO {
     
     public String telefono;
     
-    public Date fechaRegistro;
+    public LocalDate fechaRegistro;
 
     public ClienteDTO() {
     }
 
-    public ClienteDTO(String nombre, String apellidoP, String apelldioM, String correo, String telefono, Date fechaRegistro) {
+    public ClienteDTO(String nombre, String apellidoP, String apelldioM, String correo, String telefono, LocalDate fechaRegistro) {
         this.nombre = nombre;
         this.apellidoP = apellidoP;
         this.apellidoM = apelldioM;
@@ -76,11 +77,11 @@ public class ClienteDTO {
         this.telefono = telefono;
     }
 
-    public Date getFechaRegistro() {
+    public LocalDate getFechaRegistro() {
         return fechaRegistro;
     }
 
-    public void setFechaRegistro(Date fechaRegistro) {
+    public void setFechaRegistro(LocalDate fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
 
