@@ -4,6 +4,7 @@
  */
 package DAOs;
 
+import IDAOs.IClienteFrecuenteDAO;
 import Conexion.Conexion;
 import ENUM.EstadoComanda;
 import Entidades.ClienteFrecuente;

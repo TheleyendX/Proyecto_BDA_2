@@ -9,5 +9,5 @@ package ENUM;
  * @author mmax2
  */
 public enum UnidadMedida {
-    ml, gm, pz
+    gm,ml,pz
 }
