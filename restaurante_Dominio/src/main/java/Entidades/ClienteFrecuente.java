@@ -6,11 +6,8 @@ package Entidades;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
 
@@ -24,13 +21,12 @@ public class ClienteFrecuente extends Cliente implements Serializable {
     // no guardar atributos derivados en la bd, usar @transient
     // entidades con atributos calculados solo get
     // q solo dao pueda asignar el valor
-    
     @Transient
     private Integer puntos;
 
     @Transient
     private Double gastoTotalAcumulado;
-    
+
     @Transient
     private Integer conteoVisitas;
 
@@ -73,6 +69,8 @@ public class ClienteFrecuente extends Cliente implements Serializable {
     public void setConteoVisitas(Integer conteoVisitas) {
         this.conteoVisitas = conteoVisitas;
     }
+    
+    
 
     @Override
     public String toString() {

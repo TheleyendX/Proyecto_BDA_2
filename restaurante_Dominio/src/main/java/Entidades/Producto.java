@@ -6,7 +6,6 @@ package Entidades;
 
 import ENUM.EstadoProducto;
 import ENUM.TipoProducto;
-import java.awt.image.TileObserver;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +17,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 /**
@@ -37,7 +33,7 @@ public class Producto implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TipoProducto tipo;
-    
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private EstadoProducto estado;
@@ -47,36 +43,29 @@ public class Producto implements Serializable {
 
     @Column(nullable = false)
     private Double precio;
-    
+
     @OneToMany(mappedBy = "producto")
     private List<Ingrediente> productoIngredientes;
 
-    // hacerlo unidireccional
-    @OneToMany(mappedBy = "producto")
-    private List<DetallesComanda> detallesComanda;
-    
     public Producto() {
         this.productoIngredientes = new ArrayList<>();
-        this.detallesComanda = new ArrayList<>();
     }
 
-    public Producto(Long id, TipoProducto tipo, EstadoProducto estado, String nombre, Double precio, List<Ingrediente> productoIngredientes, List<DetallesComanda> detallesComanda) {
+    public Producto(Long id, TipoProducto tipo, EstadoProducto estado, String nombre, Double precio, List<Ingrediente> productoIngredientes) {
         this.id = id;
         this.tipo = tipo;
         this.estado = estado;
         this.nombre = nombre;
         this.precio = precio;
         this.productoIngredientes = productoIngredientes;
-        this.detallesComanda = detallesComanda;
     }
 
-    public Producto(TipoProducto tipo, EstadoProducto estado, String nombre, Double precio, List<Ingrediente> productoIngredientes, List<DetallesComanda> detallesComanda) {
+    public Producto(TipoProducto tipo, EstadoProducto estado, String nombre, Double precio, List<Ingrediente> productoIngredientes) {
         this.tipo = tipo;
         this.estado = estado;
         this.nombre = nombre;
         this.precio = precio;
         this.productoIngredientes = productoIngredientes;
-        this.detallesComanda = detallesComanda;
     }
 
     public EstadoProducto getEstado() {
@@ -107,10 +96,6 @@ public class Producto implements Serializable {
         return productoIngredientes;
     }
 
-    public List<DetallesComanda> getDetallesComanda() {
-        return detallesComanda;
-    }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -131,13 +116,9 @@ public class Producto implements Serializable {
         this.productoIngredientes = productoIngredientes;
     }
 
-    public void setDetallesComanda(List<DetallesComanda> detallesComanda) {
-        this.detallesComanda = detallesComanda;
-    }
-
     @Override
     public String toString() {
-        return "Producto{" + "id=" + id + ", tipo=" + tipo + ", estado=" + estado + ", nombre=" + nombre + ", precio=" + precio + ", productoIngredientes=" + productoIngredientes + ", detallesComanda=" + detallesComanda + '}';
+        return "Producto{" + "id=" + id + ", tipo=" + tipo + ", estado=" + estado + ", nombre=" + nombre + ", precio=" + precio + ", productoIngredientes=" + productoIngredientes + '}';
     }
 
     @Override
@@ -149,7 +130,6 @@ public class Producto implements Serializable {
         hash = 71 * hash + Objects.hashCode(this.nombre);
         hash = 71 * hash + Objects.hashCode(this.precio);
         hash = 71 * hash + Objects.hashCode(this.productoIngredientes);
-        hash = 71 * hash + Objects.hashCode(this.detallesComanda);
         return hash;
     }
 
@@ -180,13 +160,7 @@ public class Producto implements Serializable {
         if (!Objects.equals(this.precio, other.precio)) {
             return false;
         }
-        if (!Objects.equals(this.productoIngredientes, other.productoIngredientes)) {
-            return false;
-        }
-        return Objects.equals(this.detallesComanda, other.detallesComanda);
+        return Objects.equals(this.productoIngredientes, other.productoIngredientes);
     }
 
-    
-
-    
 }

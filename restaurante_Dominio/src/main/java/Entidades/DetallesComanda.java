@@ -13,7 +13,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 /**
  *
@@ -25,122 +24,120 @@ public class DetallesComanda implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @Column(nullable = false)
     private Double precioPorProducto;
-    
+
     @Column
     private String comentarios;
-    
+
     @Column(nullable = false)
     private Integer cantidadRequerida;
-    
+
     @Column(nullable = false)
     private Double importeTotal;
-    
-    // detallecomanda solo tiene 1
-    @OneToOne
-    @JoinColumn(name = "comanda_id", nullable = false)
-    private Comanda comanda;
-    
+
     @ManyToOne
     @JoinColumn(name = "producto_id")
     private Producto producto;
+    
+    @ManyToOne
+    @JoinColumn (name = "comanda_id")
+    private Comanda comanda;
 
     public DetallesComanda() {
     }
 
-    public DetallesComanda(Long id, Double precioPorProducto, String comentarios, int cantidadRequerida, Double importeTotal, Comanda comanda, Producto producto) {
+    public DetallesComanda(Long id, Double precioPorProducto, String comentarios, int cantidadRequerida, Comanda comanda, Double importeTotal, Producto producto) {
         this.id = id;
         this.precioPorProducto = precioPorProducto;
         this.comentarios = comentarios;
         this.cantidadRequerida = cantidadRequerida;
         this.importeTotal = importeTotal;
-        this.comanda = comanda;
         this.producto = producto;
+        this.comanda = comanda;
     }
 
-    public DetallesComanda(Double precioPorProducto, String comentarios, int cantidadRequerida, Double importeTotal, Comanda comanda, Producto producto) {
+    public DetallesComanda(Double precioPorProducto, String comentarios, int cantidadRequerida, Comanda comanda , Double importeTotal, Producto producto) {
         this.precioPorProducto = precioPorProducto;
         this.comentarios = comentarios;
         this.cantidadRequerida = cantidadRequerida;
         this.importeTotal = importeTotal;
-        this.comanda = comanda;
         this.producto = producto;
+        this.comanda = comanda;
     }
 
     public Long getId() {
         return id;
     }
 
-    public Double getPrecioPorProducto() {
-        return precioPorProducto;
-    }
-
-    public String getComentarios() {
-        return comentarios;
-    }
-
-    public int getCantidadRequerida() {
-        return cantidadRequerida;
-    }
-
-    public Double getImporteTotal() {
-        return importeTotal;
-    }
-
-    public Comanda getComanda() {
-        return comanda;
-    }
-
-    public Producto getProducto() {
-        return producto;
-    }
-
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Double getPrecioPorProducto() {
+        return precioPorProducto;
     }
 
     public void setPrecioPorProducto(Double precioPorProducto) {
         this.precioPorProducto = precioPorProducto;
     }
 
+    public String getComentarios() {
+        return comentarios;
+    }
+
     public void setComentarios(String comentarios) {
         this.comentarios = comentarios;
     }
 
-    public void setCantidadRequerida(int cantidadRequerida) {
+    public Integer getCantidadRequerida() {
+        return cantidadRequerida;
+    }
+
+    public void setCantidadRequerida(Integer cantidadRequerida) {
         this.cantidadRequerida = cantidadRequerida;
+    }
+
+    public Double getImporteTotal() {
+        return importeTotal;
     }
 
     public void setImporteTotal(Double importeTotal) {
         this.importeTotal = importeTotal;
     }
 
-    public void setComanda(Comanda comanda) {
-        this.comanda = comanda;
+    public Producto getProducto() {
+        return producto;
     }
 
     public void setProducto(Producto producto) {
         this.producto = producto;
     }
 
-    @Override
-    public String toString() {
-        return "DetallesComanda{" + "id=" + id + ", precioPorProducto=" + precioPorProducto + ", comentarios=" + comentarios + ", cantidadRequerida=" + cantidadRequerida + ", importeTotal=" + importeTotal + ", comanda=" + comanda + ", producto=" + producto + '}';
+    public Comanda getComanda() {
+        return comanda;
     }
 
-    
+    public void setComanda(Comanda comanda) {
+        this.comanda = comanda;
+    }
+
+    @Override
+    public String toString() {
+        return "DetallesComanda{" + "id=" + id + ", precioPorProducto=" + precioPorProducto + ", comentarios=" + comentarios + ", cantidadRequerida=" + cantidadRequerida + ", importeTotal=" + importeTotal + ", producto=" + producto + ", comanda=" + comanda + '}';
+    }
 
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 97 * hash + Objects.hashCode(this.id);
-        hash = 97 * hash + Objects.hashCode(this.precioPorProducto);
-        hash = 97 * hash + Objects.hashCode(this.comentarios);
-        hash = 97 * hash + Objects.hashCode(this.cantidadRequerida);
-        hash = 97 * hash + Objects.hashCode(this.importeTotal);
-        hash = 97 * hash + Objects.hashCode(this.comanda);
+        hash = 29 * hash + Objects.hashCode(this.id);
+        hash = 29 * hash + Objects.hashCode(this.precioPorProducto);
+        hash = 29 * hash + Objects.hashCode(this.comentarios);
+        hash = 29 * hash + Objects.hashCode(this.cantidadRequerida);
+        hash = 29 * hash + Objects.hashCode(this.importeTotal);
+        hash = 29 * hash + Objects.hashCode(this.producto);
+        hash = 29 * hash + Objects.hashCode(this.comanda);
         return hash;
     }
 
@@ -171,8 +168,13 @@ public class DetallesComanda implements Serializable {
         if (!Objects.equals(this.importeTotal, other.importeTotal)) {
             return false;
         }
+        if (!Objects.equals(this.producto, other.producto)) {
+            return false;
+        }
         return Objects.equals(this.comanda, other.comanda);
     }
+
     
-    
+  
+
 }

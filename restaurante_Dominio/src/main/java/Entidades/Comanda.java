@@ -49,34 +49,28 @@ public class Comanda implements Serializable {
     // derivado pero si se guarda
     private Double totalVenta;
 
-    @ManyToOne
-    @JoinColumn(name = "cliente_id", nullable = false)
-    private Cliente cliente;
-
     // ver que cascada poner, no ALL
-    @OneToOne(mappedBy = "comanda",  orphanRemoval = true)
+    @OneToOne(mappedBy = "comanda", orphanRemoval = true, cascade = CascadeType.REMOVE)
     private DetallesComanda detallesComanda;
-    
 
     public Comanda() {
     }
 
-    public Comanda(Long id, EstadoComanda estado, LocalDateTime fechaHora, String folio, Double totalVenta, Cliente cliente, DetallesComanda detallesComanda) {
+    public Comanda(Long id, EstadoComanda estado, LocalDateTime fechaHora, String folio, Double totalVenta, DetallesComanda detallesComanda) {
         this.id = id;
         this.estado = estado;
         this.fechaHora = fechaHora;
         this.folio = folio;
         this.totalVenta = totalVenta;
-        this.cliente = cliente;
+
         this.detallesComanda = detallesComanda;
     }
 
-    public Comanda(EstadoComanda estado, LocalDateTime fechaHora, String folio, Double totalVenta, Cliente cliente, DetallesComanda detallesComanda) {
+    public Comanda(EstadoComanda estado, LocalDateTime fechaHora, String folio, Double totalVenta, DetallesComanda detallesComanda) {
         this.estado = estado;
         this.fechaHora = fechaHora;
         this.folio = folio;
         this.totalVenta = totalVenta;
-        this.cliente = cliente;
         this.detallesComanda = detallesComanda;
     }
 
@@ -98,10 +92,6 @@ public class Comanda implements Serializable {
 
     public Double getTotalVenta() {
         return totalVenta;
-    }
-
-    public Cliente getCliente() {
-        return cliente;
     }
 
     public DetallesComanda getDetallesComanda() {
@@ -128,17 +118,13 @@ public class Comanda implements Serializable {
         this.totalVenta = totalVenta;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
     public void setDetallesComanda(DetallesComanda detallesComanda) {
         this.detallesComanda = detallesComanda;
     }
 
     @Override
     public String toString() {
-        return "Comanda{" + "id=" + id + ", estado=" + estado + ", fechaHora=" + fechaHora + ", folio=" + folio + ", totalVenta=" + totalVenta + ", cliente=" + cliente + ", detallesComanda=" + detallesComanda + '}';
+        return "Comanda{" + "id=" + id + ", estado=" + estado + ", fechaHora=" + fechaHora + ", folio=" + folio + ", totalVenta=" + totalVenta + ", detallesComanda=" + detallesComanda + '}';
     }
 
     @Override
@@ -149,7 +135,6 @@ public class Comanda implements Serializable {
         hash = 23 * hash + Objects.hashCode(this.fechaHora);
         hash = 23 * hash + Objects.hashCode(this.folio);
         hash = 23 * hash + Objects.hashCode(this.totalVenta);
-        hash = 23 * hash + Objects.hashCode(this.cliente);
         hash = 23 * hash + Objects.hashCode(this.detallesComanda);
         return hash;
     }
@@ -178,16 +163,7 @@ public class Comanda implements Serializable {
         if (!Objects.equals(this.fechaHora, other.fechaHora)) {
             return false;
         }
-        if (!Objects.equals(this.totalVenta, other.totalVenta)) {
-            return false;
-        }
-        if (!Objects.equals(this.cliente, other.cliente)) {
-            return false;
-        }
         return Objects.equals(this.detallesComanda, other.detallesComanda);
     }
-    
-    
 
-    
 }

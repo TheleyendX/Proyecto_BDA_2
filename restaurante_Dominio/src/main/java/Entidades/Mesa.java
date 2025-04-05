@@ -29,6 +29,8 @@ public class Mesa implements Serializable {
     @Column(name = "numero", nullable = false, unique = true)
     private Integer numero;
     
+    private boolean estadoMesa;
+    
     // quitar 
     @OneToMany(mappedBy = "mesa")
     private List<Comanda> comandas;
@@ -36,15 +38,25 @@ public class Mesa implements Serializable {
     public Mesa() {
     }
 
-    public Mesa(Long id, Integer numero, List<Comanda> comandas) {
+    public Mesa(Long id, Integer numero, List<Comanda> comandas, boolean estadoMesa) {
         this.id = id;
         this.numero = numero;
         this.comandas = comandas;
+        this.estadoMesa = estadoMesa;
     }
 
-    public Mesa(Integer numero, List<Comanda> comandas) {
+    public Mesa(Integer numero, List<Comanda> comandas, boolean estadoMesa) {
         this.numero = numero;
         this.comandas = comandas;
+        this.estadoMesa = estadoMesa;
+    }
+
+    public boolean isEstadoMesa() {
+        return estadoMesa;
+    }
+
+    public void setEstadoMesa(boolean estadoMesa) {
+        this.estadoMesa = estadoMesa;
     }
 
     public Long getId() {

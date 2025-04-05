@@ -4,9 +4,8 @@
  */
 package Entidades;
 
-import ENUM.UnidadMedida;
+import ENUM.*;
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,7 +14,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 /**
  *
@@ -37,27 +35,22 @@ public class Ingrediente implements Serializable {
     @Enumerated(EnumType.STRING)
     private UnidadMedida unidadMedida;
 
-    // no bidireccional
-    // hacerlo unidireccional, al ingrediente no le importa donde esta siendo utilizado
-    @OneToMany(mappedBy = "ingrediente")
-    private List<ProductoIngrediente> productosIngredientes;
+   
 
     public Ingrediente() {
     }
 
-    public Ingrediente(Long id, Double stock, String nombre, UnidadMedida unidadMedida, List<ProductoIngrediente> productosIngredientes) {
+    public Ingrediente(Long id, Double stock, String nombre, UnidadMedida unidadMedida) {
         this.id = id;
         this.stock = stock;
         this.nombre = nombre;
         this.unidadMedida = unidadMedida;
-        this.productosIngredientes = productosIngredientes;
     }
 
-    public Ingrediente(Double stock, String nombre, UnidadMedida unidadMedida, List<ProductoIngrediente> productosIngredientes) {
+    public Ingrediente(Double stock, String nombre, UnidadMedida unidadMedida) {
         this.stock = stock;
         this.nombre = nombre;
         this.unidadMedida = unidadMedida;
-        this.productosIngredientes = productosIngredientes;
     }
 
     public Long getId() {
@@ -76,10 +69,6 @@ public class Ingrediente implements Serializable {
         return unidadMedida;
     }
 
-    public List<ProductoIngrediente> getProductosIngredientes() {
-        return productosIngredientes;
-    }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -96,13 +85,9 @@ public class Ingrediente implements Serializable {
         this.unidadMedida = unidadMedida;
     }
 
-    public void setProductosIngredientes(List<ProductoIngrediente> productosIngredientes) {
-        this.productosIngredientes = productosIngredientes;
-    }
-
     @Override
     public String toString() {
-        return "Ingrediente{" + "id=" + id + ", stock=" + stock + ", nombre=" + nombre + ", unidadMedida=" + unidadMedida + ", productosIngredientes=" + productosIngredientes + '}';
+        return "Ingrediente{" + "id=" + id + ", stock=" + stock + ", nombre=" + nombre + ", unidadMedida=" + unidadMedida + '}';
     }
 
     @Override
@@ -112,7 +97,6 @@ public class Ingrediente implements Serializable {
         hash = 83 * hash + Objects.hashCode(this.stock);
         hash = 83 * hash + Objects.hashCode(this.nombre);
         hash = 83 * hash + Objects.hashCode(this.unidadMedida);
-        hash = 83 * hash + Objects.hashCode(this.productosIngredientes);
         return hash;
     }
 
@@ -137,9 +121,8 @@ public class Ingrediente implements Serializable {
         if (!Objects.equals(this.stock, other.stock)) {
             return false;
         }
-        if (this.unidadMedida != other.unidadMedida) {
-            return false;
-        }
-        return Objects.equals(this.productosIngredientes, other.productosIngredientes);
+        return this.unidadMedida == other.unidadMedida;
     }
+
+    
 }
