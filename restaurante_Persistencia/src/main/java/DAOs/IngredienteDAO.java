@@ -4,10 +4,14 @@
  */
 package DAOs;
 
+import IDAOs.IIngredienteDAO;
+
 /**
  *
  * @author jorge
  */
-public class IngredienteDAO {
+public class IngredienteDAO implements IIngredienteDAO {
+    
+    
     
 }
