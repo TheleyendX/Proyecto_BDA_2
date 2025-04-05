@@ -140,6 +140,11 @@ public class Cliente implements Serializable {
     public void setFechaRegistro(LocalDate fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
+    
+    public String getNombreCompleto() {
+        return (nombre + " " + apellidoP + (apellidoM != null ? " " + apellidoM : "")).trim();
+    }
+
 
     @Override
     public String toString() {
