@@ -45,7 +45,7 @@ public class Ingrediente implements Serializable {
     public Ingrediente() {
     }
 
-    public Ingrediente(Long id, double stock, String nombre, UnidadMedida unidadMedida, List<ProductoIngrediente> productosIngredientes) {
+    public Ingrediente(Long id, Double stock, String nombre, UnidadMedida unidadMedida, List<ProductoIngrediente> productosIngredientes) {
         this.id = id;
         this.stock = stock;
         this.nombre = nombre;
@@ -53,7 +53,7 @@ public class Ingrediente implements Serializable {
         this.productosIngredientes = productosIngredientes;
     }
 
-    public Ingrediente(double stock, String nombre, UnidadMedida unidadMedida, List<ProductoIngrediente> productosIngredientes) {
+    public Ingrediente(Double stock, String nombre, UnidadMedida unidadMedida, List<ProductoIngrediente> productosIngredientes) {
         this.stock = stock;
         this.nombre = nombre;
         this.unidadMedida = unidadMedida;
@@ -84,7 +84,7 @@ public class Ingrediente implements Serializable {
         this.id = id;
     }
 
-    public void setStock(double stock) {
+    public void setStock(Double stock) {
         this.stock = stock;
     }
 
@@ -107,12 +107,12 @@ public class Ingrediente implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 47 * hash + Objects.hashCode(this.id);
-        hash = 47 * hash + (int) (Double.doubleToLongBits(this.stock) ^ (Double.doubleToLongBits(this.stock) >>> 32));
-        hash = 47 * hash + Objects.hashCode(this.nombre);
-        hash = 47 * hash + Objects.hashCode(this.unidadMedida);
-        hash = 47 * hash + Objects.hashCode(this.productosIngredientes);
+        int hash = 7;
+        hash = 83 * hash + Objects.hashCode(this.id);
+        hash = 83 * hash + Objects.hashCode(this.stock);
+        hash = 83 * hash + Objects.hashCode(this.nombre);
+        hash = 83 * hash + Objects.hashCode(this.unidadMedida);
+        hash = 83 * hash + Objects.hashCode(this.productosIngredientes);
         return hash;
     }
 
@@ -128,13 +128,13 @@ public class Ingrediente implements Serializable {
             return false;
         }
         final Ingrediente other = (Ingrediente) obj;
-        if (Double.doubleToLongBits(this.stock) != Double.doubleToLongBits(other.stock)) {
-            return false;
-        }
         if (!Objects.equals(this.nombre, other.nombre)) {
             return false;
         }
         if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.stock, other.stock)) {
             return false;
         }
         if (this.unidadMedida != other.unidadMedida) {
@@ -142,8 +142,4 @@ public class Ingrediente implements Serializable {
         }
         return Objects.equals(this.productosIngredientes, other.productosIngredientes);
     }
-    
-    
-
-    
 }

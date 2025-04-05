@@ -39,14 +39,14 @@ public class ProductoIngrediente implements Serializable {
     public ProductoIngrediente() {
     }
 
-    public ProductoIngrediente(Long id, Producto producto, Ingrediente ingrediente, double cantidadRequerida) {
+    public ProductoIngrediente(Long id, Producto producto, Ingrediente ingrediente, Double cantidadRequerida) {
         this.id = id;
         this.producto = producto;
         this.ingrediente = ingrediente;
         this.cantidadRequerida = cantidadRequerida;
     }
 
-    public ProductoIngrediente(Producto producto, Ingrediente ingrediente, double cantidadRequerida) {
+    public ProductoIngrediente(Producto producto, Ingrediente ingrediente, Double cantidadRequerida) {
         this.producto = producto;
         this.ingrediente = ingrediente;
         this.cantidadRequerida = cantidadRequerida;
@@ -80,7 +80,7 @@ public class ProductoIngrediente implements Serializable {
         this.ingrediente = ingrediente;
     }
 
-    public void setCantidadRequerida(double cantidadRequerida) {
+    public void setCantidadRequerida(Double cantidadRequerida) {
         this.cantidadRequerida = cantidadRequerida;
     }
 
@@ -91,11 +91,11 @@ public class ProductoIngrediente implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 89 * hash + Objects.hashCode(this.id);
-        hash = 89 * hash + Objects.hashCode(this.producto);
-        hash = 89 * hash + Objects.hashCode(this.ingrediente);
-        hash = 89 * hash + (int) (Double.doubleToLongBits(this.cantidadRequerida) ^ (Double.doubleToLongBits(this.cantidadRequerida) >>> 32));
+        int hash = 3;
+        hash = 79 * hash + Objects.hashCode(this.id);
+        hash = 79 * hash + Objects.hashCode(this.producto);
+        hash = 79 * hash + Objects.hashCode(this.ingrediente);
+        hash = 79 * hash + Objects.hashCode(this.cantidadRequerida);
         return hash;
     }
 
@@ -111,17 +111,16 @@ public class ProductoIngrediente implements Serializable {
             return false;
         }
         final ProductoIngrediente other = (ProductoIngrediente) obj;
-        if (Double.doubleToLongBits(this.cantidadRequerida) != Double.doubleToLongBits(other.cantidadRequerida)) {
-            return false;
-        }
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         if (!Objects.equals(this.producto, other.producto)) {
             return false;
         }
-        return Objects.equals(this.ingrediente, other.ingrediente);
+        if (!Objects.equals(this.ingrediente, other.ingrediente)) {
+            return false;
+        }
+        return Objects.equals(this.cantidadRequerida, other.cantidadRequerida);
     }
-    
     
 }

@@ -27,7 +27,7 @@ public class Mesa implements Serializable {
     private Long id;
     
     @Column(name = "numero", nullable = false, unique = true)
-    private int numero;
+    private Integer numero;
     
     // quitar 
     @OneToMany(mappedBy = "mesa")
@@ -36,13 +36,13 @@ public class Mesa implements Serializable {
     public Mesa() {
     }
 
-    public Mesa(Long id, int numero, List<Comanda> comandas) {
+    public Mesa(Long id, Integer numero, List<Comanda> comandas) {
         this.id = id;
         this.numero = numero;
         this.comandas = comandas;
     }
 
-    public Mesa(int numero, List<Comanda> comandas) {
+    public Mesa(Integer numero, List<Comanda> comandas) {
         this.numero = numero;
         this.comandas = comandas;
     }
@@ -59,9 +59,10 @@ public class Mesa implements Serializable {
         return numero;
     }
 
-    public void setNumero(int numero) {
+    public void setNumero(Integer numero) {
         this.numero = numero;
     }
+    
 
     public List<Comanda> getComandas() {
         return comandas;
@@ -79,9 +80,10 @@ public class Mesa implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 29 * hash + Objects.hashCode(this.id);
-        hash = 29 * hash + Objects.hashCode(this.numero);
+        int hash = 5;
+        hash = 53 * hash + Objects.hashCode(this.id);
+        hash = 53 * hash + Objects.hashCode(this.numero);
+        hash = 53 * hash + Objects.hashCode(this.comandas);
         return hash;
     }
 
@@ -100,8 +102,12 @@ public class Mesa implements Serializable {
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
-        return Objects.equals(this.numero, other.numero);
+        if (!Objects.equals(this.numero, other.numero)) {
+            return false;
+        }
+        return Objects.equals(this.comandas, other.comandas);
     }
+
     
     
 }

@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -38,7 +39,7 @@ public class DetallesComanda implements Serializable {
     private Double importeTotal;
     
     // detallecomanda solo tiene 1
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "comanda_id", nullable = false)
     private Comanda comanda;
     

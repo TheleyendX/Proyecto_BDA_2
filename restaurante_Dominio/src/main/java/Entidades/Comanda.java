@@ -23,6 +23,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 
 /**
@@ -53,15 +54,14 @@ public class Comanda implements Serializable {
     private Cliente cliente;
 
     // ver que cascada poner, no ALL
-    @OneToMany(mappedBy = "comanda",  orphanRemoval = true)
-    private List<DetallesComanda> detallesComanda;
+    @OneToOne(mappedBy = "comanda",  orphanRemoval = true)
+    private DetallesComanda detallesComanda;
     
 
     public Comanda() {
-        this.detallesComanda = new ArrayList<>();
     }
 
-    public Comanda(Long id, EstadoComanda estado, LocalDateTime fechaHora, String folio, Double totalVenta, Cliente cliente, List<DetallesComanda> detallesComanda) {
+    public Comanda(Long id, EstadoComanda estado, LocalDateTime fechaHora, String folio, Double totalVenta, Cliente cliente, DetallesComanda detallesComanda) {
         this.id = id;
         this.estado = estado;
         this.fechaHora = fechaHora;
@@ -71,7 +71,7 @@ public class Comanda implements Serializable {
         this.detallesComanda = detallesComanda;
     }
 
-    public Comanda(EstadoComanda estado, LocalDateTime fechaHora, String folio, Double totalVenta, Cliente cliente, List<DetallesComanda> detallesComanda) {
+    public Comanda(EstadoComanda estado, LocalDateTime fechaHora, String folio, Double totalVenta, Cliente cliente, DetallesComanda detallesComanda) {
         this.estado = estado;
         this.fechaHora = fechaHora;
         this.folio = folio;
@@ -104,7 +104,7 @@ public class Comanda implements Serializable {
         return cliente;
     }
 
-    public List<DetallesComanda> getDetallesComanda() {
+    public DetallesComanda getDetallesComanda() {
         return detallesComanda;
     }
 
@@ -132,7 +132,7 @@ public class Comanda implements Serializable {
         this.cliente = cliente;
     }
 
-    public void setDetallesComanda(List<DetallesComanda> detallesComanda) {
+    public void setDetallesComanda(DetallesComanda detallesComanda) {
         this.detallesComanda = detallesComanda;
     }
 

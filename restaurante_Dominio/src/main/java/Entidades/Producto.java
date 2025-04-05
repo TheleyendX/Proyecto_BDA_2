@@ -4,6 +4,7 @@
  */
 package Entidades;
 
+import ENUM.EstadoProducto;
 import ENUM.TipoProducto;
 import java.awt.image.TileObserver;
 import java.io.Serializable;
@@ -36,6 +37,10 @@ public class Producto implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TipoProducto tipo;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private EstadoProducto estado;
 
     @Column(nullable = false, unique = true)
     private String nombre;
@@ -55,21 +60,31 @@ public class Producto implements Serializable {
         this.detallesComanda = new ArrayList<>();
     }
 
-    public Producto(Long id, TipoProducto tipo, String nombre, Double precio, List<Ingrediente> productoIngredientes, List<DetallesComanda> detallesComanda) {
+    public Producto(Long id, TipoProducto tipo, EstadoProducto estado, String nombre, Double precio, List<Ingrediente> productoIngredientes, List<DetallesComanda> detallesComanda) {
         this.id = id;
         this.tipo = tipo;
+        this.estado = estado;
         this.nombre = nombre;
         this.precio = precio;
         this.productoIngredientes = productoIngredientes;
         this.detallesComanda = detallesComanda;
     }
 
-    public Producto(TipoProducto tipo, String nombre, Double precio, List<Ingrediente> productoIngredientes, List<DetallesComanda> detallesComanda) {
+    public Producto(TipoProducto tipo, EstadoProducto estado, String nombre, Double precio, List<Ingrediente> productoIngredientes, List<DetallesComanda> detallesComanda) {
         this.tipo = tipo;
+        this.estado = estado;
         this.nombre = nombre;
         this.precio = precio;
         this.productoIngredientes = productoIngredientes;
         this.detallesComanda = detallesComanda;
+    }
+
+    public EstadoProducto getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoProducto estado) {
+        this.estado = estado;
     }
 
     public Long getId() {
@@ -122,18 +137,19 @@ public class Producto implements Serializable {
 
     @Override
     public String toString() {
-        return "Producto{" + "id=" + id + ", tipo=" + tipo + ", nombre=" + nombre + ", precio=" + precio + ", productoIngredientes=" + productoIngredientes + ", detallesComanda=" + detallesComanda + '}';
+        return "Producto{" + "id=" + id + ", tipo=" + tipo + ", estado=" + estado + ", nombre=" + nombre + ", precio=" + precio + ", productoIngredientes=" + productoIngredientes + ", detallesComanda=" + detallesComanda + '}';
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 67 * hash + Objects.hashCode(this.id);
-        hash = 67 * hash + Objects.hashCode(this.tipo);
-        hash = 67 * hash + Objects.hashCode(this.nombre);
-        hash = 67 * hash + Objects.hashCode(this.precio);
-        hash = 67 * hash + Objects.hashCode(this.productoIngredientes);
-        hash = 67 * hash + Objects.hashCode(this.detallesComanda);
+        hash = 71 * hash + Objects.hashCode(this.id);
+        hash = 71 * hash + Objects.hashCode(this.tipo);
+        hash = 71 * hash + Objects.hashCode(this.estado);
+        hash = 71 * hash + Objects.hashCode(this.nombre);
+        hash = 71 * hash + Objects.hashCode(this.precio);
+        hash = 71 * hash + Objects.hashCode(this.productoIngredientes);
+        hash = 71 * hash + Objects.hashCode(this.detallesComanda);
         return hash;
     }
 
@@ -158,6 +174,9 @@ public class Producto implements Serializable {
         if (this.tipo != other.tipo) {
             return false;
         }
+        if (this.estado != other.estado) {
+            return false;
+        }
         if (!Objects.equals(this.precio, other.precio)) {
             return false;
         }
@@ -166,6 +185,8 @@ public class Producto implements Serializable {
         }
         return Objects.equals(this.detallesComanda, other.detallesComanda);
     }
+
+    
 
     
 }
