@@ -20,7 +20,13 @@ public interface IClienteFrecuenteDAO {
     
     public List<ClienteFrecuente> filtrarClientesFrecuentes(String nombre, String telefono, String correo) throws PersistenciaException;
     
-    public void puntosVisitasGasto(ClienteFrecuente cliente);
+    public Double obtenerGastoTotalAcumulado(ClienteFrecuente cliente);
+    
+    public Integer obtenerConteoVisitas(ClienteFrecuente cliente);
+    
+    public Integer obtenerPuntos(ClienteFrecuente cliente);
+    
+    //public void puntosVisitasGasto(ClienteFrecuente cliente);
     
     public ClienteFrecuente buscarPorId(Long id) throws PersistenciaException;
     

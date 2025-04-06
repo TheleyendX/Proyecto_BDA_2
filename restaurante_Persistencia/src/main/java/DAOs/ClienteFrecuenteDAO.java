@@ -31,7 +31,9 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
             em.getTransaction().begin();
             em.persist(cliente);
             em.getTransaction().commit();
-            puntosVisitasGasto(cliente);
+            obtenerGastoTotalAcumulado(cliente);
+            obtenerConteoVisitas(cliente);
+            obtenerPuntos(cliente);
             
             return cliente;
         } catch(Exception e){
@@ -50,7 +52,14 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
             if (em == null || !em.isOpen()) {
                 em = Conexion.crearConexion();
             }
-            return em.createQuery("SELECT c FROM ClienteFrecuente c", ClienteFrecuente.class).getResultList();
+            List<ClienteFrecuente> clientes = em.createQuery("SELECT c FROM ClienteFrecuente c", ClienteFrecuente.class).getResultList();
+            //return em.createQuery("SELECT c FROM ClienteFrecuente c", ClienteFrecuente.class).getResultList();
+            for (ClienteFrecuente cliente: clientes){
+                obtenerGastoTotalAcumulado(cliente);
+                obtenerConteoVisitas(cliente);
+                obtenerPuntos(cliente);
+            }
+            return clientes;
         } catch (Exception e) {
             throw new PersistenciaException("No se pudieron obtener los clientes frecuentes.");
         } finally {
@@ -93,7 +102,9 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
             List<ClienteFrecuente> clientesFrecuentes = query.getResultList();
             
             for (ClienteFrecuente cliente : clientesFrecuentes){
-                puntosVisitasGasto(cliente);
+                obtenerGastoTotalAcumulado(cliente);
+                obtenerConteoVisitas(cliente);
+                obtenerPuntos(cliente);
             }
             return clientesFrecuentes;
             
@@ -105,24 +116,56 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
         }
     }
     
-    @Override
-    public void puntosVisitasGasto(ClienteFrecuente cliente) {
-        List<Comanda> comandas = cliente.getComandas();
-        Double totalGasto = 0.0;
-        int conteoVisitas = 0;
+//    @Override
+//    public void puntosVisitasGasto(ClienteFrecuente cliente) {
+//        List<Comanda> comandas = cliente.getComandas();
+//        Double totalGasto = 0.0;
+//        int conteoVisitas = 0;
+//
+//        for (Comanda comanda : comandas) {
+//            if (comanda.getEstado() == EstadoComanda.Entregado) {
+//                totalGasto += comanda.getTotalVenta();
+//                conteoVisitas++;
+//            }
+//        }
+//
+//        cliente.setGastoTotalAcumulado(totalGasto);
+//        cliente.setConteoVisitas(conteoVisitas);
+//        cliente.setPuntos((int) (totalGasto / 20)); 
+//    }
 
-        for (Comanda comanda : comandas) {
-            if (comanda.getEstado() == EstadoComanda.Entregado) {
-                totalGasto += comanda.getTotalVenta();
-                conteoVisitas++;
+    @Override
+    public Double obtenerGastoTotalAcumulado(ClienteFrecuente cliente){
+        List<Comanda> comandas = cliente.getComandas();
+        Double total = 0.0;
+        for (Comanda comanda : comandas){
+            if (comanda.getEstado() == EstadoComanda.Entregado){
+                total += comanda.getTotalVenta();
             }
         }
-
-        cliente.setGastoTotalAcumulado(totalGasto);
-        cliente.setConteoVisitas(conteoVisitas);
-        cliente.setPuntos((int) (totalGasto / 20)); 
+        cliente.setGastoTotalAcumulado(total);
+        return total;
     }
-
+    
+    @Override
+    public Integer obtenerConteoVisitas(ClienteFrecuente cliente){
+        List<Comanda> comandas = cliente.getComandas();
+        int conteo = 0;
+        for (Comanda comanda: comandas){
+            if (comanda.getEstado() == EstadoComanda.Entregado){
+                conteo++;
+            }
+        }
+        cliente.setConteoVisitas(conteo);
+        return conteo;
+    }
+    
+    @Override
+    public Integer obtenerPuntos(ClienteFrecuente cliente){
+        Double totalGasto = obtenerGastoTotalAcumulado(cliente);
+        cliente.setGastoTotalAcumulado(totalGasto);
+        return (int)(totalGasto/20);
+    }
     
     
     @Override
