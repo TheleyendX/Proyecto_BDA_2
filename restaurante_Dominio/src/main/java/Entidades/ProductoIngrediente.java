@@ -64,7 +64,7 @@ public class ProductoIngrediente implements Serializable {
         return ingrediente;
     }
 
-    public double getCantidadRequerida() {
+    public Double getCantidadRequerida() {
         return cantidadRequerida;
     }
 
