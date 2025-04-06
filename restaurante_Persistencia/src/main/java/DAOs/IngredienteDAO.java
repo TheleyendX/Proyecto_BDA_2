@@ -10,8 +10,8 @@ import IDAOs.IIngredienteDAO;
  *
  * @author jorge
  */
-public class IngredienteDAO implements IIngredienteDAO {
+//public class IngredienteDAO implements IIngredienteDAO {
     
     
     
-}
+//}
