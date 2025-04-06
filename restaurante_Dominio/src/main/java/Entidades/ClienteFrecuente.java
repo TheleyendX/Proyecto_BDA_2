@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
 
@@ -16,6 +17,7 @@ import javax.persistence.Transient;
  * @author mmax2
  */
 @Entity
+@DiscriminatorValue("ClienteFrecuente")
 public class ClienteFrecuente extends Cliente implements Serializable {
 
     // no guardar atributos derivados en la bd, usar @transient

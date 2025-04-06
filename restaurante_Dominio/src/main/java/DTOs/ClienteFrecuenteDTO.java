@@ -4,13 +4,14 @@
  */
 package DTOs;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 /**
  *
  * @author mmax2
  */
-public class ClienteFrecuenteDTO {
+public class ClienteFrecuenteDTO extends ClienteDTO {
     public Integer puntos;
     
     public Double gastoTotalAcumulado;
@@ -19,6 +20,15 @@ public class ClienteFrecuenteDTO {
 
     public ClienteFrecuenteDTO() {
     }
+
+    public ClienteFrecuenteDTO(Integer puntos, Double gastoTotalAcumulado, Integer conteoVisitas, String nombre, String apellidoP, String apelldioM, String correo, String telefono, LocalDate fechaRegistro) {
+        super(nombre, apellidoP, apelldioM, correo, telefono, fechaRegistro);
+        this.puntos = puntos;
+        this.gastoTotalAcumulado = gastoTotalAcumulado;
+        this.conteoVisitas = conteoVisitas;
+    }
+    
+    
 
     public ClienteFrecuenteDTO(Integer puntos, Double gastoTotalAcumulado, Integer conteoVisitas) {
         this.puntos = puntos;

@@ -9,7 +9,10 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,6 +29,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Clientes")
 @Inheritance (strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "tipo_cliente", discriminatorType = DiscriminatorType.STRING)
 public class Cliente implements Serializable {
 
     @Id
@@ -50,7 +54,7 @@ public class Cliente implements Serializable {
     @Column(name = "fechaRegistro", nullable = false)
     private LocalDate fechaRegistro;
     
-    @OneToMany(mappedBy = "cliente")
+    @OneToMany(mappedBy = "cliente", cascade = {CascadeType.PERSIST})
     private List<Comanda> comandas;
 
     public Cliente() {

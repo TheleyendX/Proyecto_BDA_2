@@ -53,25 +53,30 @@ public class Comanda implements Serializable {
     @OneToOne(mappedBy = "comanda", orphanRemoval = true, cascade = CascadeType.REMOVE)
     private DetallesComanda detallesComanda;
 
+    @ManyToOne
+    @JoinColumn(name = "cliente_id", nullable = false)  
+    private Cliente cliente;
+    
     public Comanda() {
     }
 
-    public Comanda(Long id, EstadoComanda estado, LocalDateTime fechaHora, String folio, Double totalVenta, DetallesComanda detallesComanda) {
+    public Comanda(Long id, EstadoComanda estado, LocalDateTime fechaHora, String folio, Double totalVenta, DetallesComanda detallesComanda, Cliente cliente) {
         this.id = id;
         this.estado = estado;
         this.fechaHora = fechaHora;
         this.folio = folio;
         this.totalVenta = totalVenta;
-
         this.detallesComanda = detallesComanda;
+        this.cliente = cliente;
     }
 
-    public Comanda(EstadoComanda estado, LocalDateTime fechaHora, String folio, Double totalVenta, DetallesComanda detallesComanda) {
+    public Comanda(EstadoComanda estado, LocalDateTime fechaHora, String folio, Double totalVenta, DetallesComanda detallesComanda, Cliente cliente) {
         this.estado = estado;
         this.fechaHora = fechaHora;
         this.folio = folio;
         this.totalVenta = totalVenta;
         this.detallesComanda = detallesComanda;
+        this.cliente = cliente;
     }
 
     public Long getId() {
@@ -122,20 +127,29 @@ public class Comanda implements Serializable {
         this.detallesComanda = detallesComanda;
     }
 
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
     @Override
     public String toString() {
-        return "Comanda{" + "id=" + id + ", estado=" + estado + ", fechaHora=" + fechaHora + ", folio=" + folio + ", totalVenta=" + totalVenta + ", detallesComanda=" + detallesComanda + '}';
+        return "Comanda{" + "id=" + id + ", estado=" + estado + ", fechaHora=" + fechaHora + ", folio=" + folio + ", totalVenta=" + totalVenta + ", detallesComanda=" + detallesComanda + ", cliente=" + cliente + '}';
     }
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 23 * hash + Objects.hashCode(this.id);
-        hash = 23 * hash + Objects.hashCode(this.estado);
-        hash = 23 * hash + Objects.hashCode(this.fechaHora);
-        hash = 23 * hash + Objects.hashCode(this.folio);
-        hash = 23 * hash + Objects.hashCode(this.totalVenta);
-        hash = 23 * hash + Objects.hashCode(this.detallesComanda);
+        int hash = 3;
+        hash = 67 * hash + Objects.hashCode(this.id);
+        hash = 67 * hash + Objects.hashCode(this.estado);
+        hash = 67 * hash + Objects.hashCode(this.fechaHora);
+        hash = 67 * hash + Objects.hashCode(this.folio);
+        hash = 67 * hash + Objects.hashCode(this.totalVenta);
+        hash = 67 * hash + Objects.hashCode(this.detallesComanda);
+        hash = 67 * hash + Objects.hashCode(this.cliente);
         return hash;
     }
 
@@ -163,7 +177,15 @@ public class Comanda implements Serializable {
         if (!Objects.equals(this.fechaHora, other.fechaHora)) {
             return false;
         }
-        return Objects.equals(this.detallesComanda, other.detallesComanda);
+        if (!Objects.equals(this.totalVenta, other.totalVenta)) {
+            return false;
+        }
+        if (!Objects.equals(this.detallesComanda, other.detallesComanda)) {
+            return false;
+        }
+        return Objects.equals(this.cliente, other.cliente);
     }
+    
+    
 
 }
