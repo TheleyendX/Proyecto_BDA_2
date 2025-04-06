@@ -27,6 +27,25 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
 //        this.em = Conexion.crearConexion();
 //    }
     
+    public void persistirComanda(Comanda comanda) throws PersistenciaException {
+    try{
+        if (em == null || !em.isOpen()){
+                em = Conexion.crearConexion();
+        }
+        em.getTransaction().begin();
+        em.persist(comanda);
+        em.getTransaction().commit();
+        
+    }catch (Exception e){
+            em.getTransaction().rollback();
+            throw new PersistenciaException("No se pudo registrar el cliente.");
+            
+        } finally{
+            em.close(); 
+            Conexion.cerrarConexion();
+        }
+    }
+    
     @Override
     public ClienteFrecuente registrarClienteFrecuente(ClienteFrecuente cliente) throws PersistenciaException{
         try{

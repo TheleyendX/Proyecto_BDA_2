@@ -6,6 +6,7 @@ package Entidades;
 
 import ENUM.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +15,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -35,29 +37,33 @@ public class Ingrediente implements Serializable {
     @Enumerated(EnumType.STRING)
     private UnidadMedida unidadMedida;
 
+    @OneToMany(mappedBy = "ingrediente")
+    private List<ProductoIngrediente> producto;
    
 
     public Ingrediente() {
     }
 
-    public Ingrediente(Long id, Double stock, String nombre, UnidadMedida unidadMedida) {
+    public Ingrediente(Long id, Double stock, String nombre, UnidadMedida unidadMedida, List<ProductoIngrediente> producto) {
         this.id = id;
         this.stock = stock;
         this.nombre = nombre;
         this.unidadMedida = unidadMedida;
+        this.producto = producto;
     }
 
-    public Ingrediente(Double stock, String nombre, UnidadMedida unidadMedida) {
+    public Ingrediente(Double stock, String nombre, UnidadMedida unidadMedida, List<ProductoIngrediente> producto) {
         this.stock = stock;
         this.nombre = nombre;
         this.unidadMedida = unidadMedida;
+        this.producto = producto;
     }
 
     public Long getId() {
         return id;
     }
 
-    public double getStock() {
+    public Double getStock() {
         return stock;
     }
 
@@ -85,18 +91,27 @@ public class Ingrediente implements Serializable {
         this.unidadMedida = unidadMedida;
     }
 
+    public List<ProductoIngrediente> getProducto() {
+        return producto;
+    }
+
+    public void setProducto(List<ProductoIngrediente> producto) {
+        this.producto = producto;
+    }
+
     @Override
     public String toString() {
-        return "Ingrediente{" + "id=" + id + ", stock=" + stock + ", nombre=" + nombre + ", unidadMedida=" + unidadMedida + '}';
+        return "Ingrediente{" + "id=" + id + ", stock=" + stock + ", nombre=" + nombre + ", unidadMedida=" + unidadMedida + ", producto=" + producto + '}';
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 83 * hash + Objects.hashCode(this.id);
-        hash = 83 * hash + Objects.hashCode(this.stock);
-        hash = 83 * hash + Objects.hashCode(this.nombre);
-        hash = 83 * hash + Objects.hashCode(this.unidadMedida);
+        hash = 41 * hash + Objects.hashCode(this.id);
+        hash = 41 * hash + Objects.hashCode(this.stock);
+        hash = 41 * hash + Objects.hashCode(this.nombre);
+        hash = 41 * hash + Objects.hashCode(this.unidadMedida);
+        hash = 41 * hash + Objects.hashCode(this.producto);
         return hash;
     }
 
@@ -121,8 +136,9 @@ public class Ingrediente implements Serializable {
         if (!Objects.equals(this.stock, other.stock)) {
             return false;
         }
-        return this.unidadMedida == other.unidadMedida;
+        if (this.unidadMedida != other.unidadMedida) {
+            return false;
+        }
+        return Objects.equals(this.producto, other.producto);
     }
-
-    
 }

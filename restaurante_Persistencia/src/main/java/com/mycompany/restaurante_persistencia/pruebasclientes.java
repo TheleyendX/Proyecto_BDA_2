@@ -10,6 +10,7 @@ import Entidades.ClienteFrecuente;
 import Entidades.Comanda;
 import Excepciones.PersistenciaException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,49 +59,58 @@ public class pruebasclientes {
 
         // Registrar los clientes
         try {
-            ClienteFrecuente clienteRegistrado1 = clienteFrecuenteDAO.registrarClienteFrecuente(cliente1);
-            ClienteFrecuente clienteRegistrado2 = clienteFrecuenteDAO.registrarClienteFrecuente(cliente2);
-            ClienteFrecuente clienteRegistrado3 = clienteFrecuenteDAO.registrarClienteFrecuente(cliente3);
+            cliente1 = clienteFrecuenteDAO.registrarClienteFrecuente(cliente1);
+            cliente2 = clienteFrecuenteDAO.registrarClienteFrecuente(cliente2);
+            cliente3 = clienteFrecuenteDAO.registrarClienteFrecuente(cliente3);
             
-            System.out.println("Clientes registrados con éxito: ");
-            System.out.println(clienteRegistrado1.getNombre());
-            System.out.println(clienteRegistrado2.getNombre());
-            System.out.println(clienteRegistrado3.getNombre());
         } catch (PersistenciaException e) {
             System.out.println("Error al registrar los clientes: " + e.getMessage());
+            return;
         }
 
-        // Paso 2: Crear y asociar comandas a los clientes
+//        // Paso 2: Crear y asociar comandas a los clientes
         System.out.println("Asociando comandas a los clientes...");
 
         // Comandas para Cliente 1
         Comanda comanda1Cliente1 = new Comanda();
         comanda1Cliente1.setEstado(EstadoComanda.Entregado);
+        comanda1Cliente1.setFechaHora(LocalDateTime.now());
         comanda1Cliente1.setTotalVenta(100.0);
+        comanda1Cliente1.setFolio("CM1");
         comanda1Cliente1.setCliente(cliente1);
 
         Comanda comanda2Cliente1 = new Comanda();
         comanda2Cliente1.setEstado(EstadoComanda.Entregado);
+        comanda2Cliente1.setFechaHora(LocalDateTime.now());
         comanda2Cliente1.setTotalVenta(150.0);
+        comanda2Cliente1.setFolio("CM2");
         comanda2Cliente1.setCliente(cliente1);
 
         // Comandas para Cliente 2
         Comanda comanda1Cliente2 = new Comanda();
         comanda1Cliente2.setEstado(EstadoComanda.Entregado);
+        comanda1Cliente2.setFechaHora(LocalDateTime.now());
         comanda1Cliente2.setTotalVenta(200.0);
+        comanda1Cliente2.setFolio("CM3");
         comanda1Cliente2.setCliente(cliente2);
 
         // Comandas para Cliente 3
         Comanda comanda1Cliente3 = new Comanda();
         comanda1Cliente3.setEstado(EstadoComanda.Entregado);
+        comanda1Cliente3.setFechaHora(LocalDateTime.now());
         comanda1Cliente3.setTotalVenta(50.0);
+        comanda1Cliente3.setFolio("CM4");
         comanda1Cliente3.setCliente(cliente3);
-
-        // Aquí deberías guardar las comandas en la base de datos:
-        // clienteFrecuenteDAO.persistirComanda(comanda1Cliente1);
-        // clienteFrecuenteDAO.persistirComanda(comanda2Cliente1);
-        // clienteFrecuenteDAO.persistirComanda(comanda1Cliente2);
-        // clienteFrecuenteDAO.persistirComanda(comanda1Cliente3);
+        
+        try {
+            clienteFrecuenteDAO.persistirComanda(comanda1Cliente1);
+            clienteFrecuenteDAO.persistirComanda(comanda2Cliente1);
+            clienteFrecuenteDAO.persistirComanda(comanda1Cliente2);
+            clienteFrecuenteDAO.persistirComanda(comanda1Cliente3);
+        } catch (PersistenciaException e){
+            System.out.println("Error al guardar las comandas: " + e.getMessage());
+            return;
+        }
 
         // Paso 3: Obtener y mostrar el gasto total acumulado, visitas y puntos para cada cliente
         System.out.println("Obteniendo información sobre los clientes frecuentes...");
@@ -113,6 +123,7 @@ public class pruebasclientes {
         System.out.println("Gasto Total: " + gastoTotal1);  // Debería ser 250 (100 + 150)
         System.out.println("Visitas: " + conteoVisitas1);    // Debería ser 2
         System.out.println("Puntos: " + puntos1);           // Debería ser 12 (250 / 20)
+        
         // Obtener y mostrar información del cliente 2
         Double gastoTotal2 = clienteFrecuenteDAO.obtenerGastoTotalAcumulado(cliente2);
         Integer conteoVisitas2 = clienteFrecuenteDAO.obtenerConteoVisitas(cliente2);
@@ -121,6 +132,7 @@ public class pruebasclientes {
         System.out.println("Gasto Total: " + gastoTotal2);  // Debería ser 200
         System.out.println("Visitas: " + conteoVisitas2);    // Debería ser 1
         System.out.println("Puntos: " + puntos2);           // Debería ser 10 (200 / 20)
+        
         // Obtener y mostrar información del cliente 3
         Double gastoTotal3 = clienteFrecuenteDAO.obtenerGastoTotalAcumulado(cliente3);
         Integer conteoVisitas3 = clienteFrecuenteDAO.obtenerConteoVisitas(cliente3);

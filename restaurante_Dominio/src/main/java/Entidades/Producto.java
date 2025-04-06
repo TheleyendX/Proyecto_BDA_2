@@ -45,27 +45,26 @@ public class Producto implements Serializable {
     private Double precio;
 
     @OneToMany(mappedBy = "producto")
-    private List<Ingrediente> productoIngredientes;
+    private List<ProductoIngrediente> ingrediente;
 
     public Producto() {
-        this.productoIngredientes = new ArrayList<>();
     }
 
-    public Producto(Long id, TipoProducto tipo, EstadoProducto estado, String nombre, Double precio, List<Ingrediente> productoIngredientes) {
+    public Producto(Long id, TipoProducto tipo, EstadoProducto estado, String nombre, Double precio, List<ProductoIngrediente> productoIngredientes) {
         this.id = id;
         this.tipo = tipo;
         this.estado = estado;
         this.nombre = nombre;
         this.precio = precio;
-        this.productoIngredientes = productoIngredientes;
+        this.ingrediente = productoIngredientes;
     }
 
-    public Producto(TipoProducto tipo, EstadoProducto estado, String nombre, Double precio, List<Ingrediente> productoIngredientes) {
+    public Producto(TipoProducto tipo, EstadoProducto estado, String nombre, Double precio, List<ProductoIngrediente> productoIngredientes) {
         this.tipo = tipo;
         this.estado = estado;
         this.nombre = nombre;
         this.precio = precio;
-        this.productoIngredientes = productoIngredientes;
+        this.ingrediente = productoIngredientes;
     }
 
     public EstadoProducto getEstado() {
@@ -92,8 +91,8 @@ public class Producto implements Serializable {
         return precio;
     }
 
-    public List<Ingrediente> getProductoIngredientes() {
-        return productoIngredientes;
+    public List<ProductoIngrediente> getIngrediente() {
+        return ingrediente;
     }
 
     public void setId(Long id) {
@@ -112,13 +111,13 @@ public class Producto implements Serializable {
         this.precio = precio;
     }
 
-    public void setProductoIngredientes(List<Ingrediente> productoIngredientes) {
-        this.productoIngredientes = productoIngredientes;
+    public void setIngrediente(List<ProductoIngrediente> ingrediente) {
+        this.ingrediente = ingrediente;
     }
 
     @Override
     public String toString() {
-        return "Producto{" + "id=" + id + ", tipo=" + tipo + ", estado=" + estado + ", nombre=" + nombre + ", precio=" + precio + ", productoIngredientes=" + productoIngredientes + '}';
+        return "Producto{" + "id=" + id + ", tipo=" + tipo + ", estado=" + estado + ", nombre=" + nombre + ", precio=" + precio + ", productoIngredientes=" + ingrediente + '}';
     }
 
     @Override
@@ -129,7 +128,7 @@ public class Producto implements Serializable {
         hash = 71 * hash + Objects.hashCode(this.estado);
         hash = 71 * hash + Objects.hashCode(this.nombre);
         hash = 71 * hash + Objects.hashCode(this.precio);
-        hash = 71 * hash + Objects.hashCode(this.productoIngredientes);
+        hash = 71 * hash + Objects.hashCode(this.ingrediente);
         return hash;
     }
 
@@ -160,7 +159,7 @@ public class Producto implements Serializable {
         if (!Objects.equals(this.precio, other.precio)) {
             return false;
         }
-        return Objects.equals(this.productoIngredientes, other.productoIngredientes);
+        return Objects.equals(this.ingrediente, other.ingrediente);
     }
 
 }
