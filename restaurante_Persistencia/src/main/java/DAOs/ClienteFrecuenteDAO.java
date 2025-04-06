@@ -21,6 +21,11 @@ import javax.persistence.TypedQuery;
  */
 public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
     EntityManager em = Conexion.crearConexion();
+//    EntityManager em;
+    
+//    public ClienteFrecuenteDAO(){
+//        this.em = Conexion.crearConexion();
+//    }
     
     @Override
     public ClienteFrecuente registrarClienteFrecuente(ClienteFrecuente cliente) throws PersistenciaException{

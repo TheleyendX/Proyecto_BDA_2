@@ -28,4 +28,11 @@ public class Conexion {
             emf.close(); 
         }
     }
+    
+    public static EntityManager crearConexionPruebas(){
+    if (emf == null || !emf.isOpen()) {
+        emf = Persistence.createEntityManagerFactory("TestPU");
+    }
+    return emf.createEntityManager();
+    }
 }
