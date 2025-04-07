@@ -4,6 +4,7 @@
  */
 package DTOs;
 
+import Entidades.Comanda;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
@@ -22,19 +23,21 @@ public class ClienteFrecuenteDTO extends ClienteDTO {
     public ClienteFrecuenteDTO() {
     }
 
-    public ClienteFrecuenteDTO(Integer puntos, Double gastoTotalAcumulado, Integer conteoVisitas, Long id, String nombre, String apellidoP, String apellidoM, String correo, String telefono, LocalDate fechaRegistro, List<ComandaDTO> comandas) {
+    public ClienteFrecuenteDTO(Integer puntos, Double gastoTotalAcumulado, Integer conteoVisitas, Long id, String nombre, String apellidoP, String apellidoM, String correo, String telefono, LocalDate fechaRegistro, List<Comanda> comandas) {
         super(id, nombre, apellidoP, apellidoM, correo, telefono, fechaRegistro, comandas);
         this.puntos = puntos;
         this.gastoTotalAcumulado = gastoTotalAcumulado;
         this.conteoVisitas = conteoVisitas;
     }
 
-    public ClienteFrecuenteDTO(Integer puntos, Double gastoTotalAcumulado, Integer conteoVisitas, String nombre, String apellidoP, String apellidoM, String correo, String telefono, LocalDate fechaRegistro, List<ComandaDTO> comandas) {
+    public ClienteFrecuenteDTO(Integer puntos, Double gastoTotalAcumulado, Integer conteoVisitas, String nombre, String apellidoP, String apellidoM, String correo, String telefono, LocalDate fechaRegistro, List<Comanda> comandas) {
         super(nombre, apellidoP, apellidoM, correo, telefono, fechaRegistro, comandas);
         this.puntos = puntos;
         this.gastoTotalAcumulado = gastoTotalAcumulado;
         this.conteoVisitas = conteoVisitas;
     }
+
+    
     
     
     public ClienteFrecuenteDTO(Integer puntos, Double gastoTotalAcumulado, Integer conteoVisitas) {

@@ -4,6 +4,7 @@
  */
 package DTOs;
 
+import Entidades.Comanda;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -28,12 +29,12 @@ public class ClienteDTO {
     
     private LocalDate fechaRegistro;
     
-    private List<ComandaDTO> comandas;
+    private List<Comanda> comandas;
 
     public ClienteDTO() {
     }
 
-    public ClienteDTO(Long id, String nombre, String apellidoP, String apellidoM, String correo, String telefono, LocalDate fechaRegistro, List<ComandaDTO> comandas) {
+    public ClienteDTO(Long id, String nombre, String apellidoP, String apellidoM, String correo, String telefono, LocalDate fechaRegistro, List<Comanda> comandas) {
         this.id = id;
         this.nombre = nombre;
         this.apellidoP = apellidoP;
@@ -44,7 +45,7 @@ public class ClienteDTO {
         this.comandas = comandas;
     }
 
-    public ClienteDTO(String nombre, String apellidoP, String apellidoM, String correo, String telefono, LocalDate fechaRegistro, List<ComandaDTO> comandas) {
+    public ClienteDTO(String nombre, String apellidoP, String apellidoM, String correo, String telefono, LocalDate fechaRegistro, List<Comanda> comandas) {
         this.nombre = nombre;
         this.apellidoP = apellidoP;
         this.apellidoM = apellidoM;
@@ -114,11 +115,11 @@ public class ClienteDTO {
         return (nombre + " " + apellidoP + (apellidoM != null ? " " + apellidoM : "")).trim();
     }
 
-    public List<ComandaDTO> getComandas() {
+    public List<Comanda> getComandas() {
         return comandas;
     }
 
-    public void setComandas(List<ComandaDTO> comandas) {
+    public void setComandas(List<Comanda> comandas) {
         this.comandas = comandas;
     }
 
