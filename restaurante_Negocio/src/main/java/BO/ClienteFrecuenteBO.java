@@ -28,6 +28,16 @@ public class ClienteFrecuenteBO {
     }
 
     public ClienteFrecuenteDTO registrarClienteFrecuente(ClienteFrecuenteDTO dto) throws NegocioException {
+        dto.setNombre(dto.getNombre().trim());
+        dto.setApellidoP(dto.getApellidoP().trim());
+        if (dto.getApellidoM() != null) {
+            dto.setApellidoM(dto.getApellidoM().trim());
+        }
+        dto.setTelefono(dto.getTelefono().trim());
+        if (dto.getCorreo() != null) {
+            dto.setCorreo(dto.getCorreo().trim());
+        }
+        
         validarCliente(dto);
         validarDuplicados(dto);
 
