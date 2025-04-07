@@ -26,9 +26,9 @@ import javax.persistence.EntityManager;
  */
 public class ComandaDAO implements IComandaDAO {
 
-    DetallesComandaDAO dtDAO = new DetallesComandaDAO();
+    public DetallesComandaDAO dtDAO = new DetallesComandaDAO();
 
-    EntityManager em = Conexion.crearConexion();
+    public EntityManager em = Conexion.crearConexion();
 
     @Override
     public Comanda registraComanda(Cliente cliente, Mesa mesa, List<Producto> productos,
