@@ -6,6 +6,8 @@ package DTOs;
 
 import ENUM.EstadoComanda;
 import Entidades.DetallesComanda;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
 
@@ -14,27 +16,47 @@ import java.util.Objects;
  * @author mmax2
  */
 public class ComandaDTO {
+    private Long id;
 
-    public EstadoComanda estado;
+    private EstadoComanda estado;
 
-    public Date fechaHora;
+    private LocalDateTime fechaHora;
 
-    public String folio;
+    private String folio;
 
-    public Double totalventa;
+    private Double totalventa;
 
-    public DetallesComanda detallesComanda;
+    private DetallesComandaDTO detallesComanda;
+    
+    private ClienteDTO cliente;
+    
+    private MesaDTO mesa;
 
     public ComandaDTO() {
     }
 
-    public ComandaDTO(EstadoComanda estado, Date fechaHora, String folio, Double totalventa, DetallesComanda detallesComanda) {
+    public ComandaDTO(Long id, EstadoComanda estado, LocalDateTime fechaHora, String folio, Double totalventa, DetallesComandaDTO detallesComanda, ClienteDTO cliente, MesaDTO mesa) {
+        this.id = id;
         this.estado = estado;
         this.fechaHora = fechaHora;
         this.folio = folio;
         this.totalventa = totalventa;
         this.detallesComanda = detallesComanda;
+        this.cliente = cliente;
+        this.mesa = mesa;
     }
+
+    public ComandaDTO(EstadoComanda estado, LocalDateTime fechaHora, String folio, Double totalventa, DetallesComandaDTO detallesComanda, ClienteDTO cliente, MesaDTO mesa) {
+        this.estado = estado;
+        this.fechaHora = fechaHora;
+        this.folio = folio;
+        this.totalventa = totalventa;
+        this.detallesComanda = detallesComanda;
+        this.cliente = cliente;
+        this.mesa = mesa;
+    }
+
+    
 
     public EstadoComanda getEstado() {
         return estado;
@@ -42,14 +64,6 @@ public class ComandaDTO {
 
     public void setEstado(EstadoComanda estado) {
         this.estado = estado;
-    }
-
-    public Date getFechaHora() {
-        return fechaHora;
-    }
-
-    public void setFechaHora(Date fechaHora) {
-        this.fechaHora = fechaHora;
     }
 
     public String getFolio() {
@@ -68,22 +82,62 @@ public class ComandaDTO {
         this.totalventa = totalventa;
     }
 
-    public DetallesComanda getDetallesComanda() {
+    public Long getId() {
+        return id;
+    }
+
+    public LocalDateTime getFechaHora() {
+        return fechaHora;
+    }
+
+    public DetallesComandaDTO getDetallesComanda() {
         return detallesComanda;
     }
 
-    public void setDetallesComanda(DetallesComanda detallesComanda) {
+    public ClienteDTO getCliente() {
+        return cliente;
+    }
+
+    public MesaDTO getMesa() {
+        return mesa;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setFechaHora(LocalDateTime fechaHora) {
+        this.fechaHora = fechaHora;
+    }
+
+    public void setDetallesComanda(DetallesComandaDTO detallesComanda) {
         this.detallesComanda = detallesComanda;
+    }
+
+    public void setCliente(ClienteDTO cliente) {
+        this.cliente = cliente;
+    }
+
+    public void setMesa(MesaDTO mesa) {
+        this.mesa = mesa;
+    }
+
+    @Override
+    public String toString() {
+        return "ComandaDTO{" + "id=" + id + ", estado=" + estado + ", fechaHora=" + fechaHora + ", folio=" + folio + ", totalventa=" + totalventa + ", detallesComanda=" + detallesComanda + ", cliente=" + cliente + ", mesa=" + mesa + '}';
     }
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 23 * hash + Objects.hashCode(this.estado);
-        hash = 23 * hash + Objects.hashCode(this.fechaHora);
-        hash = 23 * hash + Objects.hashCode(this.folio);
-        hash = 23 * hash + Objects.hashCode(this.totalventa);
-        hash = 23 * hash + Objects.hashCode(this.detallesComanda);
+        int hash = 7;
+        hash = 67 * hash + Objects.hashCode(this.id);
+        hash = 67 * hash + Objects.hashCode(this.estado);
+        hash = 67 * hash + Objects.hashCode(this.fechaHora);
+        hash = 67 * hash + Objects.hashCode(this.folio);
+        hash = 67 * hash + Objects.hashCode(this.totalventa);
+        hash = 67 * hash + Objects.hashCode(this.detallesComanda);
+        hash = 67 * hash + Objects.hashCode(this.cliente);
+        hash = 67 * hash + Objects.hashCode(this.mesa);
         return hash;
     }
 
@@ -102,6 +156,9 @@ public class ComandaDTO {
         if (!Objects.equals(this.folio, other.folio)) {
             return false;
         }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
         if (this.estado != other.estado) {
             return false;
         }
@@ -111,12 +168,14 @@ public class ComandaDTO {
         if (!Objects.equals(this.totalventa, other.totalventa)) {
             return false;
         }
-        return Objects.equals(this.detallesComanda, other.detallesComanda);
+        if (!Objects.equals(this.detallesComanda, other.detallesComanda)) {
+            return false;
+        }
+        if (!Objects.equals(this.cliente, other.cliente)) {
+            return false;
+        }
+        return Objects.equals(this.mesa, other.mesa);
     }
 
-    @Override
-    public String toString() {
-        return "ComandaDTO{" + "estado=" + estado + ", fechaHora=" + fechaHora + ", folio=" + folio + ", totalventa=" + totalventa + ", detallesComanda=" + detallesComanda + '}';
-    }
-
+    
 }

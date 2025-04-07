@@ -16,24 +16,24 @@ import java.util.Objects;
 public class ClienteDTO {
     private Long id;
     
-    public String nombre;
+    private String nombre;
     
-    public String apellidoP;
+    private String apellidoP;
     
-    public String apellidoM;
+    private String apellidoM;
     
-    public String correo;
+    private String correo;
     
-    public String telefono;
+    private String telefono;
     
-    public LocalDate fechaRegistro;
+    private LocalDate fechaRegistro;
     
-    public List<ComandaDTO> comandas;
+    private List<ComandaDTO> comandas;
 
     public ClienteDTO() {
     }
 
-    public ClienteDTO(Long id, String nombre, String apellidoP, String apellidoM, String correo, String telefono, LocalDate fechaRegistro) {
+    public ClienteDTO(Long id, String nombre, String apellidoP, String apellidoM, String correo, String telefono, LocalDate fechaRegistro, List<ComandaDTO> comandas) {
         this.id = id;
         this.nombre = nombre;
         this.apellidoP = apellidoP;
@@ -41,15 +41,17 @@ public class ClienteDTO {
         this.correo = correo;
         this.telefono = telefono;
         this.fechaRegistro = fechaRegistro;
+        this.comandas = comandas;
     }
 
-    public ClienteDTO(String nombre, String apellidoP, String apellidoM, String correo, String telefono, LocalDate fechaRegistro) {
+    public ClienteDTO(String nombre, String apellidoP, String apellidoM, String correo, String telefono, LocalDate fechaRegistro, List<ComandaDTO> comandas) {
         this.nombre = nombre;
         this.apellidoP = apellidoP;
         this.apellidoM = apellidoM;
         this.correo = correo;
         this.telefono = telefono;
         this.fechaRegistro = fechaRegistro;
+        this.comandas = comandas;
     }
 
     public Long getId() {
@@ -112,21 +114,30 @@ public class ClienteDTO {
         return (nombre + " " + apellidoP + (apellidoM != null ? " " + apellidoM : "")).trim();
     }
 
+    public List<ComandaDTO> getComandas() {
+        return comandas;
+    }
+
+    public void setComandas(List<ComandaDTO> comandas) {
+        this.comandas = comandas;
+    }
+
     @Override
     public String toString() {
-        return "ClienteDTO{" + "id=" + id + ", nombre=" + nombre + ", apellidoP=" + apellidoP + ", apellidoM=" + apellidoM + ", correo=" + correo + ", telefono=" + telefono + ", fechaRegistro=" + fechaRegistro + '}';
+        return "ClienteDTO{" + "id=" + id + ", nombre=" + nombre + ", apellidoP=" + apellidoP + ", apellidoM=" + apellidoM + ", correo=" + correo + ", telefono=" + telefono + ", fechaRegistro=" + fechaRegistro + ", comandas=" + comandas + '}';
     }
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 67 * hash + Objects.hashCode(this.id);
-        hash = 67 * hash + Objects.hashCode(this.nombre);
-        hash = 67 * hash + Objects.hashCode(this.apellidoP);
-        hash = 67 * hash + Objects.hashCode(this.apellidoM);
-        hash = 67 * hash + Objects.hashCode(this.correo);
-        hash = 67 * hash + Objects.hashCode(this.telefono);
-        hash = 67 * hash + Objects.hashCode(this.fechaRegistro);
+        int hash = 5;
+        hash = 71 * hash + Objects.hashCode(this.id);
+        hash = 71 * hash + Objects.hashCode(this.nombre);
+        hash = 71 * hash + Objects.hashCode(this.apellidoP);
+        hash = 71 * hash + Objects.hashCode(this.apellidoM);
+        hash = 71 * hash + Objects.hashCode(this.correo);
+        hash = 71 * hash + Objects.hashCode(this.telefono);
+        hash = 71 * hash + Objects.hashCode(this.fechaRegistro);
+        hash = 71 * hash + Objects.hashCode(this.comandas);
         return hash;
     }
 
@@ -160,8 +171,10 @@ public class ClienteDTO {
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
-        return Objects.equals(this.fechaRegistro, other.fechaRegistro);
+        if (!Objects.equals(this.fechaRegistro, other.fechaRegistro)) {
+            return false;
+        }
+        return Objects.equals(this.comandas, other.comandas);
     }
-
-
+    
 }
