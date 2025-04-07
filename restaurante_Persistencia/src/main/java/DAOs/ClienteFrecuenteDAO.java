@@ -21,11 +21,6 @@ import javax.persistence.TypedQuery;
  */
 public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
     EntityManager em = Conexion.crearConexion();
-//    EntityManager em;
-    
-//    public ClienteFrecuenteDAO(){
-//        this.em = Conexion.crearConexion();
-//    }
     
     public void persistirComanda(Comanda comanda) throws PersistenciaException {
     try{
@@ -38,11 +33,14 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
         
     }catch (Exception e){
             em.getTransaction().rollback();
-            throw new PersistenciaException("No se pudo registrar el cliente.");
+            throw new PersistenciaException("No se pudo persistir la comanda.");
             
         } finally{
-            em.close(); 
-            Conexion.cerrarConexion();
+        if (em != null && em.isOpen()){
+            em.close();
+        }
+            //em.close(); 
+            //Conexion.cerrarConexion();
         }
     }
     
@@ -55,18 +53,25 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
             em.getTransaction().begin();
             em.persist(cliente);
             em.getTransaction().commit();
+            em.refresh(cliente);
             obtenerGastoTotalAcumulado(cliente);
             obtenerConteoVisitas(cliente);
             obtenerPuntos(cliente);
             
             return cliente;
         } catch(Exception e){
-            em.getTransaction().rollback();
+            if (em != null && em.getTransaction().isActive()){
+                em.getTransaction().rollback();
+            }
+            //em.getTransaction().rollback();
             throw new PersistenciaException("No se pudo registrar el cliente.");
             
         } finally{
-            em.close(); 
-            Conexion.cerrarConexion();
+            if (em != null && em.isOpen()){
+                em.close();
+            }
+            //em.close(); 
+            //Conexion.cerrarConexion();
         }
     }
     
@@ -77,7 +82,6 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
                 em = Conexion.crearConexion();
             }
             List<ClienteFrecuente> clientes = em.createQuery("SELECT c FROM ClienteFrecuente c", ClienteFrecuente.class).getResultList();
-            //return em.createQuery("SELECT c FROM ClienteFrecuente c", ClienteFrecuente.class).getResultList();
             for (ClienteFrecuente cliente: clientes){
                 obtenerGastoTotalAcumulado(cliente);
                 obtenerConteoVisitas(cliente);
@@ -87,8 +91,11 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
         } catch (Exception e) {
             throw new PersistenciaException("No se pudieron obtener los clientes frecuentes.");
         } finally {
+            if (em != null && em.isOpen()){
             em.close();
-            Conexion.cerrarConexion();
+        }
+            //em.close();
+            //Conexion.cerrarConexion();
         }
     }
     
@@ -135,8 +142,11 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
         } catch (Exception e) {
             throw new PersistenciaException("No se pudo realizar la búsqueda de clientes frecuentes.");
         } finally {
+            if (em != null && em.isOpen()){
             em.close();
-            Conexion.cerrarConexion();
+        }
+//            em.close();
+//            Conexion.cerrarConexion();
         }
     }
     
@@ -158,38 +168,98 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
 //        cliente.setPuntos((int) (totalGasto / 20)); 
 //    }
 
+//    @Override
+//    public Double obtenerGastoTotalAcumulado(ClienteFrecuente cliente){
+//        List<Comanda> comandas = cliente.getComandas();
+//        Double total = 0.0;
+//        for (Comanda comanda : comandas){
+//            if (comanda.getEstado() == EstadoComanda.Entregado){
+//                total += comanda.getTotalVenta();
+//            }
+//        }
+//        cliente.setGastoTotalAcumulado(total);
+//        return total;
+//    }
+    
     @Override
     public Double obtenerGastoTotalAcumulado(ClienteFrecuente cliente){
-        List<Comanda> comandas = cliente.getComandas();
+        EntityManager em = Conexion.crearConexion();
         Double total = 0.0;
-        for (Comanda comanda : comandas){
-            if (comanda.getEstado() == EstadoComanda.Entregado){
-                total += comanda.getTotalVenta();
+        try {
+            TypedQuery<Double> query = em.createQuery(
+                "SELECT SUM(c.totalVenta) FROM Comanda c WHERE c.cliente.id = :clienteId AND c.estado = :estado",
+                Double.class
+            );
+            query.setParameter("clienteId", cliente.getId());
+            query.setParameter("estado", EstadoComanda.Entregado);
+            total = query.getSingleResult();
+            total = total != null ? total : 0.0;
+            cliente.setGastoTotalAcumulado(total);
+            return total;
+        } catch (Exception e){
+            e.printStackTrace();
+            return 0.0;
+        } finally {
+            if (em != null && em.isOpen()){
+                em.close();
             }
+//            em.close();
+//            Conexion.cerrarConexion();
         }
-        cliente.setGastoTotalAcumulado(total);
-        return total;
     }
     
     @Override
     public Integer obtenerConteoVisitas(ClienteFrecuente cliente){
-        List<Comanda> comandas = cliente.getComandas();
-        int conteo = 0;
-        for (Comanda comanda: comandas){
-            if (comanda.getEstado() == EstadoComanda.Entregado){
-                conteo++;
+        EntityManager em = Conexion.crearConexion();
+        try {
+            TypedQuery<Long> query = em.createQuery(
+                "SELECT COUNT(c) FROM Comanda c WHERE c.cliente.id = :clienteId AND c.estado = :estado",
+                Long.class
+            );
+            query.setParameter("clienteId", cliente.getId());
+            query.setParameter("estado", EstadoComanda.Entregado);
+            Long conteo = query.getSingleResult();
+            cliente.setConteoVisitas(conteo.intValue());
+            return conteo.intValue();
+        } catch (Exception e){
+            e.printStackTrace();
+            return 0;
+        } finally {
+            if (em != null && em.isOpen()){
+                em.close();
             }
+//            em.close();
+//            Conexion.cerrarConexion();
         }
-        cliente.setConteoVisitas(conteo);
-        return conteo;
     }
     
     @Override
     public Integer obtenerPuntos(ClienteFrecuente cliente){
         Double totalGasto = obtenerGastoTotalAcumulado(cliente);
-        cliente.setGastoTotalAcumulado(totalGasto);
-        return (int)(totalGasto/20);
+        Integer puntos = (int)(totalGasto / 20);
+        cliente.setPuntos(puntos);
+        return puntos;
     }
+    
+//    @Override
+//    public Integer obtenerConteoVisitas(ClienteFrecuente cliente){
+//        List<Comanda> comandas = cliente.getComandas();
+//        int conteo = 0;
+//        for (Comanda comanda: comandas){
+//            if (comanda.getEstado() == EstadoComanda.Entregado){
+//                conteo++;
+//            }
+//        }
+//        cliente.setConteoVisitas(conteo);
+//        return conteo;
+//    }
+    
+//    @Override
+//    public Integer obtenerPuntos(ClienteFrecuente cliente){
+//        Double totalGasto = obtenerGastoTotalAcumulado(cliente);
+//        cliente.setGastoTotalAcumulado(totalGasto);
+//        return (int)(totalGasto/20);
+//    }
     
     
     @Override
@@ -202,8 +272,11 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
         } catch (Exception e) {
             throw new PersistenciaException("No se pudo buscar el cliente por ID.");
         } finally {
-            em.close();
-            Conexion.cerrarConexion();
+            if (em != null && em.isOpen()){
+                em.close();
+            }
+//            em.close();
+//            Conexion.cerrarConexion();
         }
     }
 }

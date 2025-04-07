@@ -23,16 +23,22 @@ public class Conexion {
         return entityManager;
     }
     
-    public static void cerrarConexion(){
-        if (emf!=null){
-            emf.close(); 
+//    public static void cerrarConexion(){
+//        if (emf!=null){
+//            emf.close(); 
+//        }
+//    }
+    
+    public static void cerrarEntityManagerFactory() {
+        if (emf != null && emf.isOpen()) {
+            emf.close();
         }
     }
     
-    public static EntityManager crearConexionPruebas(){
-    if (emf == null || !emf.isOpen()) {
-        emf = Persistence.createEntityManagerFactory("TestPU");
-    }
-    return emf.createEntityManager();
-    }
+//    public static EntityManager crearConexionPruebas(){
+//    if (emf == null || !emf.isOpen()) {
+//        emf = Persistence.createEntityManagerFactory("TestPU");
+//    }
+//    return emf.createEntityManager();
+//    }
 }

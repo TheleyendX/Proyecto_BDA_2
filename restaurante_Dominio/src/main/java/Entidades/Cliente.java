@@ -6,6 +6,7 @@ package Entidades;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -55,7 +56,7 @@ public class Cliente implements Serializable {
     private LocalDate fechaRegistro;
     
     @OneToMany(mappedBy = "cliente", cascade = {CascadeType.PERSIST})
-    private List<Comanda> comandas;
+    private List<Comanda> comandas = new ArrayList<>();
 
     public Cliente() {
     }

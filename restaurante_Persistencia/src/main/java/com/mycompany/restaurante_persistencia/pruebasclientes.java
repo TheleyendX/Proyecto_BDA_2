@@ -168,7 +168,7 @@ public class pruebasclientes {
         // Paso 6: Buscar un cliente por ID
         try {
             ClienteFrecuente clientePorId = clienteFrecuenteDAO.buscarPorId(cliente1.getId());
-            System.out.println("Cliente encontrado por ID: " + clientePorId.getNombre());
+            System.out.println("Cliente encontrado por ID: " + clientePorId.getNombreCompleto());
         } catch (PersistenciaException e) {
             System.out.println("Error al buscar cliente por ID: " + e.getMessage());
         }
