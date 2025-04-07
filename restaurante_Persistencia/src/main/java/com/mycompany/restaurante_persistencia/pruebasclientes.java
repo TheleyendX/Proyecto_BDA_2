@@ -6,6 +6,7 @@ package com.mycompany.restaurante_persistencia;
 
 import DAOs.ClienteFrecuenteDAO;
 import ENUM.EstadoComanda;
+import Encriptador.Encriptador;
 import Entidades.ClienteFrecuente;
 import Entidades.Comanda;
 import Excepciones.PersistenciaException;
@@ -23,7 +24,7 @@ public class pruebasclientes {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         
         ClienteFrecuenteDAO clienteFrecuenteDAO = new ClienteFrecuenteDAO();
 
