@@ -189,36 +189,6 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
         }
     }
     
-//    @Override
-//    public void puntosVisitasGasto(ClienteFrecuente cliente) {
-//        List<Comanda> comandas = cliente.getComandas();
-//        Double totalGasto = 0.0;
-//        int conteoVisitas = 0;
-//
-//        for (Comanda comanda : comandas) {
-//            if (comanda.getEstado() == EstadoComanda.Entregado) {
-//                totalGasto += comanda.getTotalVenta();
-//                conteoVisitas++;
-//            }
-//        }
-//
-//        cliente.setGastoTotalAcumulado(totalGasto);
-//        cliente.setConteoVisitas(conteoVisitas);
-//        cliente.setPuntos((int) (totalGasto / 20)); 
-//    }
-
-//    @Override
-//    public Double obtenerGastoTotalAcumulado(ClienteFrecuente cliente){
-//        List<Comanda> comandas = cliente.getComandas();
-//        Double total = 0.0;
-//        for (Comanda comanda : comandas){
-//            if (comanda.getEstado() == EstadoComanda.Entregado){
-//                total += comanda.getTotalVenta();
-//            }
-//        }
-//        cliente.setGastoTotalAcumulado(total);
-//        return total;
-//    }
     
     @Override
     public Double obtenerGastoTotalAcumulado(ClienteFrecuente cliente){
