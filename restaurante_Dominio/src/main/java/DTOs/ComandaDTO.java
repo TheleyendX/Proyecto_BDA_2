@@ -24,7 +24,7 @@ public class ComandaDTO {
 
     private String folio;
 
-    private Double totalventa;
+    private Double totalVenta;
 
     private DetallesComandaDTO detallesComanda;
     
@@ -40,7 +40,7 @@ public class ComandaDTO {
         this.estado = estado;
         this.fechaHora = fechaHora;
         this.folio = folio;
-        this.totalventa = totalventa;
+        this.totalVenta = totalventa;
         this.detallesComanda = detallesComanda;
         this.cliente = cliente;
         this.mesa = mesa;
@@ -50,7 +50,7 @@ public class ComandaDTO {
         this.estado = estado;
         this.fechaHora = fechaHora;
         this.folio = folio;
-        this.totalventa = totalventa;
+        this.totalVenta = totalventa;
         this.detallesComanda = detallesComanda;
         this.cliente = cliente;
         this.mesa = mesa;
@@ -74,12 +74,12 @@ public class ComandaDTO {
         this.folio = folio;
     }
 
-    public Double getTotalventa() {
-        return totalventa;
+    public Double getTotalVenta() {
+        return totalVenta;
     }
 
-    public void setTotalventa(Double totalventa) {
-        this.totalventa = totalventa;
+    public void setTotalVenta(Double totalVenta) {
+        this.totalVenta = totalVenta;
     }
 
     public Long getId() {
@@ -124,7 +124,7 @@ public class ComandaDTO {
 
     @Override
     public String toString() {
-        return "ComandaDTO{" + "id=" + id + ", estado=" + estado + ", fechaHora=" + fechaHora + ", folio=" + folio + ", totalventa=" + totalventa + ", detallesComanda=" + detallesComanda + ", cliente=" + cliente + ", mesa=" + mesa + '}';
+        return "ComandaDTO{" + "id=" + id + ", estado=" + estado + ", fechaHora=" + fechaHora + ", folio=" + folio + ", totalventa=" + totalVenta + ", detallesComanda=" + detallesComanda + ", cliente=" + cliente + ", mesa=" + mesa + '}';
     }
 
     @Override
@@ -134,7 +134,7 @@ public class ComandaDTO {
         hash = 67 * hash + Objects.hashCode(this.estado);
         hash = 67 * hash + Objects.hashCode(this.fechaHora);
         hash = 67 * hash + Objects.hashCode(this.folio);
-        hash = 67 * hash + Objects.hashCode(this.totalventa);
+        hash = 67 * hash + Objects.hashCode(this.totalVenta);
         hash = 67 * hash + Objects.hashCode(this.detallesComanda);
         hash = 67 * hash + Objects.hashCode(this.cliente);
         hash = 67 * hash + Objects.hashCode(this.mesa);
@@ -165,7 +165,7 @@ public class ComandaDTO {
         if (!Objects.equals(this.fechaHora, other.fechaHora)) {
             return false;
         }
-        if (!Objects.equals(this.totalventa, other.totalventa)) {
+        if (!Objects.equals(this.totalVenta, other.totalVenta)) {
             return false;
         }
         if (!Objects.equals(this.detallesComanda, other.detallesComanda)) {
