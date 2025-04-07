@@ -5,6 +5,7 @@
 package IDAOs;
 
 import Entidades.ClienteFrecuente;
+import Entidades.Comanda;
 import Excepciones.PersistenciaException;
 import java.util.List;
 
@@ -29,5 +30,6 @@ public interface IClienteFrecuenteDAO {
     //public void puntosVisitasGasto(ClienteFrecuente cliente);
     
     public ClienteFrecuente buscarPorId(Long id) throws PersistenciaException;
+    public void persistirComanda(Comanda comanda) throws PersistenciaException;
     
 }

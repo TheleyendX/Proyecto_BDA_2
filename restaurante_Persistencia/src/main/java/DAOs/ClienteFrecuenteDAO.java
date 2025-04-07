@@ -24,6 +24,7 @@ import javax.persistence.TypedQuery;
 public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
     EntityManager em = Conexion.crearConexion();
     
+    @Override
     public void persistirComanda(Comanda comanda) throws PersistenciaException {
     try{
         if (em == null || !em.isOpen()){
