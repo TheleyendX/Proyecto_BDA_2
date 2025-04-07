@@ -11,6 +11,7 @@ import Encriptador.Encriptador;
 import Entidades.ClienteFrecuente;
 import Entidades.Comanda;
 import Excepciones.PersistenciaException;
+import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -52,6 +53,9 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
                 em = Conexion.crearConexion();
             }
             em.getTransaction().begin();
+            
+            cliente.setFechaRegistro(LocalDate.now());
+            
             String telefonoEncriptado = Encriptador.encrypt(cliente.getTelefono());
             cliente.setTelefono(telefonoEncriptado);
             
@@ -122,7 +126,6 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
             String[] partes = nombre.trim().split("\\s+");
             int idx = 0;
 
-            // Agregar condiciones dinámicas basadas en las partes del nombre
             for (String parte : partes) {
                 if (idx == 0) {
                     consulta += " AND LOWER(c.nombre) LIKE LOWER(:nombre" + idx + ")";
@@ -131,7 +134,6 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
                 } else if (idx == 2) {
                     consulta += " AND LOWER(c.apellidoM) LIKE LOWER(:nombre" + idx + ")";
                 } else {
-                    // Si hay más de tres partes, las agregamos a cualquier atributo adicional
                     consulta += " AND (LOWER(c.nombre) LIKE LOWER(:nombre" + idx + ") OR LOWER(c.apellidoP) LIKE LOWER(:nombre" + idx + ") OR LOWER(c.apellidoM) LIKE LOWER(:nombre" + idx + "))";
                 }
                 idx++;
@@ -143,7 +145,7 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
                 consulta += " AND c.telefono = :telefono";
             }
             if (correo != null && !correo.trim().isEmpty()) {
-                consulta += " AND c.correo = :correo";
+                consulta += " AND LOWER(c.correo) LIKE LOWER(:correo)";
             }
 
             TypedQuery<ClienteFrecuente> query = em.createQuery(consulta, ClienteFrecuente.class);
@@ -161,7 +163,7 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
                 query.setParameter("telefono", telefono);
             }
             if (correo != null && !correo.trim().isEmpty()) {
-                query.setParameter("correo", correo.trim());
+                query.setParameter("correo", "%" + correo.trim().toLowerCase() + "%");
             }
             
             List<ClienteFrecuente> clientesFrecuentes = query.getResultList();
