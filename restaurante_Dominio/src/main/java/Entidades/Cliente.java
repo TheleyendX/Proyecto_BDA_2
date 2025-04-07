@@ -49,7 +49,7 @@ public class Cliente implements Serializable {
     @Column(name = "correo", length = 70, nullable = true)
     private String correo;
 
-    @Column(name = "telefono", length = 10, nullable = false, unique = true)
+    @Column(name = "telefono", nullable = false, unique = true)
     private String telefono;
 
     @Column(name = "fechaRegistro", nullable = false)

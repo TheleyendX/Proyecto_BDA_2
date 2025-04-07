@@ -156,14 +156,26 @@ public class pruebasclientes {
         // Paso 5: Filtrar clientes frecuentes por nombre
         System.out.println("Filtrando clientes por nombre...");
         try {
-            List<ClienteFrecuente> clientesFiltrados = clienteFrecuenteDAO.filtrarClientesFrecuentes("Juan", null, null);
+            List<ClienteFrecuente> clientesFiltrados = clienteFrecuenteDAO.filtrarClientesFrecuentes("Juan Pérez", null, null);
             System.out.println("Clientes filtrados por nombre:");
             for (ClienteFrecuente c : clientesFiltrados) {
-                System.out.println(c.getNombre() + " - " + c.getCorreo());
+                System.out.println(c.getNombreCompleto() + " - " + c.getCorreo());
             }
         } catch (PersistenciaException e) {
             System.out.println("Error al filtrar clientes frecuentes: " + e.getMessage());
         }
+        
+        System.out.println("Filtrando clientes por telefono...");
+        try {
+            List<ClienteFrecuente> clientesFiltrados = clienteFrecuenteDAO.filtrarClientesFrecuentes(null, "123456789", null);
+            System.out.println("Clientes filtrados por telefono:");
+            for (ClienteFrecuente c : clientesFiltrados) {
+                System.out.println(c.getNombreCompleto()+ " - " + c.getCorreo());
+            }
+        } catch (PersistenciaException e) {
+            System.out.println("Error al filtrar clientes frecuentes: " + e.getMessage());
+        }
+        
 
         // Paso 6: Buscar un cliente por ID
         try {
