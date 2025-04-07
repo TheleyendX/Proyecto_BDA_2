@@ -25,29 +25,25 @@ public class Mesa implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @Column(name = "numero", nullable = false, unique = true)
     private Integer numero;
-    
-    private boolean estadoMesa;
-    
-    // quitar 
-    @OneToMany(mappedBy = "mesa")
-    private List<Comanda> comandas;
 
+    @Column(name = "EstadoMesa", nullable = false)
+    private boolean estadoMesa;
+
+    // quitar 
     public Mesa() {
     }
 
-    public Mesa(Long id, Integer numero, List<Comanda> comandas, boolean estadoMesa) {
+    public Mesa(Long id, Integer numero, boolean estadoMesa) {
         this.id = id;
         this.numero = numero;
-        this.comandas = comandas;
         this.estadoMesa = estadoMesa;
     }
 
-    public Mesa(Integer numero, List<Comanda> comandas, boolean estadoMesa) {
+    public Mesa(Integer numero, boolean estadoMesa) {
         this.numero = numero;
-        this.comandas = comandas;
         this.estadoMesa = estadoMesa;
     }
 
@@ -74,16 +70,6 @@ public class Mesa implements Serializable {
     public void setNumero(Integer numero) {
         this.numero = numero;
     }
-    
-
-    public List<Comanda> getComandas() {
-        return comandas;
-    }
-
-    public void setComandas(List<Comanda> comandas) {
-        this.comandas = comandas;
-    }
-    
 
     @Override
     public String toString() {
@@ -95,7 +81,6 @@ public class Mesa implements Serializable {
         int hash = 5;
         hash = 53 * hash + Objects.hashCode(this.id);
         hash = 53 * hash + Objects.hashCode(this.numero);
-        hash = 53 * hash + Objects.hashCode(this.comandas);
         return hash;
     }
 
@@ -111,15 +96,15 @@ public class Mesa implements Serializable {
             return false;
         }
         final Mesa other = (Mesa) obj;
+        if (this.estadoMesa != other.estadoMesa) {
+            return false;
+        }
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
-        if (!Objects.equals(this.numero, other.numero)) {
-            return false;
-        }
-        return Objects.equals(this.comandas, other.comandas);
+        return Objects.equals(this.numero, other.numero);
     }
 
     
-    
+
 }
