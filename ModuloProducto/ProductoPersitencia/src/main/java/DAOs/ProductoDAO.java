@@ -80,6 +80,7 @@ public class ProductoDAO implements IProductoDAO {
             return producto;
         }catch (Exception e){
             em.getTransaction().rollback();
+            return null;
         }finally {
             em.close();
         }
