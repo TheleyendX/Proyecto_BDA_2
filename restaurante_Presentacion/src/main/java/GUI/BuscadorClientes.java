@@ -78,6 +78,11 @@ public class BuscadorClientes extends javax.swing.JFrame {
         btnAtras.setFocusPainted(false);
         add(btnAtras);
         
+        btnAtras.addActionListener(e -> {
+            this.dispose();
+            new MenuClientesFrecuentes().setVisible(true);
+        });
+        
         controlador = new ControladorBuscadorClientes(this, new ClienteFrecuenteBO());        
         
         JButton btnBuscarTelefono = new JButton("Buscar por Teléfono");
@@ -106,10 +111,10 @@ public class BuscadorClientes extends javax.swing.JFrame {
 
         try {
             // Encriptar el teléfono antes de pasarlo al controlador
-            String telefonoEncriptado = Encriptador.encrypt(telefono);
+            //String telefonoEncriptado = Encriptador.encrypt(telefono);
 
             // Llamar al método del controlador para buscar por teléfono
-            controlador.buscarPorTelefono(telefonoEncriptado);
+            controlador.buscarPorTelefono(telefono);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Error al buscar por teléfono: " + ex.getMessage());
         }

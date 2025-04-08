@@ -85,7 +85,9 @@ public class ControladorBuscadorClientes {
         try {
             // Encriptar el teléfono y realizar la búsqueda
             //telefono = Encriptador.encrypt(telefono);
+            System.out.println("Buscando por tel encriptado: "+ telefonoEncriptado);
             List<ClienteFrecuenteDTO> resultados = clienteBO.filtrarClientesFrecuentes(null, telefonoEncriptado, null);
+            System.out.println("Resultados encontrados por tel: "+ resultados.size());
             vista.actualizarTabla(resultados);
         } catch (NegocioException e) {
             JOptionPane.showMessageDialog(vista, "Error al filtrar clientes por teléfono: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
