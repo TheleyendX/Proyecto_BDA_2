@@ -24,7 +24,7 @@ public class MesaDAO implements IMesaDAO {
      * Este metodo realiza un insert de 20 mesas en la base de datos
      *
      * @return Devuelve la lista de 20 mesas
-     * @throws Laza una excepcion personlaizada PersistenciaExcpertion
+     * @throws Excepciones.PersistenciaException
      */
     @Override
     public List<Mesa> registraMesas() throws PersistenciaException {

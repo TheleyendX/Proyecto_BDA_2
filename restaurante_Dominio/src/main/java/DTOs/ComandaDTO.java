@@ -8,7 +8,9 @@ import ENUM.EstadoComanda;
 import Entidades.DetallesComanda;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -16,6 +18,7 @@ import java.util.Objects;
  * @author mmax2
  */
 public class ComandaDTO {
+
     private Long id;
 
     private EstadoComanda estado;
@@ -26,16 +29,17 @@ public class ComandaDTO {
 
     private Double totalVenta;
 
-    private DetallesComandaDTO detallesComanda;
-    
+    private List<DetallesComandaDTO> detallesComanda;
+
     private ClienteDTO cliente;
-    
+
     private MesaDTO mesa;
 
     public ComandaDTO() {
+        this.detallesComanda = new ArrayList<>();
     }
 
-    public ComandaDTO(Long id, EstadoComanda estado, LocalDateTime fechaHora, String folio, Double totalventa, DetallesComandaDTO detallesComanda, ClienteDTO cliente, MesaDTO mesa) {
+    public ComandaDTO(Long id, EstadoComanda estado, LocalDateTime fechaHora, String folio, Double totalventa, List<DetallesComandaDTO> detallesComanda, ClienteDTO cliente, MesaDTO mesa) {
         this.id = id;
         this.estado = estado;
         this.fechaHora = fechaHora;
@@ -46,7 +50,7 @@ public class ComandaDTO {
         this.mesa = mesa;
     }
 
-    public ComandaDTO(EstadoComanda estado, LocalDateTime fechaHora, String folio, Double totalventa, DetallesComandaDTO detallesComanda, ClienteDTO cliente, MesaDTO mesa) {
+    public ComandaDTO(EstadoComanda estado, LocalDateTime fechaHora, String folio, Double totalventa, List<DetallesComandaDTO> detallesComanda, ClienteDTO cliente, MesaDTO mesa) {
         this.estado = estado;
         this.fechaHora = fechaHora;
         this.folio = folio;
@@ -55,8 +59,6 @@ public class ComandaDTO {
         this.cliente = cliente;
         this.mesa = mesa;
     }
-
-    
 
     public EstadoComanda getEstado() {
         return estado;
@@ -90,7 +92,7 @@ public class ComandaDTO {
         return fechaHora;
     }
 
-    public DetallesComandaDTO getDetallesComanda() {
+    public List<DetallesComandaDTO> getDetallesComanda() {
         return detallesComanda;
     }
 
@@ -110,7 +112,7 @@ public class ComandaDTO {
         this.fechaHora = fechaHora;
     }
 
-    public void setDetallesComanda(DetallesComandaDTO detallesComanda) {
+    public void setDetallesComanda(List<DetallesComandaDTO> detallesComanda) {
         this.detallesComanda = detallesComanda;
     }
 
@@ -130,14 +132,14 @@ public class ComandaDTO {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 67 * hash + Objects.hashCode(this.id);
-        hash = 67 * hash + Objects.hashCode(this.estado);
-        hash = 67 * hash + Objects.hashCode(this.fechaHora);
-        hash = 67 * hash + Objects.hashCode(this.folio);
-        hash = 67 * hash + Objects.hashCode(this.totalVenta);
-        hash = 67 * hash + Objects.hashCode(this.detallesComanda);
-        hash = 67 * hash + Objects.hashCode(this.cliente);
-        hash = 67 * hash + Objects.hashCode(this.mesa);
+        hash = 59 * hash + Objects.hashCode(this.id);
+        hash = 59 * hash + Objects.hashCode(this.estado);
+        hash = 59 * hash + Objects.hashCode(this.fechaHora);
+        hash = 59 * hash + Objects.hashCode(this.folio);
+        hash = 59 * hash + Objects.hashCode(this.totalVenta);
+        hash = 59 * hash + Objects.hashCode(this.detallesComanda);
+        hash = 59 * hash + Objects.hashCode(this.cliente);
+        hash = 59 * hash + Objects.hashCode(this.mesa);
         return hash;
     }
 
@@ -177,5 +179,4 @@ public class ComandaDTO {
         return Objects.equals(this.mesa, other.mesa);
     }
 
-    
 }

@@ -6,6 +6,7 @@ package DTOs;
 
 import ENUM.*;
 import Entidades.Ingrediente;
+import Entidades.ProductoIngrediente;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -24,13 +25,13 @@ public class ProductoDTO {
 
     public Double precio;
 
-    public List<Ingrediente> productoIngrediente;
+    public List<ProductoIngredienteDTO> productoIngrediente;
 
     public ProductoDTO() {
         this.productoIngrediente = new ArrayList<>();
     }
 
-    public ProductoDTO(TipoProducto tipoProducto, EstadoProducto estadoProducto, String nombre, Double precio, List<Ingrediente> productoIngrediente) {
+    public ProductoDTO(TipoProducto tipoProducto, EstadoProducto estadoProducto, String nombre, Double precio, List<ProductoIngredienteDTO> productoIngrediente) {
         this.tipoProducto = tipoProducto;
         this.estadoProducto = estadoProducto;
         this.nombre = nombre;
@@ -70,11 +71,11 @@ public class ProductoDTO {
         this.precio = precio;
     }
 
-    public List<Ingrediente> getProductoIngrediente() {
+    public List<ProductoIngredienteDTO> getProductoIngrediente() {
         return productoIngrediente;
     }
 
-    public void setProductoIngrediente(List<Ingrediente> productoIngrediente) {
+    public void setProductoIngrediente(List<ProductoIngredienteDTO  > productoIngrediente) {
         this.productoIngrediente = productoIngrediente;
     }
 
