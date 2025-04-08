@@ -23,7 +23,6 @@ public class IngredienteMapper {
         ingrediente.setStock(ingredienteDTO.getStock());
         ingrediente.setNombre(ingredienteDTO.getNombre());
         ingrediente.setUnidadMedida(ingredienteDTO.getUndadMedida());
-
        
 
         return ingrediente;

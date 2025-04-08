@@ -26,4 +26,6 @@ public interface IIngredienteDAO {
 
     public Ingrediente editarIngrediente (Ingrediente ingrediente) throws PersistenciaException; 
     
+    public List<Ingrediente> obtenerIngredientesPorID ()throws PersistenciaException;
+    
 }
