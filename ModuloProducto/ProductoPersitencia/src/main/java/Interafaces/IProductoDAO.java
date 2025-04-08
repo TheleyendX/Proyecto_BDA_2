@@ -6,6 +6,7 @@ package Interafaces;
 
 import DTOs.ProductoDTO;
 import ENUM.EstadoProducto;
+import ENUM.TipoProducto;
 import Entidades.Ingrediente;
 import Entidades.Producto;
 import Entidades.ProductoIngrediente;
@@ -21,11 +22,13 @@ public interface IProductoDAO {
     
     public Producto editarProducto (Producto p) throws PersitenciaException;
     
-    public Producto registrarProducto (Producto p) throws PersitenciaException;
+    public Producto registraProducto(String nombre, TipoProducto tipo, EstadoProducto estado, Double precio) throws PersitenciaException;
     
     public void quitarIngrediente (Ingrediente ingrediente) throws PersitenciaException;
     
     public void agregarIngrediente (Ingrediente ingrediente, Double cantidad) throws PersitenciaException;
     
     public EstadoProducto ModificarEstado (EstadoProducto estado) throws PersitenciaException;
+    
+    public List<Producto> buscaProducto(TipoProducto tipo, String nombre)throws PersitenciaException;
 }
