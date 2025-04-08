@@ -4,17 +4,35 @@
  */
 package GUI;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+
 /**
  *
  * @author katia
  */
 public class Inicio extends javax.swing.JFrame {
+    
+    private JButton btnMesero;
+    private JButton btnAdmin;
 
     /**
      * Creates new form Inicio
      */
     public Inicio() {
-        initComponents();
+        initComponents2();
+        this.setSize(1000, 800);
+        this.setLocationRelativeTo(null);
+        getContentPane().setBackground(new Color(18, 18, 18));
     }
 
     /**
@@ -75,6 +93,59 @@ public class Inicio extends javax.swing.JFrame {
                 new Inicio().setVisible(true);
             }
         });
+    }
+    
+    private void initComponents2() {
+        JLabel titulo = new JLabel("FOOD TRACK");
+        btnMesero = new JButton("Mesero");
+        btnAdmin = new JButton("Administrador");
+        
+        btnMesero.setPreferredSize(new Dimension(300, 60));
+        btnAdmin.setPreferredSize(new Dimension(300, 60));
+
+        // Estilos
+        titulo.setFont(new Font("SansSerif", Font.BOLD, 70));
+        titulo.setForeground(new Color(153, 0, 77));
+        titulo.setHorizontalAlignment(SwingConstants.CENTER);
+
+        Color rosa = new Color(242, 122, 224);
+        Font botonFont = new Font("SansSerif", Font.BOLD, 16);
+
+        for (JButton btn : new JButton[]{btnMesero, btnAdmin}) {
+            btn.setBackground(rosa);
+            btn.setFont(botonFont);
+            btn.setForeground(Color.BLACK);
+            btn.setFocusPainted(false);
+        }
+        
+        btnMesero.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Inicio.this.dispose();
+                // aqui va lo de comandas abiertas
+            }
+        });
+        
+        btnAdmin.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Inicio.this.dispose();
+                new PantallaPrincipal().setVisible(true);
+            }
+        });
+        
+        setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(20, 20, 20, 20);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        add(titulo, gbc);
+
+        gbc.gridy++;
+        add(btnMesero, gbc);
+
+        gbc.gridy++;
+        add(btnAdmin, gbc);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

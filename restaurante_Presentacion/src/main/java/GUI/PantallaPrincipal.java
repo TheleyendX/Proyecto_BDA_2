@@ -101,7 +101,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     }
 
     private void initComponents2() {
-        JLabel titulo = new JLabel("Menu");
+        JLabel titulo = new JLabel("Menú");
         BtnComandas = new JButton("Comandas");
         BtnProductos = new JButton("Productos");
         BtnIngredientes = new JButton("Ingredientes");
