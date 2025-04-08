@@ -17,7 +17,7 @@ public class IngredienteDTO {
 
     public String nombre;
 
-    public UnidadMedida undadMedida;
+    public UnidadMedida unidadMedida;
 
     public IngredienteDTO() {
     }
@@ -25,7 +25,7 @@ public class IngredienteDTO {
     public IngredienteDTO(Double stock, String nombre, UnidadMedida undadMedida) {
         this.stock = stock;
         this.nombre = nombre;
-        this.undadMedida = undadMedida;
+        this.unidadMedida = undadMedida;
     }
 
     public Double getStock() {
@@ -45,16 +45,16 @@ public class IngredienteDTO {
     }
 
     public UnidadMedida getUndadMedida() {
-        return undadMedida;
+        return unidadMedida;
     }
 
     public void setUndadMedida(UnidadMedida undadMedida) {
-        this.undadMedida = undadMedida;
+        this.unidadMedida = undadMedida;
     }
 
     @Override
     public String toString() {
-        return "IngredienteDTO{" + "stock=" + stock + ", nombre=" + nombre + ", undadMedida=" + undadMedida + '}';
+        return "IngredienteDTO{" + "stock=" + stock + ", nombre=" + nombre + ", undadMedida=" + unidadMedida + '}';
     }
 
     @Override
@@ -62,7 +62,7 @@ public class IngredienteDTO {
         int hash = 7;
         hash = 79 * hash + Objects.hashCode(this.stock);
         hash = 79 * hash + Objects.hashCode(this.nombre);
-        hash = 79 * hash + Objects.hashCode(this.undadMedida);
+        hash = 79 * hash + Objects.hashCode(this.unidadMedida);
         return hash;
     }
 
@@ -84,7 +84,7 @@ public class IngredienteDTO {
         if (!Objects.equals(this.stock, other.stock)) {
             return false;
         }
-        return this.undadMedida == other.undadMedida;
+        return this.unidadMedida == other.unidadMedida;
     }
 
 }
