@@ -86,42 +86,27 @@ public class ClienteFrecuenteBOTest {
         ClienteFrecuenteDTO cliente = new ClienteFrecuenteDTO();
         cliente.setNombre("Pepe");
         cliente.setApellidoP("Pica");
-        cliente.setTelefono("8998677678");
+        cliente.setTelefono("8998677678"); // El teléfono a buscar
         cliente.setCorreo("pepe@pica.com");
+
+        try {
+            ClienteFrecuenteDTO registrado = clienteBO.registrarClienteFrecuente(cliente);
+            List<ClienteFrecuenteDTO> resultado = clienteBO.filtrarClientesFrecuentes(null, "8998677678", null);
+            assertTrue(!resultado.isEmpty(), "El cliente no fue encontrado por teléfono");
+        } catch (NegocioException e) {
+            fail("Error al registrar cliente: " + e.getMessage());
+        }
+
+        // Paso 3: Buscar el cliente por teléfono encriptado
         try {
             List<ClienteFrecuenteDTO> resultado = clienteBO.filtrarClientesFrecuentes(null, "8998677678", null);
-            assertTrue(!resultado.isEmpty());
+            System.out.println("Resultado busqueda: "+ resultado);
+            assertFalse(resultado.isEmpty());
         } catch (NegocioException e) {
-            fail("Error al filtrar por nombre: " + e.getMessage());
+            fail("Error al filtrar clientes por teléfono: " + e.getMessage());
         }
-    }
-    
-//    @Test
-//    public void testGuardarYBuscarPorTelefono() {
-//        // Paso 1: Crear un DTO para un cliente frecuente
-//        ClienteFrecuenteDTO cliente = new ClienteFrecuenteDTO();
-//        cliente.setNombre("Pepe");
-//        cliente.setApellidoP("Pica");
-//        cliente.setTelefono("8998677678"); // El teléfono a buscar
-//        cliente.setCorreo("pepe@pica.com");
-//
-//        // Paso 2: Guardar el cliente (esto usa el BO y DAO, el teléfono será encriptado)
-//        try {
-//            clienteBO.registrarClienteFrecuente(cliente);
-//        } catch (NegocioException e) {
-//            fail("Error al registrar cliente: " + e.getMessage());
-//        }
-//
-//        // Paso 3: Buscar el cliente por teléfono encriptado
-//        try {
-//            List<ClienteFrecuenteDTO> resultado = clienteBO.filtrarClientesFrecuentes(null, "8998677678", null);
-//            System.out.println("Resultado busqueda: "+ resultado);
-//            assertFalse(resultado.isEmpty());
-//        } catch (NegocioException e) {
-//            fail("Error al filtrar clientes por teléfono: " + e.getMessage());
-//        }
-//
-//        }
+
+        }
     
     @Test
     public void testEncriptacionTelefono() {
