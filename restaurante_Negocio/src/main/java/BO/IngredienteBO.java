@@ -28,7 +28,7 @@ public class IngredienteBO {
 
     public IngredienteDTO registrarIngrediente(IngredienteDTO dto) throws NegocioException {
         dto.setNombre(dto.getNombre().trim());
-        dto.setUnidadMedida(dto.getUndadMedida().trim);
+        dto.getUndadMedida();
 
         validarIngrediente(dto);
         validarDuplicados(dto);
@@ -104,7 +104,7 @@ public class IngredienteBO {
         if (dto.getNombre() == null || dto.getNombre().isBlank()) {
             throw new NegocioException("El nombre del ingrediente es obligatorio.");
         }
-        if (dto.getUndadMedida()== null || dto.getUndadMedida().isBlank()) {
+        if (dto.getUndadMedida() == null) {
             throw new NegocioException("La unidad de medida es obligatoria.");
         }
     }
