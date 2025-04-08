@@ -14,23 +14,24 @@ import java.util.Objects;
  */
 public class MesaDTO {
 
-    public Integer numero;
+    private Long id;
+    private Integer numero;
 
-    public List<Comanda> comanda;
+    //public List<Comanda> comanda;
 
-    public boolean estadoMesa;
+    private boolean estadoMesa;
 
     public MesaDTO() {
     }
 
-    @Override
-    public String toString() {
-        return "MesaDTO{" + "numero=" + numero + ", comanda=" + comanda + ", estadoMesa=" + estadoMesa + '}';
+    public MesaDTO(Long id, Integer numero, boolean estadoMesa) {
+        this.id = id;
+        this.numero = numero;
+        this.estadoMesa = estadoMesa;
     }
 
-    public MesaDTO(Integer numero, List<Comanda> comanda, boolean estadoMesa) {
+    public MesaDTO(Integer numero, boolean estadoMesa) {
         this.numero = numero;
-        this.comanda = comanda;
         this.estadoMesa = estadoMesa;
     }
 
@@ -42,13 +43,15 @@ public class MesaDTO {
         this.numero = numero;
     }
 
-    public List<Comanda> getComanda() {
-        return comanda;
+    public Long getId() {
+        return id;
     }
 
-    public void setComanda(List<Comanda> comanda) {
-        this.comanda = comanda;
+    public void setId(Long id) {
+        this.id = id;
     }
+
+    
 
     public boolean isEstadoMesa() {
         return estadoMesa;
@@ -59,11 +62,16 @@ public class MesaDTO {
     }
 
     @Override
+    public String toString() {
+        return "MesaDTO{" + "id=" + id + ", numero=" + numero + ", estadoMesa=" + estadoMesa + '}';
+    }
+
+    @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 47 * hash + Objects.hashCode(this.numero);
-        hash = 47 * hash + Objects.hashCode(this.comanda);
-        hash = 47 * hash + (this.estadoMesa ? 1 : 0);
+        int hash = 3;
+        hash = 83 * hash + Objects.hashCode(this.id);
+        hash = 83 * hash + Objects.hashCode(this.numero);
+        hash = 83 * hash + (this.estadoMesa ? 1 : 0);
         return hash;
     }
 
@@ -82,10 +90,12 @@ public class MesaDTO {
         if (this.estadoMesa != other.estadoMesa) {
             return false;
         }
-        if (!Objects.equals(this.numero, other.numero)) {
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
-        return Objects.equals(this.comanda, other.comanda);
+        return Objects.equals(this.numero, other.numero);
     }
+
+    
 
 }
