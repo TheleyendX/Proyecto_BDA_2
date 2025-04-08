@@ -5,6 +5,7 @@
 package BO;
 
 import DTOs.ClienteFrecuenteDTO;
+import Encriptador.Encriptador;
 import Excepciones.NegocioException;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
@@ -79,6 +80,58 @@ public class ClienteFrecuenteBOTest {
             fail("Error al filtrar por nombre: " + e.getMessage());
         }
     }
+    
+    @Test
+    public void testFiltrarPorTelefono() {
+        ClienteFrecuenteDTO cliente = new ClienteFrecuenteDTO();
+        cliente.setNombre("Pepe");
+        cliente.setApellidoP("Pica");
+        cliente.setTelefono("8998677678");
+        cliente.setCorreo("pepe@pica.com");
+        try {
+            List<ClienteFrecuenteDTO> resultado = clienteBO.filtrarClientesFrecuentes(null, "8998677678", null);
+            assertTrue(!resultado.isEmpty());
+        } catch (NegocioException e) {
+            fail("Error al filtrar por nombre: " + e.getMessage());
+        }
+    }
+    
+//    @Test
+//    public void testGuardarYBuscarPorTelefono() {
+//        // Paso 1: Crear un DTO para un cliente frecuente
+//        ClienteFrecuenteDTO cliente = new ClienteFrecuenteDTO();
+//        cliente.setNombre("Pepe");
+//        cliente.setApellidoP("Pica");
+//        cliente.setTelefono("8998677678"); // El teléfono a buscar
+//        cliente.setCorreo("pepe@pica.com");
+//
+//        // Paso 2: Guardar el cliente (esto usa el BO y DAO, el teléfono será encriptado)
+//        try {
+//            clienteBO.registrarClienteFrecuente(cliente);
+//        } catch (NegocioException e) {
+//            fail("Error al registrar cliente: " + e.getMessage());
+//        }
+//
+//        // Paso 3: Buscar el cliente por teléfono encriptado
+//        try {
+//            List<ClienteFrecuenteDTO> resultado = clienteBO.filtrarClientesFrecuentes(null, "8998677678", null);
+//            System.out.println("Resultado busqueda: "+ resultado);
+//            assertFalse(resultado.isEmpty());
+//        } catch (NegocioException e) {
+//            fail("Error al filtrar clientes por teléfono: " + e.getMessage());
+//        }
+//
+//        }
+    
+    @Test
+    public void testEncriptacionTelefono() {
+        String telefonoOriginal = "8998677678";
+        String telefonoEncriptado = Encriptador.encrypt(telefonoOriginal);
+        assertNotEquals(telefonoOriginal, telefonoEncriptado);
+        System.out.println("Telefono encriptado: " + telefonoEncriptado);
+    }
+    
+    
 
     @Test
     public void testBuscarPorIdExistente() {

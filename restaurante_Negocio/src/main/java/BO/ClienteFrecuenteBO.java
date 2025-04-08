@@ -7,6 +7,7 @@ package BO;
 import DAOs.ClienteFrecuenteDAO;
 import DTOs.ClienteFrecuenteDTO;
 import DTOs.ComandaDTO;
+import Encriptador.Encriptador;
 import Entidades.ClienteFrecuente;
 import Excepciones.NegocioException;
 import Excepciones.PersistenciaException;
@@ -62,6 +63,9 @@ public class ClienteFrecuenteBO {
 
     public List<ClienteFrecuenteDTO> filtrarClientesFrecuentes(String nombre, String telefono, String correo) throws NegocioException {
         try {
+//            if (telefono != null && !telefono.trim().isEmpty()) {
+//                telefono = Encriptador.encrypt(telefono.trim());  // Encriptar el teléfono antes de pasarlo al DAO
+//            }
             List<ClienteFrecuente> clientes = clienteFrecuenteDAO.filtrarClientesFrecuentes(nombre, telefono, correo);
             return clientes.stream().map(mapperClienteFrecuente::toDTO).toList();
         } catch (PersistenciaException e) {

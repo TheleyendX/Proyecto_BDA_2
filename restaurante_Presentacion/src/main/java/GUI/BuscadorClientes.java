@@ -7,11 +7,15 @@ package GUI;
 import BO.ClienteFrecuenteBO;
 import Controlador.ControladorBuscadorClientes;
 import DTOs.ClienteFrecuenteDTO;
+import Encriptador.Encriptador;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -27,6 +31,7 @@ public class BuscadorClientes extends javax.swing.JFrame {
     private JTextField txtNombre, txtTelefono, txtCorreo;
     private DefaultTableModel modeloTabla;
     private ControladorBuscadorClientes controlador;
+    private JButton btnBuscarTelefono;
 
     /**
      * Creates new form BuscadorClientes
@@ -73,7 +78,41 @@ public class BuscadorClientes extends javax.swing.JFrame {
         btnAtras.setFocusPainted(false);
         add(btnAtras);
         
-        controlador = new ControladorBuscadorClientes(this, new ClienteFrecuenteBO());
+        controlador = new ControladorBuscadorClientes(this, new ClienteFrecuenteBO());        
+        
+        JButton btnBuscarTelefono = new JButton("Buscar por Teléfono");
+        btnBuscarTelefono.setBounds(700, 380, 200, 40);
+        btnBuscarTelefono.setBackground(rosa);
+        btnBuscarTelefono.setFont(new Font("SansSerif", Font.BOLD, 14));
+        btnBuscarTelefono.setFocusPainted(false);
+        add(btnBuscarTelefono);
+
+        // ActionListener para el botón de búsqueda
+        btnBuscarTelefono.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                buscarPorTelefono();
+            }
+        });
+    }
+    
+    private void buscarPorTelefono() {
+        String telefono = txtTelefono.getText().trim();  // Obtener teléfono ingresado por el usuario
+
+        if (telefono.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor ingrese un número de teléfono.");
+            return;
+        }
+
+        try {
+            // Encriptar el teléfono antes de pasarlo al controlador
+            String telefonoEncriptado = Encriptador.encrypt(telefono);
+
+            // Llamar al método del controlador para buscar por teléfono
+            controlador.buscarPorTelefono(telefonoEncriptado);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error al buscar por teléfono: " + ex.getMessage());
+        }
     }
     
     private JTextField crearCampoConEtiqueta(String textoEtiqueta, int x, int y, Color fondoEtiqueta, Font fuente) {
@@ -103,6 +142,10 @@ public class BuscadorClientes extends javax.swing.JFrame {
 
     public JTextField getTxtCorreo() {
         return txtCorreo;
+    }
+    
+    public JButton getBtnBuscarTelefono(){
+        return btnBuscarTelefono;
     }
     
     public void actualizarTabla(List<ClienteFrecuenteDTO> clientes) {
