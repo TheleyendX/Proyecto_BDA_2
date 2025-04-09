@@ -4,15 +4,12 @@
  */
 package BO;
 
-
-import DAOs.ComandaDAO;
-import IDAOs.IComandaDAO;
-import Interfaces.IComandaBO;
+import Interfaces.IMesaBO;
 
 /**
  *
  * @author mmax2
  */
-public class ComandaBO implements IComandaBO{
-    private final IComandaDAO comanda = new ComandaDAO();
+public class MesaBO implements IMesaBO {
+    
 }

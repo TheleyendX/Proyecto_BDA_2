@@ -52,7 +52,7 @@ public class ProductoMapper {
             entity.getEstado(),
             entity.getNombre(),
             entity.getPrecio(),
-            ingredientesDTO
+                ingredientesDTO
         );
         return dto;
     }

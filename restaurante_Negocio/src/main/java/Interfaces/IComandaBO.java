@@ -4,10 +4,18 @@
  */
 package Interfaces;
 
+import DAOs.ComandaDAO;
+import DTOs.ComandaDTO;
+import ENUM.EstadoComanda;
+import IDAOs.IComandaDAO;
+
 /**
  *
  * @author mmax2
  */
-public class IComandaBO {
+public interface IComandaBO {
     
+    public ComandaDTO registraComnada ();
+    
+    public ComandaDTO actualizaEstado(Long id, EstadoComanda estado);
 }

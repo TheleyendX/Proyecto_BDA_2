@@ -13,6 +13,7 @@ import java.util.Objects;
  * @author katia
  */
 public class DetallesComandaDTO {
+    
     public Double precioPorPorducto;
     
     public String comentarios;

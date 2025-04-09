@@ -4,10 +4,14 @@
  */
 package Interfaz;
 
+import DTOs.ProductoIngredienteDTO;
+import java.util.List;
+
 /**
  *
  * @author mmax2
  */
 public interface IProductoIngredienteBO {
-    
+
+    public List<ProductoIngredienteDTO> listaIngredientes();
 }

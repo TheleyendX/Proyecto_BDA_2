@@ -66,7 +66,7 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
             obtenerGastoTotalAcumulado(cliente);
             obtenerConteoVisitas(cliente);
             obtenerPuntos(cliente);
-            
+             
             return cliente;
         } catch(Exception e){
             if (em != null && em.getTransaction().isActive()){
