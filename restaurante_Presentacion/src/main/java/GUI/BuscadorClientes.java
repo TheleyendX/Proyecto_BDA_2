@@ -84,40 +84,6 @@ public class BuscadorClientes extends javax.swing.JFrame {
         });
         
         controlador = new ControladorBuscadorClientes(this, new ClienteFrecuenteBO());        
-        
-        JButton btnBuscarTelefono = new JButton("Buscar por Teléfono");
-        btnBuscarTelefono.setBounds(700, 380, 200, 40);
-        btnBuscarTelefono.setBackground(rosa);
-        btnBuscarTelefono.setFont(new Font("SansSerif", Font.BOLD, 14));
-        btnBuscarTelefono.setFocusPainted(false);
-        add(btnBuscarTelefono);
-
-        // ActionListener para el botón de búsqueda
-        btnBuscarTelefono.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                buscarPorTelefono();
-            }
-        });
-    }
-    
-    private void buscarPorTelefono() {
-        String telefono = txtTelefono.getText().trim();  // Obtener teléfono ingresado por el usuario
-
-        if (telefono.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor ingrese un número de teléfono.");
-            return;
-        }
-
-        try {
-            // Encriptar el teléfono antes de pasarlo al controlador
-            //String telefonoEncriptado = Encriptador.encrypt(telefono);
-
-            // Llamar al método del controlador para buscar por teléfono
-            controlador.buscarPorTelefono(telefono);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Error al buscar por teléfono: " + ex.getMessage());
-        }
     }
     
     private JTextField crearCampoConEtiqueta(String textoEtiqueta, int x, int y, Color fondoEtiqueta, Font fuente) {
@@ -158,7 +124,7 @@ public class BuscadorClientes extends javax.swing.JFrame {
 
         for (ClienteFrecuenteDTO cliente : clientes) {
             Object[] fila = {
-                cliente.getNombreCompleto(), // puedes tener un método que concatene nombre + apellidos
+                cliente.getNombreCompleto(), 
                 cliente.getTelefono(),
                 cliente.getCorreo(),
                 cliente.getConteoVisitas(),
