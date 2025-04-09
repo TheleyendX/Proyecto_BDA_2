@@ -10,6 +10,7 @@ import Encriptador.Encriptador;
 import Entidades.ClienteFrecuente;
 import Entidades.Comanda;
 import Excepciones.PersistenciaException;
+import IDAOs.IReporteClientesFrecuentesDAO;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -21,8 +22,9 @@ import javax.persistence.TypedQuery;
  *
  * @author katia
  */
-public class ReporteClientesFrecuentesDAO extends ClienteFrecuenteDAO{
+public class ReporteClientesFrecuentesDAO implements IReporteClientesFrecuentesDAO{
     
+    @Override
     public List<ClienteFrecuente> obtenerClientesFrecuentesPorFiltro(String nombre, Integer visitasMinimas) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
         try {
@@ -66,6 +68,7 @@ public class ReporteClientesFrecuentesDAO extends ClienteFrecuenteDAO{
         }
     }
     
+    @Override
     public LocalDate obtenerUltimaFechaComanda(ClienteFrecuente cliente) {
         EntityManager em = Conexion.crearConexion();
         try {
@@ -87,7 +90,7 @@ public class ReporteClientesFrecuentesDAO extends ClienteFrecuenteDAO{
             }
         }
     }
-    
+        
     public Integer obtenerConteoVisitas(ClienteFrecuente cliente){
         EntityManager em = Conexion.crearConexion();
         try {
@@ -139,6 +142,62 @@ public class ReporteClientesFrecuentesDAO extends ClienteFrecuenteDAO{
                 em.close();
             }
         }
+    }
+    
+    //PARA LAS PRUEBAS UNITARIAS
+    public ClienteFrecuente registrarClienteFrecuente(ClienteFrecuente cliente) throws PersistenciaException{
+        EntityManager em = Conexion.crearConexion();
+        try{
+            if (em == null || !em.isOpen()){
+                em = Conexion.crearConexion();
+            }
+            em.getTransaction().begin();
+            
+            cliente.setFechaRegistro(LocalDate.now());
+            
+            String telefonoEncriptado = Encriptador.encrypt(cliente.getTelefono());
+            cliente.setTelefono(telefonoEncriptado);
+            
+            em.persist(cliente);
+            em.getTransaction().commit();
+            em.refresh(cliente);
+            obtenerGastoTotalAcumulado(cliente);
+            obtenerConteoVisitas(cliente);
+            obtenerPuntos(cliente);
+             
+            return cliente;
+        } catch(Exception e){
+            if (em != null && em.getTransaction().isActive()){
+                em.getTransaction().rollback();
+            }
+            throw new PersistenciaException("No se pudo registrar el cliente.");
+            
+        } finally{
+            if (em != null && em.isOpen()){
+                em.close();
+            }
+        }
+    }
+    
+    public void persistirComanda(Comanda comanda) throws PersistenciaException {
+        EntityManager em = Conexion.crearConexion();
+        try{
+            if (em == null || !em.isOpen()){
+                    em = Conexion.crearConexion();
+            }
+            em.getTransaction().begin();
+            em.persist(comanda);
+            em.getTransaction().commit();
+
+        }catch (Exception e){
+                em.getTransaction().rollback();
+                throw new PersistenciaException("No se pudo persistir la comanda.");
+
+            } finally{
+            if (em != null && em.isOpen()){
+                em.close();
+            }
+            }
     }
 
 }

@@ -9,6 +9,7 @@ import Encriptador.Encriptador;
 import Entidades.ClienteFrecuente;
 import Entidades.Comanda;
 import Excepciones.PersistenciaException;
+import IDAOs.IReporteComandasDAO;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,10 +20,11 @@ import javax.persistence.TypedQuery;
  *
  * @author katia
  */
-public class ReporteComandasDAO {
+public class ReporteComandasDAO implements IReporteComandasDAO{
     EntityManager em = Conexion.crearConexion();
     
     
+    @Override
     public List<Comanda> obtenerComandasFiltros(LocalDateTime inicio, LocalDateTime fin) throws PersistenciaException {
         if (em == null || !em.isOpen()) {
             em = Conexion.crearConexion();
