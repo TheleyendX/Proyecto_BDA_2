@@ -32,9 +32,14 @@ public class ClienteFrecuente extends Cliente implements Serializable {
     @Transient
     private Integer conteoVisitas;
 
+    @Transient
+    private LocalDate ultimaFechaComanda;
+    
     public ClienteFrecuente() {
     }
 
+    
+    
     public ClienteFrecuente(Integer puntos, Double gastoTotalAcumulado, Integer conteoVisitas) {
         this.puntos = puntos;
         this.gastoTotalAcumulado = gastoTotalAcumulado;
@@ -47,6 +52,31 @@ public class ClienteFrecuente extends Cliente implements Serializable {
         this.gastoTotalAcumulado = gastoTotalAcumulado;
         this.conteoVisitas = conteoVisitas;
     }
+
+    public ClienteFrecuente(Integer puntos, Double gastoTotalAcumulado, Integer conteoVisitas, LocalDate ultimaFechaComanda) {
+        this.puntos = puntos;
+        this.gastoTotalAcumulado = gastoTotalAcumulado;
+        this.conteoVisitas = conteoVisitas;
+        this.ultimaFechaComanda = ultimaFechaComanda;
+    }
+
+    public ClienteFrecuente(Integer puntos, Double gastoTotalAcumulado, Integer conteoVisitas, LocalDate ultimaFechaComanda, String nombre, String apellidoP, String apellidoM, String correo, String telefono, LocalDate fechaRegistro, List<Comanda> comandas) {
+        super(nombre, apellidoP, apellidoM, correo, telefono, fechaRegistro, comandas);
+        this.puntos = puntos;
+        this.gastoTotalAcumulado = gastoTotalAcumulado;
+        this.conteoVisitas = conteoVisitas;
+        this.ultimaFechaComanda = ultimaFechaComanda;
+    }
+
+    public LocalDate getUltimaFechaComanda() {
+        return ultimaFechaComanda;
+    }
+
+    public void setUltimaFechaComanda(LocalDate ultimaFechaComanda) {
+        this.ultimaFechaComanda = ultimaFechaComanda;
+    }
+    
+    
 
     public Integer getPuntos() {
         return puntos;
@@ -71,20 +101,19 @@ public class ClienteFrecuente extends Cliente implements Serializable {
     public void setConteoVisitas(Integer conteoVisitas) {
         this.conteoVisitas = conteoVisitas;
     }
-    
-    
 
     @Override
     public String toString() {
-        return "ClienteFrecuente{" + "puntos=" + puntos + ", gastoTotalAcumulado=" + gastoTotalAcumulado + ", conteoVisitas=" + conteoVisitas + '}';
+        return "ClienteFrecuente{" + "puntos=" + puntos + ", gastoTotalAcumulado=" + gastoTotalAcumulado + ", conteoVisitas=" + conteoVisitas + ", ultimaFechaComanda=" + ultimaFechaComanda + '}';
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 97 * hash + Objects.hashCode(this.puntos);
-        hash = 97 * hash + Objects.hashCode(this.gastoTotalAcumulado);
-        hash = 97 * hash + Objects.hashCode(this.conteoVisitas);
+        hash = 89 * hash + Objects.hashCode(this.puntos);
+        hash = 89 * hash + Objects.hashCode(this.gastoTotalAcumulado);
+        hash = 89 * hash + Objects.hashCode(this.conteoVisitas);
+        hash = 89 * hash + Objects.hashCode(this.ultimaFechaComanda);
         return hash;
     }
 
@@ -106,6 +135,13 @@ public class ClienteFrecuente extends Cliente implements Serializable {
         if (!Objects.equals(this.gastoTotalAcumulado, other.gastoTotalAcumulado)) {
             return false;
         }
-        return Objects.equals(this.conteoVisitas, other.conteoVisitas);
+        if (!Objects.equals(this.conteoVisitas, other.conteoVisitas)) {
+            return false;
+        }
+        return Objects.equals(this.ultimaFechaComanda, other.ultimaFechaComanda);
     }
+    
+    
+
+    
 }
