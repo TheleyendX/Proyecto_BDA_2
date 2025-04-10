@@ -109,7 +109,7 @@ public class ClienteFrecuenteBOTest {
         }
     
     @Test
-    public void testEncriptacionTelefono() {
+    public void testEncriptacionTelefono() throws Exception {
         String telefonoOriginal = "8998677678";
         String telefonoEncriptado = Encriptador.encrypt(telefonoOriginal);
         assertNotEquals(telefonoOriginal, telefonoEncriptado);

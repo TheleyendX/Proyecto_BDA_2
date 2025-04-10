@@ -6,6 +6,8 @@ package BO;
 
 
 import DAOs.ComandaDAO;
+import DTOs.ComandaDTO;
+import ENUM.EstadoComanda;
 import IDAOs.IComandaDAO;
 import Interfaces.IComandaBO;
 
@@ -15,4 +17,14 @@ import Interfaces.IComandaBO;
  */
 public class ComandaBO implements IComandaBO{
     private final IComandaDAO comanda = new ComandaDAO();
+
+    @Override
+    public ComandaDTO registraComnada() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public ComandaDTO actualizaEstado(Long id, EstadoComanda estado) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

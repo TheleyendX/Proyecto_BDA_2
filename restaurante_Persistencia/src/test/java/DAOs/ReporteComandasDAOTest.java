@@ -80,7 +80,7 @@ public class ReporteComandasDAOTest {
         cliente.setNombre("Carlos");
         cliente.setApellidoP("Pérez");
         cliente.setCorreo("carlos.perez@example.com");
-        cliente.setTelefono("9876543210");
+        cliente.setTelefono("8912982121");
         reporteComandasDAO.registrarClienteFrecuente(cliente);
         
         for (int i = 0; i < 3; i++) {
@@ -162,6 +162,4 @@ public class ReporteComandasDAOTest {
         assertNotNull(result, "La lista no debe ser nula.");
         assertEquals(1, result.size(), "Debe haber 1 comanda, ya que solo una está dentro del rango de fechas.");
     }
-    
-    
 }
