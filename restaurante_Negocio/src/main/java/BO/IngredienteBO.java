@@ -28,7 +28,7 @@ public class IngredienteBO {
 
     public IngredienteDTO registrarIngrediente(IngredienteDTO dto) throws NegocioException {
         dto.setNombre(dto.getNombre().trim());
-        dto.getUndadMedida();
+        dto.setUndadMedida(dto.getUndadMedida());
 
         validarIngrediente(dto);
         validarDuplicados(dto);
