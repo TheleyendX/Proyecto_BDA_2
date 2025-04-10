@@ -5,13 +5,10 @@
 package GUI;
 
 import BO.ClienteFrecuenteBO;
-import Controlador.ControladorBuscadorClientes;
 import DTOs.ClienteFrecuenteDTO;
-import Encriptador.Encriptador;
+import Excepciones.NegocioException;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -20,6 +17,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -30,8 +29,8 @@ public class BuscadorClientes extends javax.swing.JFrame {
     private JTable tablaClientes;
     private JTextField txtNombre, txtTelefono, txtCorreo;
     private DefaultTableModel modeloTabla;
-    private ControladorBuscadorClientes controlador;
-    private JButton btnBuscarTelefono;
+    
+    private ClienteFrecuenteBO clienteBO;
 
     /**
      * Creates new form BuscadorClientes
@@ -46,14 +45,12 @@ public class BuscadorClientes extends javax.swing.JFrame {
         getContentPane().setBackground(new Color(18, 18, 18));
         setLayout(null);
 
-        // Título
         JLabel lblTitulo = new JLabel("Buscador Clientes");
         lblTitulo.setFont(new Font("SansSerif", Font.BOLD, 36));
         lblTitulo.setForeground(new Color(153, 0, 77));
         lblTitulo.setBounds(350, 30, 400, 50);
         add(lblTitulo);
 
-        // Tabla
         String[] columnas = {"Nombre", "Teléfono", "Correo", "Visitas", "Puntos", "Gasto total acumulado"};
         modeloTabla = new DefaultTableModel(columnas, 0);
         tablaClientes = new JTable(modeloTabla);
@@ -62,7 +59,6 @@ public class BuscadorClientes extends javax.swing.JFrame {
         scroll.setBounds(50, 100, 600, 500);
         add(scroll);
 
-        // Etiquetas y campos
         Color rosa = new Color(242, 122, 224);
         Font fuenteCampos = new Font("SansSerif", Font.BOLD, 14);
 
@@ -70,7 +66,6 @@ public class BuscadorClientes extends javax.swing.JFrame {
         txtTelefono = crearCampoConEtiqueta("Teléfono:", 700, 230, rosa, fuenteCampos);
         txtCorreo = crearCampoConEtiqueta("Correo:", 700, 310, rosa, fuenteCampos);
 
-        // Botón atrás
         JButton btnAtras = new JButton("Atrás");
         btnAtras.setBounds(50, 650, 150, 50);
         btnAtras.setBackground(rosa);
@@ -82,8 +77,12 @@ public class BuscadorClientes extends javax.swing.JFrame {
             this.dispose();
             new MenuClientesFrecuentes().setVisible(true);
         });
+
+        clienteBO = new ClienteFrecuenteBO();
         
-        controlador = new ControladorBuscadorClientes(this, new ClienteFrecuenteBO());        
+        cargarTodosLosClientes();
+
+        agregarListenersBusqueda();        
     }
     
     private JTextField crearCampoConEtiqueta(String textoEtiqueta, int x, int y, Color fondoEtiqueta, Font fuente) {
@@ -103,6 +102,66 @@ public class BuscadorClientes extends javax.swing.JFrame {
         return campo;
     }
     
+    public void actualizarTabla(List<ClienteFrecuenteDTO> clientes) {
+        modeloTabla.setRowCount(0);
+
+        for (ClienteFrecuenteDTO cliente : clientes) {
+            Object[] fila = {
+                cliente.getNombreCompleto(), 
+                cliente.getTelefono(),
+                cliente.getCorreo(),
+                cliente.getConteoVisitas(),
+                cliente.getPuntos(),
+                cliente.getGastoTotalAcumulado()
+            };
+            modeloTabla.addRow(fila);
+        }
+    }
+    
+    private void cargarTodosLosClientes() {
+        try {
+            List<ClienteFrecuenteDTO> clientes = clienteBO.obtenerTodos();
+            actualizarTabla(clientes);
+        } catch (NegocioException e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar clientes: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private void agregarListenersBusqueda() {
+        DocumentListener listener = new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                buscar();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                buscar();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                buscar();
+            }
+        };
+        getTxtNombre().getDocument().addDocumentListener(listener);
+        getTxtTelefono().getDocument().addDocumentListener(listener);
+        getTxtCorreo().getDocument().addDocumentListener(listener);
+    }
+    
+    private void buscar() {
+        String nombre = getTxtNombre().getText();
+        String telefono = getTxtTelefono().getText().trim();
+        String correo = getTxtCorreo().getText().trim();
+
+        try {
+            List<ClienteFrecuenteDTO> resultados = clienteBO.filtrarClientesFrecuentes(nombre, telefono, correo);
+            actualizarTabla(resultados);
+        } catch (NegocioException e) {
+            JOptionPane.showMessageDialog(this, "Error al filtrar clientes: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
     public JTextField getTxtNombre() {
         return txtNombre;
     }
@@ -115,25 +174,7 @@ public class BuscadorClientes extends javax.swing.JFrame {
         return txtCorreo;
     }
     
-    public JButton getBtnBuscarTelefono(){
-        return btnBuscarTelefono;
-    }
     
-    public void actualizarTabla(List<ClienteFrecuenteDTO> clientes) {
-        modeloTabla.setRowCount(0); // Limpiar tabla
-
-        for (ClienteFrecuenteDTO cliente : clientes) {
-            Object[] fila = {
-                cliente.getNombreCompleto(), 
-                cliente.getTelefono(),
-                cliente.getCorreo(),
-                cliente.getConteoVisitas(),
-                cliente.getPuntos(),
-                cliente.getGastoTotalAcumulado()
-            };
-            modeloTabla.addRow(fila);
-    }
-        }
     
     
 
