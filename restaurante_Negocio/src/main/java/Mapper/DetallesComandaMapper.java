@@ -15,9 +15,9 @@ public class DetallesComandaMapper {
             return null;
         }
 
-        // Corregir la sintaxis en el retorno
+        // Corregir el error tipográfico en el método getPrecioPorProducto
         return new DetallesComanda(
-            dt.getPrecioPorPorducto(),
+            dt.getPrecioPorProducto(),  // Corregido aquí
             dt.getComentarios(),
             dt.getCantidadRequerida(),
             comandaMapper.toEntity(dt.getComanda()),
@@ -31,9 +31,9 @@ public class DetallesComandaMapper {
             return null;
         }
 
-        // Corregir la sintaxis en el retorno
+        // Corregir el error tipográfico en el método getPrecioPorProducto
         return new DetallesComandaDTO(
-            dt.getPrecioPorProducto(),
+            dt.getPrecioPorProducto(),  // Corregido aquí
             dt.getComentarios(),
             dt.getCantidadRequerida(),
             dt.getImporteTotal(),

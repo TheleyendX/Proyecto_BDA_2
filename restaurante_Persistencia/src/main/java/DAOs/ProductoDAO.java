@@ -10,10 +10,10 @@ import ENUM.EstadoProducto;
 import ENUM.TipoProducto;
 import Encriptador.Encriptador;
 import Entidades.Ingrediente;
+import Excepciones.PersistenciaException;
 import Entidades.Producto;
 import Entidades.ProductoIngrediente;
-import Exception.PersitenciaException;
-import Interafaces.IProductoDAO;
+import IDAOs.IProductoDAO;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,23 +42,23 @@ public class ProductoDAO implements IProductoDAO {
 
     @Override
 
-    public ProductoIngrediente getIngredientesNecesarios(Long id) throws PersitenciaException {
+    public ProductoIngrediente getIngredientesNecesarios(Long id) throws PersistenciaException {
         try {
             Producto producto = em.find(Producto.class, id);
             if (producto == null) {
-                throw new PersitenciaException("Producto no encontrado con ID: " + id);
+                throw new PersistenciaException("Producto no encontrado con ID: " + id);
             }
 
             // Retorna la lista de ingredientes. Si quieres todos, puedes regresar la lista completa
             // o hacer una búsqueda específica si se desea por otra condición.
             return producto.getIngrediente().isEmpty() ? null : producto.getIngrediente().get(0);
         } catch (Exception e) {
-            throw new PersitenciaException("Error al obtener ingredientes: " + e.getMessage());
+            throw new PersistenciaException("Error al obtener ingredientes: " + e.getMessage());
         }
     }
 
     @Override
-    public Producto editarProducto(Producto p) throws PersitenciaException {
+    public Producto editarProducto(Producto p) throws PersistenciaException {
         try {
             em.getTransaction().begin();
             Producto actualizado = em.merge(p);
@@ -66,7 +66,7 @@ public class ProductoDAO implements IProductoDAO {
             return actualizado;
         } catch (Exception e) {
             em.getTransaction().rollback();
-            throw new PersitenciaException("Error al editar el producto: " + e.getMessage());
+            throw new PersistenciaException("Error al editar el producto: " + e.getMessage());
         }
     }
 
@@ -81,10 +81,10 @@ public class ProductoDAO implements IProductoDAO {
      * @throws PersistenciaException Si ocurre un error al guardar el producto.
      */
     @Override
-    public Producto registraProducto(String nombre, TipoProducto tipo, EstadoProducto estado, Double precio) throws PersitenciaException {
+    public Producto registraProducto(String nombre, TipoProducto tipo, EstadoProducto estado, Double precio) throws PersistenciaException {
         try {
             if (nombre == null || nombre.trim().isEmpty()) {
-                throw new PersitenciaException("El nombre ingresado no puede estar vacio");
+                throw new PersistenciaException("El nombre ingresado no puede estar vacio");
             }
 
             Producto producto = new Producto();
@@ -108,12 +108,12 @@ public class ProductoDAO implements IProductoDAO {
     }
 
     @Override
-    public void quitarIngrediente(Long idProducto, String nombre) throws PersitenciaException {
+    public void quitarIngrediente(Long idProducto, String nombre) throws PersistenciaException {
         try {
             em.getTransaction().begin();
             Producto producto = em.find(Producto.class, idProducto);
             if (producto == null) {
-                throw new PersitenciaException("Producto no encontrado");
+                throw new PersistenciaException("Producto no encontrado");
             }
 
             List<ProductoIngrediente> lista = producto.getIngrediente();
@@ -134,18 +134,18 @@ public class ProductoDAO implements IProductoDAO {
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
-            throw new PersitenciaException("Error al quitar ingrediente: " + e.getMessage());
+            throw new PersistenciaException("Error al quitar ingrediente: " + e.getMessage());
         }
     }
 
     @Override
-    public void agregarIngrediente(Long idProducto, Ingrediente ingrediente, Double cantidad) throws PersitenciaException {
+    public void agregarIngrediente(Long idProducto, Ingrediente ingrediente, Double cantidad) throws PersistenciaException {
         try {
             em.getTransaction().begin();
 
             Producto producto = em.find(Producto.class, idProducto);
             if (producto == null) {
-                throw new PersitenciaException("Producto no encontrado");
+                throw new PersistenciaException("Producto no encontrado");
             }
 
             ProductoIngrediente nuevo = new ProductoIngrediente(producto, ingrediente, cantidad);
@@ -157,17 +157,17 @@ public class ProductoDAO implements IProductoDAO {
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
-            throw new PersitenciaException("Error al agregar ingrediente: " + e.getMessage());
+            throw new PersistenciaException("Error al agregar ingrediente: " + e.getMessage());
         }
     }
 
     @Override
-    public EstadoProducto ModificarEstado(Long idProducto, EstadoProducto estado) throws PersitenciaException {
+    public EstadoProducto ModificarEstado(Long idProducto, EstadoProducto estado) throws PersistenciaException {
         try {
             em.getTransaction().begin();
             Producto producto = em.find(Producto.class, idProducto);
             if (producto == null) {
-                throw new PersitenciaException("Producto no encontrado");
+                throw new PersistenciaException("Producto no encontrado");
             }
 
             producto.setEstado(estado);
@@ -176,12 +176,12 @@ public class ProductoDAO implements IProductoDAO {
             return estado;
         } catch (Exception e) {
             em.getTransaction().rollback();
-            throw new PersitenciaException("Error al modificar estado: " + e.getMessage());
+            throw new PersistenciaException("Error al modificar estado: " + e.getMessage());
         }
     }
 
     @Override
-    public List<Producto> buscaProducto(TipoProducto tipo, String nombre) throws PersitenciaException {
+    public List<Producto> buscaProducto(TipoProducto tipo, String nombre) throws PersistenciaException {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Producto> query = cb.createQuery(Producto.class);
         Root<Producto> producto = query.from(Producto.class);

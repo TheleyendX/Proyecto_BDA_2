@@ -4,6 +4,7 @@ import DTOs.ProductoDTO;
 import DTOs.ProductoIngredienteDTO;
 import Entidades.Producto;
 import Entidades.ProductoIngrediente;
+import Mapper.ProductoIngredienteMapper;
 import java.util.ArrayList;
 import java.util.List;
 
