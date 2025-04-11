@@ -4,12 +4,32 @@
  */
 package GUI;
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.BaseColor;
+
+
+import java.io.FileOutputStream;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 import BO.ReporteClientesFrecuentesBO;
 import DTOs.ClienteFrecuenteDTO;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import java.awt.Color;
-import java.awt.Font;
+import java.awt.Desktop;
+import java.io.File;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -17,6 +37,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+
 
 /**
  *
@@ -43,7 +64,8 @@ public class ReporteClientesFrecuentes extends javax.swing.JFrame {
         getContentPane().setBackground(new Color(20, 20, 20));
 
         JLabel titulo = new JLabel("Clientes Frecuentes");
-        titulo.setFont(new Font("Arial", Font.BOLD, 36));
+        titulo.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 36));
+        //titulo.setFont(new Font("Arial", Font.BOLD, 36));
         titulo.setForeground(new Color(128, 0, 64));
         titulo.setBounds(340, 20, 400, 50);
         add(titulo);
@@ -86,16 +108,24 @@ public class ReporteClientesFrecuentes extends javax.swing.JFrame {
         btnPDF.addActionListener(e -> generarPDF());
         add(btnPDF);
 
-        JButton btnSalir = new JButton("Salir");
-        btnSalir.setBounds(730, 410, 220, 45);
-        btnSalir.setBackground(new Color(128, 0, 64));
-        btnSalir.setForeground(Color.WHITE);
-        btnSalir.addActionListener(e -> System.exit(0));
-        add(btnSalir);
+        JButton btnAtras = new JButton("Atrás");
+        btnAtras.setBounds(730, 410, 220, 45);
+        btnAtras.setBackground(new Color(128, 0, 64));
+        btnAtras.setForeground(Color.WHITE);
+        btnAtras.addActionListener(e -> System.exit(0));
+        add(btnAtras);
 
         setVisible(true);
+        
+        btnAtras.addActionListener(e -> {
+            this.dispose();
+            new MenuReportes().setVisible(true);
+        });
+        buscarClientes();
         //initComponents();
     }
+    
+    
     
     private void buscarClientes() {
         String nombre = txtNombre.getText();
@@ -112,7 +142,7 @@ public class ReporteClientesFrecuentes extends javax.swing.JFrame {
 
         try {
             List<ClienteFrecuenteDTO> clientes = reporteBO.obtenerClientesFrecuentesPorFiltro(nombre, visitasMin);
-            modeloTabla.setRowCount(0); // Limpiar tabla
+            modeloTabla.setRowCount(0);
             for (ClienteFrecuenteDTO c : clientes) {
                 modeloTabla.addRow(new Object[]{
                     c.getNombreCompleto(),
@@ -127,7 +157,85 @@ public class ReporteClientesFrecuentes extends javax.swing.JFrame {
         }
     }
     private void generarPDF() {
-        JOptionPane.showMessageDialog(this, "Función de generación de PDF aún no implementada.", "Info", JOptionPane.INFORMATION_MESSAGE);
+            try {
+            String nombreFiltro = txtNombre.getText();
+            Integer visitasMinimas = txtVisitasMin.getText().isEmpty() ? null : Integer.parseInt(txtVisitasMin.getText());
+
+            List<ClienteFrecuenteDTO> clientes = reporteBO.obtenerClientesFrecuentesPorFiltro(nombreFiltro, visitasMinimas);
+
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Guardar reporte PDF");
+            fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Archivo PDF", "pdf"));
+
+            int seleccion = fileChooser.showSaveDialog(this);
+
+            if (seleccion == JFileChooser.APPROVE_OPTION) {
+                File archivoSeleccionado = fileChooser.getSelectedFile();
+                String rutaArchivo = archivoSeleccionado.getAbsolutePath();
+                if (!rutaArchivo.toLowerCase().endsWith(".pdf")) {
+                    rutaArchivo += ".pdf";
+                }
+                generarPDFClientes(clientes, rutaArchivo);
+
+                JOptionPane.showMessageDialog(this, "Reporte generado exitosamente en:\n" + rutaArchivo);
+                Desktop.getDesktop().open(new File(rutaArchivo));
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al generar el reporte: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }
+    
+    private void generarPDFClientes(List<ClienteFrecuenteDTO> clientes, String rutaDestino) throws Exception {
+        Document document = new Document(PageSize.A4.rotate());
+        PdfWriter.getInstance(document, new FileOutputStream(rutaDestino));
+        document.open();
+
+        Font fontTitulo = FontFactory.getFont(FontFactory.HELVETICA, 20, Font.BOLD, new BaseColor(0, 102, 153));
+        Paragraph titulo = new Paragraph("Reporte de Clientes Frecuentes", fontTitulo);
+        titulo.setAlignment(Element.ALIGN_CENTER);
+        titulo.setSpacingAfter(20);
+        document.add(titulo);
+
+        PdfPTable tabla = new PdfPTable(5);
+        tabla.setWidthPercentage(100);
+        tabla.setWidths(new float[]{3, 2, 2, 2, 3});
+
+        Font headerFont = FontFactory.getFont(FontFactory.HELVETICA, 12, Font.BOLD, BaseColor.WHITE);
+        BaseColor headerColor = new BaseColor(0, 102, 153);
+        String[] headers = {"Nombre", "Visitas", "Total Gastado", "Puntos", "Última Comanda"};
+
+        for (String h : headers) {
+            PdfPCell celda = new PdfPCell(new Phrase(h, headerFont));
+            celda.setBackgroundColor(headerColor);
+            celda.setHorizontalAlignment(Element.ALIGN_CENTER);
+            celda.setPadding(8);
+            tabla.addCell(celda);
+        }
+
+        NumberFormat monedaMX = NumberFormat.getCurrencyInstance(new Locale("es", "MX"));
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        for (ClienteFrecuenteDTO c : clientes) {
+            tabla.addCell(crearCelda(c.getNombreCompleto()));
+            tabla.addCell(crearCelda(String.valueOf(c.getConteoVisitas())));
+            tabla.addCell(crearCelda(monedaMX.format(c.getGastoTotalAcumulado())));
+            tabla.addCell(crearCelda(String.valueOf(c.getPuntos())));
+            tabla.addCell(crearCelda(c.getUltimaFechaComanda() != null ? dtf.format(c.getUltimaFechaComanda()) : "Sin registro"));
+
+        }
+
+        document.add(tabla);
+        document.close();
+    }
+    
+    private PdfPCell crearCelda(String texto) {
+        PdfPCell celda = new PdfPCell(new Phrase(texto));
+        celda.setHorizontalAlignment(Element.ALIGN_CENTER);
+        celda.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        celda.setPadding(6);
+        return celda;
     }
 
     /**

@@ -12,7 +12,7 @@ import Entidades.Ingrediente;
 import Entidades.Producto;
 import Entidades.ProductoIngrediente;
 import Excepciones.NegocioException;
-import Exception.PersitenciaException;
+//import Exception.PersitenciaException;
 import java.util.List;
 
 /**

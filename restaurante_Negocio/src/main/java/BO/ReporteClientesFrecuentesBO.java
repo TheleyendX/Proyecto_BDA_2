@@ -53,12 +53,12 @@ public class ReporteClientesFrecuentesBO {
         return clientes.stream().map(clienteFMapper::toDTO).collect(Collectors.toList());
     }
     
-    public List<ClienteFrecuenteDTO> obtenerTodosLosClientesFrecuentes() throws NegocioException {
-        try {
-            List<ClienteFrecuente> clientes = reporteClientesDAO.obtenerClientesFrecuentesPorFiltro(null, null); // Sin filtro
-            return convertirAClienteFrecuenteDTO(clientes);
-        } catch (PersistenciaException e) {
-            throw new NegocioException("Error al obtener todos los clientes frecuentes: " + e.getMessage());
-        }
-    }
+//    public List<ClienteFrecuenteDTO> obtenerTodosLosClientesFrecuentes() throws NegocioException {
+//        try {
+//            List<ClienteFrecuente> clientes = reporteClientesDAO.obtenerClientesFrecuentesPorFiltro(null, null); // Sin filtro
+//            return convertirAClienteFrecuenteDTO(clientes);
+//        } catch (PersistenciaException e) {
+//            throw new NegocioException("Error al obtener todos los clientes frecuentes: " + e.getMessage());
+//        }
+//    }
 }
