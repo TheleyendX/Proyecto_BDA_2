@@ -119,6 +119,14 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             }
         });
         
+         BtnClientesFrecuentes.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                PantallaPrincipal.this.dispose();
+                new Ingrediente().setVisible(true);
+            }
+        });
+        
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(20, 20, 20, 20);
