@@ -119,6 +119,14 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             }
         });
         
+        BtnReportes.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                PantallaPrincipal.this.dispose();
+                new MenuReportes().setVisible(true);
+            }
+        });
+        
          BtnIngredientes.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
