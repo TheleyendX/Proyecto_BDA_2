@@ -192,7 +192,7 @@ public class ReporteClientesFrecuentes extends javax.swing.JFrame {
         PdfWriter.getInstance(document, new FileOutputStream(rutaDestino));
         document.open();
 
-        Font fontTitulo = FontFactory.getFont(FontFactory.HELVETICA, 20, Font.BOLD, new BaseColor(0, 102, 153));
+        Font fontTitulo = FontFactory.getFont(FontFactory.HELVETICA, 20, Font.BOLD, new BaseColor(128, 0, 64));
         Paragraph titulo = new Paragraph("Reporte de Clientes Frecuentes", fontTitulo);
         titulo.setAlignment(Element.ALIGN_CENTER);
         titulo.setSpacingAfter(20);
@@ -203,7 +203,7 @@ public class ReporteClientesFrecuentes extends javax.swing.JFrame {
         tabla.setWidths(new float[]{3, 2, 2, 2, 3});
 
         Font headerFont = FontFactory.getFont(FontFactory.HELVETICA, 12, Font.BOLD, BaseColor.WHITE);
-        BaseColor headerColor = new BaseColor(0, 102, 153);
+        BaseColor headerColor = new BaseColor(128, 0, 64);
         String[] headers = {"Nombre", "Visitas", "Total Gastado", "Puntos", "Última Comanda"};
 
         for (String h : headers) {
