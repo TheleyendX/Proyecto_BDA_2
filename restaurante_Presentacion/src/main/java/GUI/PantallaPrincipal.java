@@ -119,7 +119,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             }
         });
         
-         BtnClientesFrecuentes.addActionListener(new ActionListener() {
+         BtnIngredientes.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 PantallaPrincipal.this.dispose();
