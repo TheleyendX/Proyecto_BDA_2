@@ -8,12 +8,12 @@ package GUI;
  *
  * @author jorge
  */
-public class EliminarIngrediente extends javax.swing.JFrame {
+public class BuscarIngrediente extends javax.swing.JFrame {
 
     /**
-     * Creates new form EliminarIngrediente
+     * Creates new form BuscarIngrediente
      */
-    public EliminarIngrediente() {
+    public BuscarIngrediente() {
         initComponents();
     }
 
@@ -26,27 +26,24 @@ public class EliminarIngrediente extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel3 = new javax.swing.JLabel();
-        btnvolver = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
+        btnvolver = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
+
+        btnEliminar.setBackground(new java.awt.Color(255, 153, 255));
+        btnEliminar.setForeground(new java.awt.Color(0, 0, 0));
+        btnEliminar.setText("Eliminar");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel3.setFont(new java.awt.Font("Microsoft YaHei", 1, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(153, 0, 102));
-        jLabel3.setText("Eliminar Ingrediente");
-
-        btnvolver.setBackground(new java.awt.Color(255, 153, 255));
-        btnvolver.setForeground(new java.awt.Color(0, 0, 0));
-        btnvolver.setText("Volver");
-
-        btnEliminar.setBackground(new java.awt.Color(255, 153, 255));
-        btnEliminar.setForeground(new java.awt.Color(0, 0, 0));
-        btnEliminar.setText("Eliminar");
+        jLabel3.setText("Buscar Ingrediente");
 
         jLabel2.setText("Unidad de Medida:");
 
@@ -61,39 +58,52 @@ public class EliminarIngrediente extends javax.swing.JFrame {
 
         jLabel1.setText("Nombre:");
 
+        btnvolver.setBackground(new java.awt.Color(255, 153, 255));
+        btnvolver.setForeground(new java.awt.Color(0, 0, 0));
+        btnvolver.setText("Volver");
+
+        btnBuscar.setBackground(new java.awt.Color(255, 153, 255));
+        btnBuscar.setForeground(new java.awt.Color(0, 0, 0));
+        btnBuscar.setText("Buscar");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(8, Short.MAX_VALUE)
-                .addComponent(btnvolver, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel1)
-                            .addGap(66, 66, 66)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel2)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(102, 102, 102))
             .addGroup(layout.createSequentialGroup()
-                .addGap(170, 170, 170)
-                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnvolver, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3)
+                        .addGap(95, 95, 95))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(66, 66, 66)
+                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(85, 85, 85))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(162, 162, 162))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(btnvolver)
-                .addGap(4, 4, 4)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(btnvolver)))
+                .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
@@ -101,9 +111,9 @@ public class EliminarIngrediente extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addGap(36, 36, 36)
-                .addComponent(btnEliminar)
-                .addGap(77, 77, 77))
+                .addGap(33, 33, 33)
+                .addComponent(btnBuscar)
+                .addContainerGap(92, Short.MAX_VALUE))
         );
 
         pack();
@@ -113,9 +123,10 @@ public class EliminarIngrediente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
-   
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnvolver;
     private javax.swing.JComboBox<String> jComboBox1;
