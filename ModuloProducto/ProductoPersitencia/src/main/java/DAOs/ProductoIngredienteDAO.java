@@ -1,91 +1,108 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DAOs;
 
-import Entidades.Ingrediente;
-import Entidades.Producto;
-import java.util.Objects;
+import Conexion.Conexion;
+import Entidades.ProductoIngrediente;
+import Exception.PersitenciaException;
+import Interafaces.IProductoIngredienteDAO;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
-/**
- *
- * @author mmax2
- */
-public class ProductoIngredienteDAO {
+public class ProductoIngredienteDAO implements IProductoIngredienteDAO {
 
-    public Producto producto;
+    private EntityManager em = Conexion.crearConexion();
 
-    public Ingrediente ingrediente;
-
-    public Double cantidadRequerida;
-
-    public ProductoIngredienteDAO() {
-    }
-
-    public ProductoIngredienteDAO(Producto producto, Ingrediente ingrediente, Double cantidadRequerida) {
-        this.producto = producto;
-        this.ingrediente = ingrediente;
-        this.cantidadRequerida = cantidadRequerida;
-    }
-
-    public Producto getProducto() {
-        return producto;
-    }
-
-    public void setProducto(Producto producto) {
-        this.producto = producto;
-    }
-
-    public Ingrediente getIngrediente() {
-        return ingrediente;
-    }
-
-    public void setIngrediente(Ingrediente ingrediente) {
-        this.ingrediente = ingrediente;
-    }
-
-    public Double getCantidadRequerida() {
-        return cantidadRequerida;
-    }
-
-    public void setCantidadRequerida(Double cantidadRequerida) {
-        this.cantidadRequerida = cantidadRequerida;
+    @Override
+    public ProductoIngrediente registrar(ProductoIngrediente pi) throws PersitenciaException {
+        try {
+            em.getTransaction().begin();
+            em.persist(pi);
+            em.getTransaction().commit();
+            return pi;
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw new PersitenciaException("Error al registrar ProductoIngrediente: " + e.getMessage());
+        }
     }
 
     @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 89 * hash + Objects.hashCode(this.producto);
-        hash = 89 * hash + Objects.hashCode(this.ingrediente);
-        hash = 89 * hash + Objects.hashCode(this.cantidadRequerida);
-        return hash;
+    public ProductoIngrediente editar(ProductoIngrediente pi) throws PersitenciaException {
+        try {
+            em.getTransaction().begin();
+            ProductoIngrediente actualizado = em.merge(pi);
+            em.getTransaction().commit();
+            return actualizado;
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw new PersitenciaException("Error al editar ProductoIngrediente: " + e.getMessage());
+        }
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
+    public void eliminar(Long idProductoIngrediente) throws PersitenciaException {
+        try {
+            em.getTransaction().begin();
+            ProductoIngrediente pi = em.find(ProductoIngrediente.class, idProductoIngrediente);
+            if (pi != null) {
+                em.remove(pi);
+            }
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw new PersitenciaException("Error al eliminar ProductoIngrediente: " + e.getMessage());
         }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final ProductoIngredienteDAO other = (ProductoIngredienteDAO) obj;
-        if (!Objects.equals(this.producto, other.producto)) {
-            return false;
-        }
-        if (!Objects.equals(this.ingrediente, other.ingrediente)) {
-            return false;
-        }
-        return Objects.equals(this.cantidadRequerida, other.cantidadRequerida);
     }
 
     @Override
-    public String toString() {
-        return "ProductoIngredienteDAO{" + "producto=" + producto + ", ingrediente=" + ingrediente + ", cantidadRequerida=" + cantidadRequerida + '}';
+    public List<ProductoIngrediente> obtenerPorProducto(Long idProducto) throws PersitenciaException {
+        try {
+            TypedQuery<ProductoIngrediente> query = em.createQuery(
+                    "SELECT pi FROM ProductoIngrediente pi WHERE pi.producto.id = :idProducto",
+                    ProductoIngrediente.class
+            );
+            query.setParameter("idProducto", idProducto);
+            return query.getResultList();
+        } catch (Exception e) {
+            throw new PersitenciaException("Error al obtener ingredientes del producto: " + e.getMessage());
+        }
     }
 
+    @Override
+    public ProductoIngrediente obtenerPorProductoEIngrediente(Long idProducto, Long idIngrediente) throws PersitenciaException {
+        try {
+            TypedQuery<ProductoIngrediente> query = em.createQuery(
+                    "SELECT pi FROM ProductoIngrediente pi WHERE pi.producto.id = :idProducto AND pi.ingrediente.id = :idIngrediente",
+                    ProductoIngrediente.class
+            );
+            query.setParameter("idProducto", idProducto);
+            query.setParameter("idIngrediente", idIngrediente);
+            return query.getSingleResult();
+        } catch (Exception e) {
+            throw new PersitenciaException("No se encontró la relación Producto-Ingrendiente: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public boolean existeRelacion(Long idProducto, Long idIngrediente) throws PersitenciaException {
+        try {
+            TypedQuery<Long> query = em.createQuery(
+                    "SELECT COUNT(pi) FROM ProductoIngrediente pi WHERE pi.producto.id = :idProducto AND pi.ingrediente.id = :idIngrediente",
+                    Long.class
+            );
+            query.setParameter("idProducto", idProducto);
+            query.setParameter("idIngrediente", idIngrediente);
+            return query.getSingleResult() > 0;
+        } catch (Exception e) {
+            throw new PersitenciaException("Error al verificar la existencia de la relación: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public List<ProductoIngrediente> obtenerTodos() throws PersitenciaException {
+        try {
+            return em.createQuery("SELECT pi FROM ProductoIngrediente pi", ProductoIngrediente.class).getResultList();
+        } catch (Exception e) {
+            throw new PersitenciaException("Error al obtener todos los ProductoIngrediente: " + e.getMessage());
+        }
+    }
 }

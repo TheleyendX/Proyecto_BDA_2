@@ -24,11 +24,11 @@ public interface IProductoDAO {
     
     public Producto registraProducto(String nombre, TipoProducto tipo, EstadoProducto estado, Double precio) throws PersitenciaException;
     
-    public void quitarIngrediente (Ingrediente ingrediente) throws PersitenciaException;
+    public void quitarIngrediente ( Long id, String nombre) throws PersitenciaException;
     
-    public void agregarIngrediente (Ingrediente ingrediente, Double cantidad) throws PersitenciaException;
+    public void agregarIngrediente (Long idProducto, Ingrediente ingrediente, Double cantidad) throws PersitenciaException;
     
-    public EstadoProducto ModificarEstado (EstadoProducto estado) throws PersitenciaException;
+    public EstadoProducto ModificarEstado (Long idProducto, EstadoProducto estado) throws PersitenciaException;
     
     public List<Producto> buscaProducto(TipoProducto tipo, String nombre)throws PersitenciaException;
 }

@@ -41,13 +41,33 @@ public class ProductoDAO implements IProductoDAO {
     }
 
     @Override
+
     public ProductoIngrediente getIngredientesNecesarios(Long id) throws PersitenciaException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            Producto producto = em.find(Producto.class, id);
+            if (producto == null) {
+                throw new PersitenciaException("Producto no encontrado con ID: " + id);
+            }
+
+            // Retorna la lista de ingredientes. Si quieres todos, puedes regresar la lista completa
+            // o hacer una búsqueda específica si se desea por otra condición.
+            return producto.getIngrediente().isEmpty() ? null : producto.getIngrediente().get(0);
+        } catch (Exception e) {
+            throw new PersitenciaException("Error al obtener ingredientes: " + e.getMessage());
+        }
     }
 
     @Override
     public Producto editarProducto(Producto p) throws PersitenciaException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            em.getTransaction().begin();
+            Producto actualizado = em.merge(p);
+            em.getTransaction().commit();
+            return actualizado;
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw new PersitenciaException("Error al editar el producto: " + e.getMessage());
+        }
     }
 
     /**
@@ -63,7 +83,7 @@ public class ProductoDAO implements IProductoDAO {
     @Override
     public Producto registraProducto(String nombre, TipoProducto tipo, EstadoProducto estado, Double precio) throws PersitenciaException {
         try {
-            if (nombre == null || nombre.trim().isEmpty()){
+            if (nombre == null || nombre.trim().isEmpty()) {
                 throw new PersitenciaException("El nombre ingresado no puede estar vacio");
             }
 
@@ -76,30 +96,88 @@ public class ProductoDAO implements IProductoDAO {
             em.getTransaction().begin();
             em.persist(producto);
             em.getTransaction().commit();
-            
+
             return producto;
-        }catch (Exception e){
+        } catch (Exception e) {
             em.getTransaction().rollback();
             return null;
-        }finally {
+        } finally {
             em.close();
         }
-        
+
     }
 
     @Override
-    public void quitarIngrediente(Ingrediente ingrediente) throws PersitenciaException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void quitarIngrediente(Long idProducto, String nombre) throws PersitenciaException {
+        try {
+            em.getTransaction().begin();
+            Producto producto = em.find(Producto.class, idProducto);
+            if (producto == null) {
+                throw new PersitenciaException("Producto no encontrado");
+            }
+
+            List<ProductoIngrediente> lista = producto.getIngrediente();
+            ProductoIngrediente objetivo = null;
+
+            for (ProductoIngrediente pi : lista) {
+                if (pi.getIngrediente().getNombre().equalsIgnoreCase(nombre)) {
+                    objetivo = pi;
+                    break;
+                }
+            }
+
+            if (objetivo != null) {
+                lista.remove(objetivo);
+                em.remove(em.contains(objetivo) ? objetivo : em.merge(objetivo));
+            }
+
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw new PersitenciaException("Error al quitar ingrediente: " + e.getMessage());
+        }
     }
 
     @Override
-    public void agregarIngrediente(Ingrediente ingrediente, Double cantidad) throws PersitenciaException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void agregarIngrediente(Long idProducto, Ingrediente ingrediente, Double cantidad) throws PersitenciaException {
+        try {
+            em.getTransaction().begin();
+
+            Producto producto = em.find(Producto.class, idProducto);
+            if (producto == null) {
+                throw new PersitenciaException("Producto no encontrado");
+            }
+
+            ProductoIngrediente nuevo = new ProductoIngrediente(producto, ingrediente, cantidad);
+            em.persist(nuevo);
+
+            producto.getIngrediente().add(nuevo);
+            em.merge(producto);
+
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw new PersitenciaException("Error al agregar ingrediente: " + e.getMessage());
+        }
     }
 
     @Override
-    public EstadoProducto ModificarEstado(EstadoProducto estado) throws PersitenciaException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public EstadoProducto ModificarEstado(Long idProducto, EstadoProducto estado) throws PersitenciaException {
+        try {
+            em.getTransaction().begin();
+            Producto producto = em.find(Producto.class, idProducto);
+            if (producto == null) {
+                throw new PersitenciaException("Producto no encontrado");
+            }
+
+            producto.setEstado(estado);
+            em.merge(producto);
+            em.getTransaction().commit();
+            return estado;
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw new PersitenciaException("Error al modificar estado: " + e.getMessage());
+        }
     }
 
     @Override
