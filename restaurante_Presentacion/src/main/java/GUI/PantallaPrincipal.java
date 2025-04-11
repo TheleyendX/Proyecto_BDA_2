@@ -119,6 +119,14 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             }
         });
         
+          BtnIngredientes.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                PantallaPrincipal.this.dispose();
+                new Ingrediente().setVisible(true);
+            }
+        });
+        
         BtnReportes.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -127,13 +135,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             }
         });
         
-         BtnIngredientes.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                PantallaPrincipal.this.dispose();
-                new Ingrediente().setVisible(true);
-            }
-        });
+       
         
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
