@@ -19,6 +19,8 @@ public class ClienteFrecuenteDTO extends ClienteDTO {
     private Double gastoTotalAcumulado;
     
     private Integer conteoVisitas;
+    
+    private LocalDate ultimaFechaComanda;
 
     public ClienteFrecuenteDTO() {
     }
@@ -37,6 +39,29 @@ public class ClienteFrecuenteDTO extends ClienteDTO {
         this.conteoVisitas = conteoVisitas;
     }
 
+    public ClienteFrecuenteDTO(Integer puntos, Double gastoTotalAcumulado, Integer conteoVisitas, LocalDate ultimaFechaComanda, String nombre, String apellidoP, String apellidoM, String correo, String telefono, LocalDate fechaRegistro, List<Comanda> comandas) {
+        super(nombre, apellidoP, apellidoM, correo, telefono, fechaRegistro, comandas);
+        this.puntos = puntos;
+        this.gastoTotalAcumulado = gastoTotalAcumulado;
+        this.conteoVisitas = conteoVisitas;
+        this.ultimaFechaComanda = ultimaFechaComanda;
+    }
+
+    public ClienteFrecuenteDTO(Integer puntos, Double gastoTotalAcumulado, Integer conteoVisitas, LocalDate ultimaFechaComanda) {
+        this.puntos = puntos;
+        this.gastoTotalAcumulado = gastoTotalAcumulado;
+        this.conteoVisitas = conteoVisitas;
+        this.ultimaFechaComanda = ultimaFechaComanda;
+    }
+
+    public ClienteFrecuenteDTO(Integer puntos, Double gastoTotalAcumulado, Integer conteoVisitas, LocalDate ultimaFechaComanda, Long id, String nombre, String apellidoP, String apellidoM, String correo, String telefono, LocalDate fechaRegistro, List<Comanda> comandas) {
+        super(id, nombre, apellidoP, apellidoM, correo, telefono, fechaRegistro, comandas);
+        this.puntos = puntos;
+        this.gastoTotalAcumulado = gastoTotalAcumulado;
+        this.conteoVisitas = conteoVisitas;
+        this.ultimaFechaComanda = ultimaFechaComanda;
+    }
+    
     
     
     
@@ -46,6 +71,13 @@ public class ClienteFrecuenteDTO extends ClienteDTO {
         this.conteoVisitas = conteoVisitas;
     }
 
+    public LocalDate getUltimaFechaComanda() {
+        return ultimaFechaComanda;
+    }
+    
+    public void setUltimaFechaComanda(LocalDate ultimaFechaComanda) {
+        this.ultimaFechaComanda = ultimaFechaComanda;
+    }
     public Integer getPuntos() {
         return puntos;
     }
@@ -78,9 +110,10 @@ public class ClienteFrecuenteDTO extends ClienteDTO {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 41 * hash + Objects.hashCode(this.puntos);
-        hash = 41 * hash + Objects.hashCode(this.gastoTotalAcumulado);
-        hash = 41 * hash + Objects.hashCode(this.conteoVisitas);
+        hash = 43 * hash + Objects.hashCode(this.puntos);
+        hash = 43 * hash + Objects.hashCode(this.gastoTotalAcumulado);
+        hash = 43 * hash + Objects.hashCode(this.conteoVisitas);
+        hash = 43 * hash + Objects.hashCode(this.ultimaFechaComanda);
         return hash;
     }
 
@@ -102,8 +135,13 @@ public class ClienteFrecuenteDTO extends ClienteDTO {
         if (!Objects.equals(this.gastoTotalAcumulado, other.gastoTotalAcumulado)) {
             return false;
         }
-        return Objects.equals(this.conteoVisitas, other.conteoVisitas);
+        if (!Objects.equals(this.conteoVisitas, other.conteoVisitas)) {
+            return false;
+        }
+        return Objects.equals(this.ultimaFechaComanda, other.ultimaFechaComanda);
     }
+
+    
     
     
 }

@@ -40,12 +40,12 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>restaurante_Dominio</artifactId>
+            <artifactId>restaurante_Persistencia</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>restaurante_Persistencia</artifactId>
+            <artifactId>restaurante_Dominio</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

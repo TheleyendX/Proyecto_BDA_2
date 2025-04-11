@@ -31,6 +31,7 @@ public class ClienteFrecuenteMapper extends ClienteMapper {
         entity.setPuntos(clienteFrecuenteDTO.getPuntos());
         entity.setGastoTotalAcumulado(clienteFrecuenteDTO.getGastoTotalAcumulado());
         entity.setConteoVisitas(clienteFrecuenteDTO.getConteoVisitas());
+        entity.setUltimaFechaComanda(clienteFrecuenteDTO.getUltimaFechaComanda());
 
         return entity;
     }
@@ -42,6 +43,7 @@ public class ClienteFrecuenteMapper extends ClienteMapper {
             clienteFrecuente.getPuntos(),
             clienteFrecuente.getGastoTotalAcumulado(),
             clienteFrecuente.getConteoVisitas(),
+            clienteFrecuente.getUltimaFechaComanda(),
             clienteFrecuente.getId(),
             clienteFrecuente.getNombre(),
             clienteFrecuente.getApellidoP(),
