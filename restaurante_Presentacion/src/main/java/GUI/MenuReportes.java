@@ -4,19 +4,103 @@
  */
 package GUI;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+
 /**
  *
  * @author katia
  */
 public class MenuReportes extends javax.swing.JFrame {
 
+    private JButton btnAtras;
+    private JButton btnComandas;
+    private JButton btnClientesF;
+    
     /**
      * Creates new form MenuReportes
      */
     public MenuReportes() {
-        initComponents();
+        initComponents2();
+        this.setSize(1000, 800);
+        this.setLocationRelativeTo(null);
+        getContentPane().setBackground(new Color(18, 18, 18));
     }
 
+    private void initComponents2() {
+        JLabel titulo = new JLabel("Reportes");
+        btnComandas = new JButton("Comandas");
+        btnClientesF = new JButton("Clientes Frecuentes");
+        btnAtras = new JButton("Atrás");
+        
+        btnComandas.setPreferredSize(new Dimension(300, 60));
+        btnClientesF.setPreferredSize(new Dimension(300, 60));
+        btnAtras.setPreferredSize(new Dimension(150, 50));
+
+        titulo.setFont(new Font("SansSerif", Font.BOLD, 50));
+        titulo.setForeground(new Color(153, 0, 77)); // Bordó
+        titulo.setHorizontalAlignment(SwingConstants.CENTER);
+
+        Color rosa = new Color(242, 122, 224);
+        Font botonFont = new Font("SansSerif", Font.BOLD, 16);
+
+        for (JButton btn : new JButton[]{btnComandas, btnClientesF, btnAtras}) {
+            btn.setBackground(rosa);
+            btn.setFont(botonFont);
+            btn.setForeground(Color.BLACK);
+            btn.setFocusPainted(false);
+        }
+
+        btnAtras.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MenuReportes.this.dispose();
+                new PantallaPrincipal().setVisible(true);
+            }
+        });
+        
+        btnComandas.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MenuReportes.this.dispose();
+                new ReporteComandas().setVisible(true);
+            }
+        });
+        
+        btnClientesF.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MenuReportes.this.dispose();
+                new ReporteClientesFrecuentes().setVisible(true);
+            }
+        });
+        
+        setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(20, 20, 20, 20);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        add(titulo, gbc);
+
+        gbc.gridy++;
+        add(btnComandas, gbc);
+
+        gbc.gridy++;
+        add(btnClientesF, gbc);
+
+        gbc.gridy++;
+        add(btnAtras, gbc);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
