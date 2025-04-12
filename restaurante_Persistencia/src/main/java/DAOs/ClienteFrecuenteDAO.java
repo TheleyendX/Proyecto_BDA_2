@@ -18,12 +18,21 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 /**
- *
+ * Clase que implementa la interfaz IClienteFrecuenteDAO
+ * Se encarga de persistir en la base de datos todo lo relacionado con
+ * los clientes frecuentes.
  * @author katia
  */
 public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
     EntityManager em = Conexion.crearConexion();
     
+    /**
+     * MÉTODO REALIZADO PARA PRUEBAS.
+     * Guarda una nueva comanda en la base de datos.
+     * @param comanda La comanda con toda la información que se
+     * persistirá.
+     * @throws PersistenciaException En caso de que ocurra un error.
+     */
     @Override
     public void persistirComanda(Comanda comanda) throws PersistenciaException {
     try{
@@ -42,11 +51,16 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
         if (em != null && em.isOpen()){
             em.close();
         }
-            //em.close(); 
-            //Conexion.cerrarConexion();
         }
     }
     
+    /**
+     * Método para registrar un cliente nuevo al sistema.
+     * @param cliente El cliente que se desea registrar.
+     * @return El cliente registrado.
+     * @throws PersistenciaException por cualquier error que pueda ocurrir al
+     * registrar el cliente.
+     */
     @Override
     public ClienteFrecuente registrarClienteFrecuente(ClienteFrecuente cliente) throws PersistenciaException{
         try{
@@ -72,18 +86,21 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
             if (em != null && em.getTransaction().isActive()){
                 em.getTransaction().rollback();
             }
-            //em.getTransaction().rollback();
             throw new PersistenciaException("No se pudo registrar el cliente.");
             
         } finally{
             if (em != null && em.isOpen()){
                 em.close();
             }
-            //em.close(); 
-            //Conexion.cerrarConexion();
         }
     }
     
+    /**
+     * Se encarga de obtener todos los clientes frecuentes que se encuentren
+     * registrados en la base de datos.
+     * @return Lista con todos los clientes.
+     * @throws PersistenciaException En caso de error al obtener clientes frecuentes.
+     */
     @Override
     public List<ClienteFrecuente> obtenerTodos() throws PersistenciaException {
         try {
@@ -105,11 +122,17 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
             if (em != null && em.isOpen()){
             em.close();
         }
-            //em.close();
-            //Conexion.cerrarConexion();
         }
     }
     
+    /**
+     * Método encargado de filtrar los clientes frecuentes según los criterios proporcionados.
+     * @param nombre Nombre completo o parcial del cliente.
+     * @param telefono Teléfono completo del cliente.
+     * @param correo Correo completo o parcial del cliente.
+     * @return Lista de clientes que coincidan con los criterios de búsqueda.
+     * @throws PersistenciaException En caso de error al realizar la búsqueda.
+     */
     @Override
     public List<ClienteFrecuente> filtrarClientesFrecuentes(String nombre, String telefono, String correo) throws PersistenciaException {
         try {
@@ -118,10 +141,6 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
             }
 
             String consulta = "SELECT c FROM ClienteFrecuente c WHERE 1=1";
-
-//            if (nombre != null && !nombre.trim().isEmpty()) {
-//                consulta += " AND (LOWER(c.nombre) LIKE LOWER(:nombre) OR LOWER(c.apellidoP) LIKE LOWER(:nombre) OR LOWER(c.apellidoM) LIKE LOWER(:nombre))";
-//            }
             
             if (nombre != null && !nombre.trim().isEmpty()) {
             String[] partes = nombre.trim().split("\\s+");
@@ -158,7 +177,6 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
                     query.setParameter("nombre" + idx, "%" + parte.trim().toLowerCase() + "%");
                     idx++;
                 }
-                //query.setParameter("nombre", "%" + nombre.trim() + "%");
             }
             if (telefono != null && !telefono.trim().isEmpty()) {
                 query.setParameter("telefono", telefono);
@@ -184,12 +202,15 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
             if (em != null && em.isOpen()){
             em.close();
         }
-//            em.close();
-//            Conexion.cerrarConexion();
         }
     }
     
-    
+    /**
+     * Método que calcula el gasto total acumulado de un cliente, basado en las
+     * comandas cuyo estado sea entregado.
+     * @param cliente Cliente al que se le calcula su gasto.
+     * @return Total de lo que ha gastado un cliente.
+     */
     @Override
     public Double obtenerGastoTotalAcumulado(ClienteFrecuente cliente){
         EntityManager em = Conexion.crearConexion();
@@ -212,11 +233,15 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
             if (em != null && em.isOpen()){
                 em.close();
             }
-//            em.close();
-//            Conexion.cerrarConexion();
         }
     }
     
+    /**
+     * Método que calcula el número de visitas que ha realizado un cliente al
+     * restaurante.
+     * @param cliente Cliente al que se desea calcular.
+     * @return Número total de visitas.
+     */
     @Override
     public Integer obtenerConteoVisitas(ClienteFrecuente cliente){
         EntityManager em = Conexion.crearConexion();
@@ -237,11 +262,15 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
             if (em != null && em.isOpen()){
                 em.close();
             }
-//            em.close();
-//            Conexion.cerrarConexion();
         }
     }
     
+    /**
+     * Calcula los puntos acumulados por un cliente basado en su gasto total 
+     * acumulado.
+     * @param cliente Cliente al que se le calcularán sus puntos.
+     * @return La cantidad de puntos que tenga.
+     */
     @Override
     public Integer obtenerPuntos(ClienteFrecuente cliente){
         Double totalGasto = obtenerGastoTotalAcumulado(cliente);
@@ -250,27 +279,12 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
         return puntos;
     }
     
-//    @Override
-//    public Integer obtenerConteoVisitas(ClienteFrecuente cliente){
-//        List<Comanda> comandas = cliente.getComandas();
-//        int conteo = 0;
-//        for (Comanda comanda: comandas){
-//            if (comanda.getEstado() == EstadoComanda.Entregado){
-//                conteo++;
-//            }
-//        }
-//        cliente.setConteoVisitas(conteo);
-//        return conteo;
-//    }
-    
-//    @Override
-//    public Integer obtenerPuntos(ClienteFrecuente cliente){
-//        Double totalGasto = obtenerGastoTotalAcumulado(cliente);
-//        cliente.setGastoTotalAcumulado(totalGasto);
-//        return (int)(totalGasto/20);
-//    }
-    
-    
+    /**
+     * Busca un cliente frecuente proporcionando su id.
+     * @param id ID del cliente que se desea encontrar.
+     * @return Cliente encontrado.
+     * @throws PersistenciaException En caso de error.
+     */
     @Override
     public ClienteFrecuente buscarPorId(Long id) throws PersistenciaException {
         try {
@@ -284,8 +298,6 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
             if (em != null && em.isOpen()){
                 em.close();
             }
-//            em.close();
-//            Conexion.cerrarConexion();
         }
     }
 }
