@@ -5,6 +5,7 @@
 package DAOs;
 
 import Conexion.Conexion;
+import ENUM.EstadoComanda;
 import Encriptador.Encriptador;
 import Entidades.ClienteFrecuente;
 import Entidades.Comanda;
@@ -51,6 +52,44 @@ public class ReporteComandasDAO implements IReporteComandasDAO{
             return query.getResultList();
         } catch (Exception e) {
             throw new PersistenciaException("Error al obtener comandas filtradas.");
+        } finally {
+            if (em != null && em.isOpen()) {
+                em.close();
+            }
+        }
+    }
+    
+    @Override
+    public Double obtenerTotalAcumuladoVentas(LocalDateTime inicio, LocalDateTime fin) throws PersistenciaException {
+        if (em == null || !em.isOpen()) {
+            em = Conexion.crearConexion();
+        }
+
+        try {
+            String consulta = "SELECT SUM(c.totalVenta) FROM Comanda c WHERE c.estado = :estado";
+
+            if (inicio != null) {
+                consulta += " AND c.fechaHora >= :inicio";
+            }
+            if (fin != null) {
+                consulta += " AND c.fechaHora <= :fin";
+            }
+
+            TypedQuery<Double> query = em.createQuery(consulta, Double.class);
+            query.setParameter("estado", EstadoComanda.Entregado);
+
+            if (inicio != null) {
+                query.setParameter("inicio", inicio);
+            }
+            if (fin != null) {
+                query.setParameter("fin", fin);
+            }
+
+            Double totalAcumulado = query.getSingleResult();
+            return totalAcumulado != null ? totalAcumulado : 0.0;
+
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al obtener el total acumulado de ventas.");
         } finally {
             if (em != null && em.isOpen()) {
                 em.close();

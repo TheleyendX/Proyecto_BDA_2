@@ -162,4 +162,114 @@
 //        assertNotNull(result, "La lista no debe ser nula.");
 //        assertEquals(1, result.size(), "Debe haber 1 comanda, ya que solo una está dentro del rango de fechas.");
 //    }
+//    
+//    @Test
+//    public void testObtenerTotalAcumuladoVentasSinFiltros() throws PersistenciaException {
+//        ClienteFrecuente cliente = new ClienteFrecuente();
+//        cliente.setNombre("Laura");
+//        cliente.setApellidoP("Martínez");
+//        cliente.setCorreo("laura.martinez@example.com");
+//        cliente.setTelefono("4564564560");
+//        reporteComandasDAO.registrarClienteFrecuente(cliente);
+//
+//        for (int i = 0; i < 2; i++) {
+//            Comanda comanda = new Comanda();
+//            comanda.setCliente(cliente);
+//            comanda.setEstado(EstadoComanda.Entregado);
+//            comanda.setFechaHora(LocalDateTime.now());
+//            comanda.setTotalVenta(800.00);
+//
+//            String folio = "CM" + (i + 1);
+//            comanda.setFolio(folio);
+//            reporteComandasDAO.persistirComanda(comanda);
+//        }
+//        Double totalAcumulado = reporteComandasDAO.obtenerTotalAcumuladoVentas(null, null);
+//        assertNotNull(totalAcumulado, "El total acumulado no debe ser nulo.");
+//        assertEquals(1600.00, totalAcumulado, "El total acumulado de ventas debería ser 1600.00.");
+//    }
+//
+//    @Test
+//    public void testObtenerTotalAcumuladoVentasConFiltroInicio() throws PersistenciaException {
+//        ClienteFrecuente cliente = new ClienteFrecuente();
+//        cliente.setNombre("Carlos");
+//        cliente.setApellidoP("Pérez");
+//        cliente.setCorreo("carlos.perez@example.com");
+//        cliente.setTelefono("8912982121");
+//        reporteComandasDAO.registrarClienteFrecuente(cliente);
+//
+//        for (int i = 0; i < 3; i++) {
+//            Comanda comanda = new Comanda();
+//            comanda.setCliente(cliente);
+//            comanda.setEstado(EstadoComanda.Entregado);
+//            comanda.setFechaHora(LocalDateTime.now().minusDays(i)); 
+//            comanda.setTotalVenta(800.00);
+//
+//            String folio = "CMD" + (i + 1);
+//            comanda.setFolio(folio);
+//            reporteComandasDAO.persistirComanda(comanda);
+//        }
+//
+//        LocalDateTime inicio = LocalDateTime.now().minusDays(2); 
+//        Double totalAcumulado = reporteComandasDAO.obtenerTotalAcumuladoVentas(inicio, null);
+//
+//        assertNotNull(totalAcumulado, "El total acumulado no debe ser nulo.");
+//        assertEquals(1600.00, totalAcumulado, "El total acumulado de ventas debería ser 1600.00.");
+//    }
+//
+//    @Test
+//    public void testObtenerTotalAcumuladoVentasConFiltroFin() throws PersistenciaException {
+//        ClienteFrecuente cliente = new ClienteFrecuente();
+//        cliente.setNombre("Ana");
+//        cliente.setApellidoP("González");
+//        cliente.setCorreo("ana.gonzalez@example.com");
+//        cliente.setTelefono("1234567890");
+//        reporteComandasDAO.registrarClienteFrecuente(cliente);
+//
+//        // Crear comandas para este cliente
+//        for (int i = 0; i < 3; i++) {
+//            Comanda comanda = new Comanda();
+//            comanda.setCliente(cliente);
+//            comanda.setEstado(EstadoComanda.Entregado);
+//            comanda.setFechaHora(LocalDateTime.now().minusDays(i)); 
+//            comanda.setTotalVenta(800.00);
+//
+//            String folio = "CMNDA" + (i + 1);
+//            comanda.setFolio(folio);
+//            reporteComandasDAO.persistirComanda(comanda);
+//        }
+//
+//        LocalDateTime fin = LocalDateTime.now().minusDays(1);
+//        Double totalAcumulado = reporteComandasDAO.obtenerTotalAcumuladoVentas(null, fin);
+//        assertNotNull(totalAcumulado, "El total acumulado no debe ser nulo.");
+//        assertEquals(1600.00, totalAcumulado, "El total acumulado de ventas debería ser 1600.00.");
+//    }
+//
+//    @Test
+//    public void testObtenerTotalAcumuladoVentasConFiltros() throws PersistenciaException {
+//        ClienteFrecuente cliente = new ClienteFrecuente();
+//        cliente.setNombre("Pedro");
+//        cliente.setApellidoP("López");
+//        cliente.setCorreo("pedro.lopez@example.com");
+//        cliente.setTelefono("1122334455");
+//        reporteComandasDAO.registrarClienteFrecuente(cliente);
+//
+//        for (int i = 0; i < 3; i++) {
+//            Comanda comanda = new Comanda();
+//            comanda.setCliente(cliente);
+//            comanda.setEstado(EstadoComanda.Entregado);
+//            comanda.setFechaHora(LocalDateTime.now().minusDays(i));
+//            comanda.setTotalVenta(800.00);
+//
+//            String folio = "COM" + (i + 1);
+//            comanda.setFolio(folio);
+//            reporteComandasDAO.persistirComanda(comanda);
+//        }
+//        LocalDateTime inicio = LocalDateTime.now().minusDays(2);
+//        LocalDateTime fin = LocalDateTime.now().minusDays(1);
+//
+//        Double totalAcumulado = reporteComandasDAO.obtenerTotalAcumuladoVentas(inicio, fin);
+//
+//        assertNotNull(totalAcumulado, "El total acumulado no debe ser nulo.");
+//        assertEquals(800.00, totalAcumulado, "El total acumulado de ventas debería ser 800.00.");
+//    }
 //}

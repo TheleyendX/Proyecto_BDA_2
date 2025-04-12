@@ -15,5 +15,5 @@ import java.util.List;
  */
 public interface IReporteComandasDAO {
     public List<Comanda> obtenerComandasFiltros(LocalDateTime inicio, LocalDateTime fin) throws PersistenciaException;
-    
+    public Double obtenerTotalAcumuladoVentas(LocalDateTime inicio, LocalDateTime fin) throws PersistenciaException;
 }
