@@ -16,18 +16,30 @@ import Mapper.ClienteFrecuenteMapper;
 import java.util.List;
 
 /**
- *
+ * Clase encargada de gestionar los clientes frecuentes.
+ * Proporciona métodos para registrar, obtener, filtrar y buscar clientes.
+ * Realiza validaciones.
  * @author katia
  */
 public class ClienteFrecuenteBO {
     private final IClienteFrecuenteDAO clienteFrecuenteDAO;
     private final ClienteFrecuenteMapper mapperClienteFrecuente;
 
+    /**
+     * Constructor de la clase.
+     * Inicializa el acceso a los datos de clientes frecuentes y el mapeado.
+     */
     public ClienteFrecuenteBO() {
         this.clienteFrecuenteDAO = new ClienteFrecuenteDAO();
         this.mapperClienteFrecuente = new ClienteFrecuenteMapper();
     }
 
+    /**
+     * Registra un nuevo cliente frecuente.
+     * @param dto El DTO que contiene la información del cliente a registrar.
+     * @return El DTO del cliente registrado.
+     * @throws NegocioException Por si ocurre un error en el proceso de registro o si las validaciones fallan.
+     */
     public ClienteFrecuenteDTO registrarClienteFrecuente(ClienteFrecuenteDTO dto) throws NegocioException {
         dto.setNombre(dto.getNombre().trim());
         dto.setApellidoP(dto.getApellidoP().trim());
@@ -52,6 +64,11 @@ public class ClienteFrecuenteBO {
         }
     }
 
+    /**
+     * Obtiene todos los clientes frecuentes registrados.
+     * @return Lista de DTOs de todos los clientes frecuentes.
+     * @throws NegocioException En caso que ocurra un error al obtener los clientes.
+     */
     public List<ClienteFrecuenteDTO> obtenerTodos() throws NegocioException {
         try {
             List<ClienteFrecuente> clientes = clienteFrecuenteDAO.obtenerTodos();
@@ -61,11 +78,16 @@ public class ClienteFrecuenteBO {
         }
     }
 
+    /**
+     * Filtra clientes frecuentes según el nombre, teléfono o correo.
+     * @param nombre Nombre del cliente a buscar.
+     * @param telefono Teléfono del cliente a buscar.
+     * @param correo Correo del cliente que se quiere obtener.
+     * @return Lista de los clientes que hayan coincidido con los filtros.
+     * @throws NegocioException En caso de error al filtrar los clientes.
+     */
     public List<ClienteFrecuenteDTO> filtrarClientesFrecuentes(String nombre, String telefono, String correo) throws NegocioException {
         try {
-//            if (telefono != null && !telefono.trim().isEmpty()) {
-//                telefono = Encriptador.encrypt(telefono.trim());  // Encriptar el teléfono antes de pasarlo al DAO
-//            }
             List<ClienteFrecuente> clientes = clienteFrecuenteDAO.filtrarClientesFrecuentes(nombre, telefono, correo);
             return clientes.stream().map(mapperClienteFrecuente::toDTO).toList();
         } catch (PersistenciaException e) {
@@ -73,6 +95,12 @@ public class ClienteFrecuenteBO {
         }
     }
 
+    /**
+     * Busca un cliente frecuente haciendo uso de su ID.
+     * @param id El ID del cliente frecuente a buscar.
+     * @return El cliente encontrado.
+     * @throws NegocioException En caso de error o si no se encuentra al cliente.
+     */
     public ClienteFrecuenteDTO buscarPorId(Long id) throws NegocioException {
         try {
             ClienteFrecuente cliente = clienteFrecuenteDAO.buscarPorId(id);
@@ -85,6 +113,11 @@ public class ClienteFrecuenteBO {
         }
     }
 
+    /**
+     * Valida los campos del cliente antes de ser registrado.
+     * @param dto El DTO del cliente a validar.
+     * @throws NegocioException Por si alguna de las validaciones falla.
+     */
     private void validarCliente(ClienteFrecuenteDTO dto) throws NegocioException {
         if (dto.getNombre() == null || dto.getNombre().isBlank())
             throw new NegocioException("El nombre es obligatorio.");
@@ -100,6 +133,12 @@ public class ClienteFrecuenteBO {
         }
     }
 
+    /**
+     * Verifica si ya existen clientes con los mismos datos que deberían ser
+     * únicos.
+     * @param clienteFDTO El DTO del cliente frecuente a verificar.
+     * @throws NegocioException Por si se encuentra un cliente con los mismos datos.
+     */
     private void validarDuplicados(ClienteFrecuenteDTO clienteFDTO) throws NegocioException {
         try {
             List<ClienteFrecuenteDTO> existentes = obtenerTodos();
