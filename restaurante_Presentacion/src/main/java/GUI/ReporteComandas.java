@@ -4,18 +4,125 @@
  */
 package GUI;
 
+import com.toedter.calendar.JDateChooser;
+import java.awt.Color;
+import java.awt.Font;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author katia
  */
 public class ReporteComandas extends javax.swing.JFrame {
+    private JTable tabla;
+    private DefaultTableModel modeloTabla;
+    private JTextField txtFechaInicio, txtFechaFin;
+    private JLabel lblTotal;
+    private JDateChooser dateChooserInicio;
+    private JDateChooser dateChooserFin;
 
     /**
      * Creates new form ReporteComandas
      */
     public ReporteComandas() {
-        initComponents();
+        setTitle("Reporte comandas");
+        setSize(1000, 800);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setLayout(null);
+        getContentPane().setBackground(new Color(20, 20, 20)); // Fondo oscuro
+
+        JLabel lblTitulo = new JLabel("Comandas");
+        lblTitulo.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 36));
+        lblTitulo.setForeground(new Color(204, 0, 102));
+        lblTitulo.setBounds(400, 20, 300, 40);
+        add(lblTitulo);
+
+        modeloTabla = new DefaultTableModel(new Object[]{"Fecha", "Hora", "Mesa", "Total venta", "Estado", "Cliente"}, 0);
+        tabla = new JTable(modeloTabla);
+        tabla.setRowHeight(30);
+        tabla.setFont(new Font("Arial", Font.PLAIN, 14));
+        tabla.getTableHeader().setFont(new Font("Arial", Font.BOLD, 14));
+        tabla.getTableHeader().setBackground(new Color(128, 0, 64));
+        tabla.getTableHeader().setForeground(Color.BLACK);
+        tabla.setBackground(new Color(255, 182, 255));
+        JScrollPane scroll = new JScrollPane(tabla);
+        scroll.setBounds(60, 100, 640, 400);
+        add(scroll);
+
+        JLabel lblFechaInicio = new JLabel("Fecha inicio");
+        lblFechaInicio.setBounds(740, 100, 200, 20);
+        lblFechaInicio.setForeground(Color.WHITE);
+        add(lblFechaInicio);
+        
+        dateChooserInicio = new JDateChooser();
+        dateChooserInicio.setBounds(740, 120, 200, 30);
+        dateChooserInicio.setDateFormatString("dd/MM/yyyy");
+        add(dateChooserInicio);
+
+        JLabel lblFechaFin = new JLabel("Fecha fin");
+        lblFechaFin.setBounds(740, 170, 200, 20);
+        lblFechaFin.setForeground(Color.WHITE);
+        add(lblFechaFin);
+
+        dateChooserFin = new JDateChooser();
+        dateChooserFin.setBounds(740, 190, 200, 30);
+        dateChooserFin.setDateFormatString("dd/MM/yyyy");
+        add(dateChooserFin);
+
+        JButton btnBuscar = new JButton("Buscar");
+        btnBuscar.setBounds(760, 240, 160, 40);
+        btnBuscar.setBackground(new Color(255, 153, 255));
+        btnBuscar.setFont(new Font("Arial", Font.BOLD, 16));
+        add(btnBuscar);
+
+        JPanel panelTotal = new JPanel();
+        panelTotal.setLayout(null);
+        panelTotal.setBounds(60, 520, 640, 50);
+        panelTotal.setBackground(new Color(255, 153, 255));
+        add(panelTotal);
+
+        JLabel lblTextoTotal = new JLabel("Total acumulado ventas");
+        lblTextoTotal.setBounds(10, 10, 300, 30);
+        lblTextoTotal.setFont(new Font("Arial", Font.BOLD, 16));
+        panelTotal.add(lblTextoTotal);
+
+        lblTotal = new JLabel("0.00");
+        lblTotal.setBounds(400, 10, 150, 30);
+        lblTotal.setHorizontalAlignment(SwingConstants.RIGHT);
+        lblTotal.setFont(new Font("Arial", Font.BOLD, 18));
+        panelTotal.add(lblTotal);
+
+        JButton btnPDF = new JButton("Generar PDF");
+        btnPDF.setBounds(740, 320, 200, 45);
+        btnPDF.setBackground(new Color(255, 153, 255));
+        btnPDF.setFont(new Font("Arial", Font.BOLD, 16));
+        add(btnPDF);
+
+        JButton btnAtras = new JButton("Atrás");
+        btnAtras.setBounds(740, 380, 200, 45);
+        btnAtras.setBackground(new Color(128, 0, 64));
+        btnAtras.setForeground(Color.WHITE);
+        btnAtras.setFont(new Font("Arial", Font.BOLD, 16));
+        add(btnAtras);
+
+        setVisible(true);
+        
+        btnAtras.addActionListener(e -> {
+            this.dispose();
+            new MenuReportes().setVisible(true);
+        });
+        //initComponents();
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.

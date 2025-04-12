@@ -91,6 +91,7 @@ public class ReporteClientesFrecuentes extends javax.swing.JFrame {
         JButton btnBuscar = new JButton("Buscar");
         btnBuscar.setBounds(770, 260, 140, 35);
         btnBuscar.setBackground(new Color(255, 153, 255));
+        btnBuscar.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 16));
         btnBuscar.addActionListener(e -> buscarClientes());
         add(btnBuscar);
 
@@ -98,6 +99,7 @@ public class ReporteClientesFrecuentes extends javax.swing.JFrame {
             "Nombre", "Número visitas", "Total gastado", "Puntos fidelidad", "Fecha última comanda"
         }, 0);
         tablaClientes = new JTable(modeloTabla);
+        tablaClientes.getTableHeader().setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 14));
         JScrollPane scroll = new JScrollPane(tablaClientes);
         scroll.setBounds(60, 100, 640, 600);
         add(scroll);
@@ -105,23 +107,24 @@ public class ReporteClientesFrecuentes extends javax.swing.JFrame {
         JButton btnPDF = new JButton("Generar PDF");
         btnPDF.setBounds(730, 350, 220, 45);
         btnPDF.setBackground(new Color(255, 153, 255));
+        btnPDF.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 16));
         btnPDF.addActionListener(e -> generarPDF());
         add(btnPDF);
 
         JButton btnAtras = new JButton("Atrás");
         btnAtras.setBounds(730, 410, 220, 45);
         btnAtras.setBackground(new Color(128, 0, 64));
+        btnAtras.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 16));
         btnAtras.setForeground(Color.WHITE);
-        btnAtras.addActionListener(e -> System.exit(0));
         add(btnAtras);
 
         setVisible(true);
         
+        buscarClientes();
         btnAtras.addActionListener(e -> {
             this.dispose();
             new MenuReportes().setVisible(true);
         });
-        buscarClientes();
         //initComponents();
     }
     
