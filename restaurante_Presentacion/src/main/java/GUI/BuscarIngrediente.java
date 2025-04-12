@@ -61,6 +61,11 @@ public class BuscarIngrediente extends javax.swing.JFrame {
         btnvolver.setBackground(new java.awt.Color(255, 153, 255));
         btnvolver.setForeground(new java.awt.Color(0, 0, 0));
         btnvolver.setText("Volver");
+        btnvolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnvolverActionPerformed(evt);
+            }
+        });
 
         btnBuscar.setBackground(new java.awt.Color(255, 153, 255));
         btnBuscar.setForeground(new java.awt.Color(0, 0, 0));
@@ -122,6 +127,12 @@ public class BuscarIngrediente extends javax.swing.JFrame {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void btnvolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnvolverActionPerformed
+        Ingrediente ingrediente = new Ingrediente(); // Crear la instancia de la otra pantalla
+    ingrediente.setVisible(true); // Hacer visible la nueva pantalla
+    this.dispose(); // Cerrar la pantalla actual
+    }//GEN-LAST:event_btnvolverActionPerformed
 
     
 

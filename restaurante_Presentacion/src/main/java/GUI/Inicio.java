@@ -122,7 +122,7 @@ public class Inicio extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Inicio.this.dispose();
-                // aqui va lo de comandas abiertas
+               new ComandasAbiertas().setVisible(true);
             }
         });
         

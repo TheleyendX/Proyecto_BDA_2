@@ -41,6 +41,11 @@ public class ComandasAbiertas extends javax.swing.JFrame {
         btnvolver.setBackground(new java.awt.Color(255, 153, 255));
         btnvolver.setForeground(new java.awt.Color(0, 0, 0));
         btnvolver.setText("Volver");
+        btnvolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnvolverActionPerformed(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -58,6 +63,11 @@ public class ComandasAbiertas extends javax.swing.JFrame {
         btnNuevaC.setBackground(new java.awt.Color(255, 153, 255));
         btnNuevaC.setForeground(new java.awt.Color(0, 0, 0));
         btnNuevaC.setText("Nueva Comanda");
+        btnNuevaC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevaCActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -91,6 +101,18 @@ public class ComandasAbiertas extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnvolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnvolverActionPerformed
+        PantallaPrincipal pantallaPrincipal = new PantallaPrincipal(); // Crear la instancia de la otra pantalla
+    pantallaPrincipal.setVisible(true); // Hacer visible la nueva pantalla
+    this.dispose(); // Cerrar la pantalla actual
+    }//GEN-LAST:event_btnvolverActionPerformed
+
+    private void btnNuevaCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaCActionPerformed
+         NuevaComanda nuevaComanda = new NuevaComanda(); // Crear la instancia de la otra pantalla
+    nuevaComanda.setVisible(true); // Hacer visible la nueva pantalla
+    this.dispose(); // Cerrar la pantalla actual
+    }//GEN-LAST:event_btnNuevaCActionPerformed
 
   
 

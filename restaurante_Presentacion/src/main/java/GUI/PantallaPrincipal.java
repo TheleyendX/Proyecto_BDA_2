@@ -135,6 +135,21 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             }
         });
         
+        BtnComandas.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                PantallaPrincipal.this.dispose();
+                new ComandasAbiertas().setVisible(true);
+            }
+        });
+        
+         BtnProductos.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                PantallaPrincipal.this.dispose();
+                new PantallaProductos().setVisible(true);
+            }
+        });
        
         
         setLayout(new GridBagLayout());

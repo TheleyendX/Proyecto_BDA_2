@@ -44,6 +44,11 @@ public class Ingrediente extends javax.swing.JFrame {
         btnVolver.setBackground(new java.awt.Color(255, 153, 255));
         btnVolver.setForeground(new java.awt.Color(0, 0, 0));
         btnVolver.setText("Volver");
+        btnVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVolverActionPerformed(evt);
+            }
+        });
 
         jTable1.setBackground(new java.awt.Color(255, 153, 255));
         jTable1.setForeground(new java.awt.Color(0, 0, 0));
@@ -82,14 +87,29 @@ public class Ingrediente extends javax.swing.JFrame {
         btnRegistrar.setBackground(new java.awt.Color(255, 153, 255));
         btnRegistrar.setForeground(new java.awt.Color(0, 0, 0));
         btnRegistrar.setText("Registrar ingrediente");
+        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setBackground(new java.awt.Color(255, 153, 255));
         btnEliminar.setForeground(new java.awt.Color(0, 0, 0));
         btnEliminar.setText("Eliminar ingrediente");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         btnEditar.setBackground(new java.awt.Color(255, 153, 255));
         btnEditar.setForeground(new java.awt.Color(0, 0, 0));
         btnEditar.setText("Editar Ingrediente");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         btnBuscar.setPreferredSize(new java.awt.Dimension(20, 20));
 
@@ -168,6 +188,30 @@ public class Ingrediente extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        RegistrarIngrediente registrarIngrediente = new RegistrarIngrediente(); // Crear la instancia de la otra pantalla
+    registrarIngrediente.setVisible(true); // Hacer visible la nueva pantalla
+    this.dispose(); // Cerrar la pantalla actual
+    }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        EliminarIngrediente eliminarIngrediente = new EliminarIngrediente(); // Crear la instancia de la otra pantalla
+    eliminarIngrediente.setVisible(true); // Hacer visible la nueva pantalla
+    this.dispose(); // Cerrar la pantalla actual
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+          BuscarIngrediente buscarIngrediente = new BuscarIngrediente(); // Crear la instancia de la otra pantalla
+    buscarIngrediente.setVisible(true); // Hacer visible la nueva pantalla
+    this.dispose(); // Cerrar la pantalla actual
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
+        PantallaPrincipal pantallaPrincipal = new PantallaPrincipal(); // Crear la instancia de la otra pantalla
+    pantallaPrincipal.setVisible(true); // Hacer visible la nueva pantalla
+    this.dispose(); // Cerrar la pantalla actual
+    }//GEN-LAST:event_btnVolverActionPerformed
 
  
 
