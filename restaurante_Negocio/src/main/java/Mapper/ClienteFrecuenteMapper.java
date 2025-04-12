@@ -9,11 +9,17 @@ import Entidades.Cliente;
 import Entidades.ClienteFrecuente;
 
 /**
- *
+ * Convierte objetos de entidad a DTO y de DTO a Entidad.
+ * Sirve para separar la lógica de la presentación
  * @author katia
  */
 public class ClienteFrecuenteMapper extends ClienteMapper {
     
+    /**
+     * Convierte un DTO en una entidad.
+     * @param clienteFrecuenteDTO DTO que contiene los datos del cliente frecuente.
+     * @return La entidad con los datos del DTO proporcionado.
+     */
     public ClienteFrecuente toEntity(ClienteFrecuenteDTO clienteFrecuenteDTO) {
         if (clienteFrecuenteDTO == null) return null;
 
@@ -27,7 +33,6 @@ public class ClienteFrecuenteMapper extends ClienteMapper {
         entity.setFechaRegistro(clienteFrecuenteDTO.getFechaRegistro());
         entity.setComandas(clienteFrecuenteDTO.getComandas());
 
-        // Atributos derivados (se permiten porque son @Transient)
         entity.setPuntos(clienteFrecuenteDTO.getPuntos());
         entity.setGastoTotalAcumulado(clienteFrecuenteDTO.getGastoTotalAcumulado());
         entity.setConteoVisitas(clienteFrecuenteDTO.getConteoVisitas());
@@ -36,6 +41,11 @@ public class ClienteFrecuenteMapper extends ClienteMapper {
         return entity;
     }
     
+    /**
+     * Convierte una entidad a su correspondiente DTO.
+     * @param clienteFrecuente La entidad que contiene los datos del cliente frecuente.
+     * @return Un DTO con los datos de la entidad proporcionada.
+     */
     public ClienteFrecuenteDTO toDTO(ClienteFrecuente clienteFrecuente) {
         if (clienteFrecuente == null) return null;
 

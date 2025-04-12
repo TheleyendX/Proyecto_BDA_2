@@ -15,18 +15,32 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- *
+ * Clase usada para obtener reportes de clientes frecuentes
+ * Permite realizar validaciones para verificar que los filtros sean válidos.
  * @author katia
  */
 public class ReporteClientesFrecuentesBO {
     private final IReporteClientesFrecuentesDAO reporteClientesDAO;
     private final ClienteFrecuenteMapper clienteFMapper;
     
+    /**
+     * Constructor de la clase.
+     * Inicializa el acceso a los datos de clientes frecuentes y el mapeador.
+     */
     public ReporteClientesFrecuentesBO(){
         this.reporteClientesDAO = new ReporteClientesFrecuentesDAO();
         this.clienteFMapper = new ClienteFrecuenteMapper();
     }
     
+    /**
+     * Obtiene los clientes frecuentes filtrados por nombre y número mínimo de visitas.
+     * Si el nombre es proporcionado, se valida que solo contenga letras y espacios.
+     * Si el número de visitas es proporcionado, se valida que sea un número entero no negativo.
+     * @param nombre El nombre del cliente (puede ser parcial).
+     * @param visitasMin El número mínimo de visitas del cliente.
+     * @return Lista con los clientes frecuentes que cumplan con los filtros.
+     * @throws NegocioException  En caso de que las validaciones fallen o si ocurre algún error.
+     */
     public List<ClienteFrecuenteDTO> obtenerClientesFrecuentesPorFiltro(String nombre, Integer visitasMin) throws NegocioException {
         if (visitasMin != null){
             if (visitasMin < 0){
@@ -49,16 +63,14 @@ public class ReporteClientesFrecuentesBO {
         }
     }
     
+    /**
+     * Convierte una lista de entidades ClienteFrecuente en una lista de DTOs ClienteFrecuenteDTO.
+     * @param clientes La lista de entidades ClienteFrecuente a convertir.
+     * @return Una lista de DTOs ClienteFrecuenteDTO.
+     */
     private List<ClienteFrecuenteDTO> convertirAClienteFrecuenteDTO(List<ClienteFrecuente> clientes) {
         return clientes.stream().map(clienteFMapper::toDTO).collect(Collectors.toList());
     }
     
-//    public List<ClienteFrecuenteDTO> obtenerTodosLosClientesFrecuentes() throws NegocioException {
-//        try {
-//            List<ClienteFrecuente> clientes = reporteClientesDAO.obtenerClientesFrecuentesPorFiltro(null, null); // Sin filtro
-//            return convertirAClienteFrecuenteDTO(clientes);
-//        } catch (PersistenciaException e) {
-//            throw new NegocioException("Error al obtener todos los clientes frecuentes: " + e.getMessage());
-//        }
-//    }
+
 }
