@@ -144,7 +144,9 @@ public class RegistrarProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_btnvolverActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        // TODO add your handling code here:
+        AgregarIngredienteProducto agregarIngredienteProducto = new AgregarIngredienteProducto(); // Crear la instancia de la otra pantalla
+        agregarIngredienteProducto.setVisible(true); // Hacer visible la nueva pantalla
+        this.dispose(); // Cerrar la pantalla actual
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed

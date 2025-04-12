@@ -180,7 +180,9 @@ public class PantallaProductos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDesabilitarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        // TODO add your handling code here:
+        EditarProducto editarProducto = new EditarProducto(); // Crear la instancia de la otra pantalla
+        editarProducto.setVisible(true); // Hacer visible la nueva pantalla
+        this.dispose(); // Cerrar la pantalla actual
     }//GEN-LAST:event_btnEditarActionPerformed
 
    
