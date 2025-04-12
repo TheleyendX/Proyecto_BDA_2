@@ -5,7 +5,7 @@
 package ENUM;
 
 /**
- *
+ * Representa los posibles estados de una comanda.
  * @author mmax2
  */
 public enum EstadoComanda {

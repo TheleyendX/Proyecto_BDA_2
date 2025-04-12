@@ -5,7 +5,7 @@
 package ENUM;
 
 /**
- *
+ * Representa los posibles estados de un Producto.
  * @author katia
  */
 public enum EstadoProducto {

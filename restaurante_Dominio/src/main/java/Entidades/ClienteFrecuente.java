@@ -13,16 +13,15 @@ import javax.persistence.Entity;
 import javax.persistence.Transient;
 
 /**
- *
+ * Clase que representa a un cliente frecuente, deriva de la clase
+ * Cliente, contiene atributos adicionales.
  * @author mmax2
  */
 @Entity
 @DiscriminatorValue("ClienteFrecuente")
 public class ClienteFrecuente extends Cliente implements Serializable {
 
-    // no guardar atributos derivados en la bd, usar @transient
-    // entidades con atributos calculados solo get
-    // q solo dao pueda asignar el valor
+    
     @Transient
     private Integer puntos;
 
@@ -35,17 +34,41 @@ public class ClienteFrecuente extends Cliente implements Serializable {
     @Transient
     private LocalDate ultimaFechaComanda;
     
+    /**
+     * Constructor por defecto.
+     */
     public ClienteFrecuente() {
     }
 
-    
-    
+    /**
+     * Constructor para crear un ClienteFrecuente con puntos, gasto total acumulado y conteo de visitas.
+     * 
+     * @param puntos El número de puntos acumulados por el cliente.
+     * @param gastoTotalAcumulado El gasto total acumulado del cliente.
+     * @param conteoVisitas El número de visitas realizadas por el cliente.
+     */
     public ClienteFrecuente(Integer puntos, Double gastoTotalAcumulado, Integer conteoVisitas) {
         this.puntos = puntos;
         this.gastoTotalAcumulado = gastoTotalAcumulado;
         this.conteoVisitas = conteoVisitas;
     }
 
+    /**
+     * Constructor para crear un ClienteFrecuente con los atributos del cliente base y los atributos específicos 
+     * de cliente frecuente como puntos, gasto total acumulado y conteo de visitas.
+     * 
+     * @param puntos El número de puntos acumulados por el cliente.
+     * @param gastoTotalAcumulado El gasto total acumulado del cliente.
+     * @param conteoVisitas El número de visitas realizadas por el cliente.
+     * @param id El identificador único del cliente.
+     * @param nombre El nombre del cliente.
+     * @param apellidoP El apellido paterno del cliente.
+     * @param apellidoM El apellido materno del cliente.
+     * @param correo El correo electrónico del cliente.
+     * @param telefono El número de teléfono del cliente.
+     * @param fechaRegistro La fecha en la que se registró el cliente.
+     * @param comandas La lista de comandas asociadas al cliente.
+     */
     public ClienteFrecuente(Integer puntos, Double gastoTotalAcumulado, Integer conteoVisitas, Long id, String nombre, String apellidoP, String apellidoM, String correo, String telefono, LocalDate fechaRegistro, List<Comanda> comandas) {
         super(id, nombre, apellidoP, apellidoM, correo, telefono, fechaRegistro, comandas);
         this.puntos = puntos;
@@ -53,6 +76,15 @@ public class ClienteFrecuente extends Cliente implements Serializable {
         this.conteoVisitas = conteoVisitas;
     }
 
+    /**
+     * Constructor para crear un ClienteFrecuente con los atributos específicos de cliente frecuente, incluyendo 
+     * la última fecha de comanda.
+     * 
+     * @param puntos El número de puntos acumulados por el cliente.
+     * @param gastoTotalAcumulado El gasto total acumulado del cliente.
+     * @param conteoVisitas El número de visitas realizadas por el cliente.
+     * @param ultimaFechaComanda La última fecha de comanda realizada por el cliente.
+     */
     public ClienteFrecuente(Integer puntos, Double gastoTotalAcumulado, Integer conteoVisitas, LocalDate ultimaFechaComanda) {
         this.puntos = puntos;
         this.gastoTotalAcumulado = gastoTotalAcumulado;
@@ -60,6 +92,22 @@ public class ClienteFrecuente extends Cliente implements Serializable {
         this.ultimaFechaComanda = ultimaFechaComanda;
     }
 
+    /**
+     * Constructor para crear un ClienteFrecuente con todos los atributos, incluidos los del cliente base 
+     * y los específicos del cliente frecuente.
+     * 
+     * @param puntos El número de puntos acumulados por el cliente.
+     * @param gastoTotalAcumulado El gasto total acumulado del cliente.
+     * @param conteoVisitas El número de visitas realizadas por el cliente.
+     * @param ultimaFechaComanda La última fecha de comanda realizada por el cliente.
+     * @param nombre El nombre del cliente.
+     * @param apellidoP El apellido paterno del cliente.
+     * @param apellidoM El apellido materno del cliente.
+     * @param correo El correo electrónico del cliente.
+     * @param telefono El número de teléfono del cliente.
+     * @param fechaRegistro La fecha en la que se registró el cliente.
+     * @param comandas La lista de comandas asociadas al cliente.
+     */
     public ClienteFrecuente(Integer puntos, Double gastoTotalAcumulado, Integer conteoVisitas, LocalDate ultimaFechaComanda, String nombre, String apellidoP, String apellidoM, String correo, String telefono, LocalDate fechaRegistro, List<Comanda> comandas) {
         super(nombre, apellidoP, apellidoM, correo, telefono, fechaRegistro, comandas);
         this.puntos = puntos;
@@ -140,8 +188,4 @@ public class ClienteFrecuente extends Cliente implements Serializable {
         }
         return Objects.equals(this.ultimaFechaComanda, other.ultimaFechaComanda);
     }
-    
-    
-
-    
 }

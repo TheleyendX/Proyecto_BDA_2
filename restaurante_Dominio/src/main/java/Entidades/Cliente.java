@@ -24,7 +24,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- *
+ * Clase que representa a un cliente.
+ * Los atributos incluyen información personal de este, como el nombre, teléfono,
+ * correo.
  * @author mmax2
  */
 @Entity
@@ -58,9 +60,23 @@ public class Cliente implements Serializable {
     @OneToMany(mappedBy = "cliente", cascade = {CascadeType.PERSIST})
     private List<Comanda> comandas = new ArrayList<>();
 
+    /**
+     * Constructor por defecto.
+     */
     public Cliente() {
     }
 
+    /**
+     * Constructor con todos los atributos de la clase.
+     * @param id El identificador único del cliente.
+     * @param nombre El nombre del cliente.
+     * @param apellidoP El apellido paterno del cliente.
+     * @param apellidoM El apellido materno del cliente.
+     * @param correo El correo electrónico del cliente.
+     * @param telefono El número de teléfono del cliente.
+     * @param fechaRegistro La fecha en la que se registró el cliente.
+     * @param comandas La lista de comandas asociadas al cliente.
+     */
     public Cliente(Long id, String nombre, String apellidoP, String apellidoM, String correo, String telefono, LocalDate fechaRegistro, List<Comanda> comandas) {
         this.id = id;
         this.nombre = nombre;
@@ -72,6 +88,17 @@ public class Cliente implements Serializable {
         this.comandas = comandas;
     }
 
+    /**
+     * Constructor sin el id.
+     * 
+     * @param nombre El nombre del cliente.
+     * @param apellidoP El apellido paterno del cliente.
+     * @param apellidoM El apellido materno del cliente.
+     * @param correo El correo electrónico del cliente.
+     * @param telefono El número de teléfono del cliente.
+     * @param fechaRegistro La fecha de registro del cliente.
+     * @param comandas La lista de comandas asociadas al cliente.
+     */
     public Cliente(String nombre, String apellidoP, String apellidoM, String correo, String telefono, LocalDate fechaRegistro, List<Comanda> comandas) {
         this.nombre = nombre;
         this.apellidoP = apellidoP;
@@ -146,6 +173,11 @@ public class Cliente implements Serializable {
         this.fechaRegistro = fechaRegistro;
     }
     
+    /**
+     * Obtiene el nombre completo del cliente, compuesto por el nombre y los apellidos.
+     * 
+     * @return El nombre completo del cliente.
+     */
     public String getNombreCompleto() {
         return (nombre + " " + apellidoP + (apellidoM != null ? " " + apellidoM : "")).trim();
     }

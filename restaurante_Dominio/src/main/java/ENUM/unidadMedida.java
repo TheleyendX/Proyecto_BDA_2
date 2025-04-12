@@ -5,7 +5,7 @@
 package ENUM;
 
 /**
- *
+ * La unidad de medida que se utiliza para los ingredientes.
  * @author jorge
  */
 public enum UnidadMedida {
