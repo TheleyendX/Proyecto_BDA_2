@@ -19,11 +19,21 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 /**
- *
+ * Clase que contiene los métodos necesarios para obtener, y filtrar los datos 
+ * relacionados a clientes frecuentes.
  * @author katia
  */
 public class ReporteClientesFrecuentesDAO implements IReporteClientesFrecuentesDAO{
     
+    /**
+     * Obtiene una lista de clientes frecuentes filtrada por nombre y mínimo de visitas. 
+     * (Los filtros son opcionales).
+     * @param nombre Nombre completo o parcial del cliente que se desea obtener.
+     * @param visitasMinimas Cantidad de visitas mínimas que deben tener los clientes
+     * que se desea obtener.
+     * @return
+     * @throws PersistenciaException
+     */
     @Override
     public List<ClienteFrecuente> obtenerClientesFrecuentesPorFiltro(String nombre, Integer visitasMinimas) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
@@ -68,6 +78,11 @@ public class ReporteClientesFrecuentesDAO implements IReporteClientesFrecuentesD
         }
     }
     
+    /**
+     * Obtiene la última fecha de comanda registrada que tenga un cliente frecuente.
+     * @param cliente Cliente al que se consulta su historial de comanda.s
+     * @return Última fecha de comanda del cliente.
+     */
     @Override
     public LocalDate obtenerUltimaFechaComanda(ClienteFrecuente cliente) {
         EntityManager em = Conexion.crearConexion();
@@ -90,7 +105,14 @@ public class ReporteClientesFrecuentesDAO implements IReporteClientesFrecuentesD
             }
         }
     }
-        
+    
+    /**
+     * Método encargado de calcular la cantidad de visitas realizadas por un
+     * cliente al restaurante.
+     * @param cliente Cliente frecuente cuyo número de visitas se consulta.
+     * @return Número total de visitas realizadas por el cliente, se regresa
+     * un 0 en caso de que no tenga.
+     */    
     public Integer obtenerConteoVisitas(ClienteFrecuente cliente){
         EntityManager em = Conexion.crearConexion();
         try {
@@ -113,6 +135,12 @@ public class ReporteClientesFrecuentesDAO implements IReporteClientesFrecuentesD
         }
     }
     
+    /**
+     * Método que calcula los puntos de un cliente frecuente basado en el gasto
+     * total acumulado que este tenga.
+     * @param cliente Cliente cuyo puntaje se consulta.
+     * @return Cantidad de puntos acumulados por el cliente.
+     */
     public Integer obtenerPuntos(ClienteFrecuente cliente){
         Double totalGasto = obtenerGastoTotalAcumulado(cliente);
         Integer puntos = (int)(totalGasto / 20);
@@ -120,6 +148,12 @@ public class ReporteClientesFrecuentesDAO implements IReporteClientesFrecuentesD
         return puntos;
     }
     
+    /**
+     * Calcula el gasto total acumulado de un cliente frecuente, en base al
+     * total de la venta de cada comanda que tenga asociada.
+     * @param cliente Cliente frecuente cuyo gasto total se consulta.
+     * @return Cantidad que ha gastado en el restaurante, o 0.0 en caso que no tenga.
+     */
     public Double obtenerGastoTotalAcumulado(ClienteFrecuente cliente){
         EntityManager em = Conexion.crearConexion();
         Double total = 0.0;
@@ -145,6 +179,14 @@ public class ReporteClientesFrecuentesDAO implements IReporteClientesFrecuentesD
     }
     
     //PARA LAS PRUEBAS UNITARIAS
+    /**
+     * MÉTODO UTILIZADO SOLAMENTE PARA PRUEBAS
+     * Método que registra un nuevo cliente frecuente en la bd.
+     * @param cliente Cliente frecuente que se desea registrar.
+     * @return El cliente ya registrado, con su ID asignado.
+     * @throws PersistenciaException En caso de que ocurra algún error durante 
+     * el registro.
+     */
     public ClienteFrecuente registrarClienteFrecuente(ClienteFrecuente cliente) throws PersistenciaException{
         EntityManager em = Conexion.crearConexion();
         try{
@@ -179,6 +221,13 @@ public class ReporteClientesFrecuentesDAO implements IReporteClientesFrecuentesD
         }
     }
     
+    /**
+     * MÉTODO UTILIZADO SOLAMENTE PARA PRUEBAS.
+     * Se encarga de persistir una comanda en la base de datos.
+     * @param comanda Comanda que se desea guardar.
+     * @throws PersistenciaException Por si ocurre un error durante el registro
+     * de la comanda.
+     */
     public void persistirComanda(Comanda comanda) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
         try{

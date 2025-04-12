@@ -18,13 +18,22 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 /**
- *
+ * Clase utilizada para obtener datos de las comandas desde la base de datos.
+ * Permite filtrarlas por un rango de fecha y calcular el total acumulado.
  * @author katia
  */
 public class ReporteComandasDAO implements IReporteComandasDAO{
     EntityManager em = Conexion.crearConexion();
     
-    
+    /**
+     * Obtiene una lista de comandas que coincidan con los filtros de búsqueda
+     * proporcionados por el usuario. (Filtros opcionales).
+     * @param inicio Fecha y hora de inicio del rango de búsqueda.
+     * @param fin Fecha y hora de fin del rango de búsqueda.
+     * @return Lista de comandas que coincidan con el rango de fechas
+     * proporcionados.
+     * @throws PersistenciaException Por si sucede algún error.
+     */
     @Override
     public List<Comanda> obtenerComandasFiltros(LocalDateTime inicio, LocalDateTime fin) throws PersistenciaException {
         if (em == null || !em.isOpen()) {
@@ -59,6 +68,14 @@ public class ReporteComandasDAO implements IReporteComandasDAO{
         }
     }
     
+    /**
+     * Obtiene el total acumulado de ventas dentro del rango de fechas que se
+     * proporcione.
+     * @param inicio Fecha y hora de inicio del rango de búsqueda.
+     * @param fin Fecha y hora de fin del rango de búsqueda.
+     * @return El total acumulado de ventas dentro del rango de fechas.
+     * @throws PersistenciaException En caso de error.
+     */
     @Override
     public Double obtenerTotalAcumuladoVentas(LocalDateTime inicio, LocalDateTime fin) throws PersistenciaException {
         if (em == null || !em.isOpen()) {
@@ -99,7 +116,14 @@ public class ReporteComandasDAO implements IReporteComandasDAO{
     
     
     // PARA LAS PRUEBAS
-    
+    /**
+     * MÉTODO USADO PARA REALIZAR PRUEBAS.
+     * Registra un nuevo cliente frecuente en la base de datos.
+     * @param cliente Cliente que se desea registrar.
+     * @return Cliente registrado.
+     * @throws PersistenciaException En caso de error durante el registro del
+     * cliente.
+     */
     public ClienteFrecuente registrarClienteFrecuente(ClienteFrecuente cliente) throws PersistenciaException{
         try{
             if (em == null || !em.isOpen()){
@@ -130,6 +154,12 @@ public class ReporteComandasDAO implements IReporteComandasDAO{
         }
     }
     
+    /**
+     * MÉTODO USADO PARA REALIZAR PRUEBAS.
+     * Persiste una nueva comanda en la base de datos.
+     * @param comanda La comanda que se quiere guardar en la bd.
+     * @throws PersistenciaException En caso de error al guardar la comanda.
+     */
     public void persistirComanda(Comanda comanda) throws PersistenciaException {
     try{
         if (em == null || !em.isOpen()){
